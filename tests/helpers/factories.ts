@@ -60,10 +60,16 @@ export function makeBooking(overrides: Partial<TestBooking> = {}): TestBooking {
   };
 }
 
-/** Генерирует непересекающиеся диапазоны дат. */
+/**
+ * Генерирует уникальные даты для каждого воркера.
+ * Каждый Playwright worker — отдельный Node.js процесс с уникальным PID.
+ * Смещение = (PID % 500) * 400 дней — даёт 500 изолированных диапазонов.
+ */
+const WORKER_OFFSET = (process.pid % 500) * 400;
+
 export function futureDate(offsetDays: number): string {
-  const d = new Date('2027-10-01');
-  d.setDate(d.getDate() + offsetDays);
+  const d = new Date('2028-01-01');
+  d.setDate(d.getDate() + WORKER_OFFSET + offsetDays);
   return d.toISOString().slice(0, 10);
 }
 

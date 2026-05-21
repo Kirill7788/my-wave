@@ -43,5 +43,8 @@ set_exception_handler(function (Throwable $e) {
     exit;
 });
 
+// Приховати версію PHP з заголовків
+header_remove('X-Powered-By');
+
 // Запуск сессии через конфиг
 \App\Config\Session::start();

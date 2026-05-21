@@ -25,25 +25,19 @@ test.describe('POST /auth.php?action=register', () => {
     expect(meBody.user.role).toBe('user');
   });
 
-  test('duplicate email returns 422', async ({ anonRequest }) => {
+  test('duplicate email returns 422', async ({ anonRequest, playwright }) => {
     const user = makeUser();
-    await API.register(anonRequest, user);
+    // Перша реєстрація — успіх
+    const first = await API.register(anonRequest, user);
+    expect(first.status()).toBe(200);
 
-    // Новый контекст — тот же email
-    const ctx2 = await anonRequest.dispose().then(() =>
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      (anonRequest as any)
-    );
-
-    // Используем другой context напрямую
-    const resp = await API.register(anonRequest, user);
-    // Первый запрос уже прошёл в этом контексте — делаем второй вручную
-    const resp2 = await anonRequest.post('/api/auth.php?action=register', {
-      data: user,
-    });
-    expect(resp2.status()).toBe(422);
-    const body = await resp2.json();
+    // Другий контекст, той самий email → 422
+    const ctx2 = await playwright.request.newContext({ baseURL: 'http://127.0.0.1:8000' });
+    const second = await API.register(ctx2, user);
+    expect(second.status()).toBe(422);
+    const body = await second.json();
     expect(body.error).toMatch(/зарегистрирован|exist/i);
+    await ctx2.dispose();
   });
 
   test.describe('validation errors', () => {

@@ -7,7 +7,7 @@
 import { execSync } from 'child_process';
 import { request } from '@playwright/test';
 
-const BASE_URL = process.env.BASE_URL ?? 'http://localhost:8000';
+const BASE_URL = process.env.BASE_URL ?? 'http://127.0.0.1:8000';
 const MAX_WAIT_MS = 10_000;
 
 async function waitForServer(url: string): Promise<void> {

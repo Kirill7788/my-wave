@@ -65,7 +65,7 @@ test.describe('Password reset flow', () => {
 
   test('update_password with correct current_password succeeds', async ({ playwright }) => {
     // Создаём свежего пользователя чтобы не сломать глобальный USER
-    const ctx   = await playwright.request.newContext({ baseURL: 'http://localhost:8000' });
+    const ctx   = await playwright.request.newContext({ baseURL: 'http://127.0.0.1:8000' });
     const user  = makeUser();
     await API.register(ctx, user);
 
@@ -76,7 +76,7 @@ test.describe('Password reset flow', () => {
     expect(resp.status()).toBe(200);
 
     // Старый пароль больше не работает
-    const ctx2 = await playwright.request.newContext({ baseURL: 'http://localhost:8000' });
+    const ctx2 = await playwright.request.newContext({ baseURL: 'http://127.0.0.1:8000' });
     const old  = await API.login(ctx2, user.email, user.password);
     expect(old.status()).toBe(401);
 

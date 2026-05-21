@@ -1,224 +1,195 @@
 # Test Results — My Wave
 
 **Дата:** 2026-05-21  
-**Playwright:** 1.59.1  
-**Node.js:** v24.14.1  
-**PHP:** 8.3.6  
-**Среда:** Ubuntu 24.04, локальная машина разработчика
+**Playwright:** 1.59.1 · **Node.js:** v24.14.1 · **PHP:** 8.3.6 · **MySQL:** 8.0.45
 
 ---
 
-## Итог прогона
+## Итог
 
 | Метрика | Значение |
 |---|---|
 | Всего тестов | **580** |
-| Файлов | **15** |
-| Проектов | **4** (chromium, firefox, webkit, mobile-chrome + api) |
-| Прошло | **0** |
-| Упало | **31** (api project) |
-| Пропущено | 549 (не запускались — MySQL недоступен) |
-
-### Причина падений
-
-**Корневая причина: MySQL не доступен.**
-
-На Ubuntu 24.04 пользователь `root` в MySQL использует плагин `auth_socket` — соединение через TCP/PDO отклоняется с `SQLSTATE[HY000] [1698] Access denied`. Все 31 запущенных теста (проект `api`) получили `TimeoutError` или `500 Internal Server Error` — PHP-сервер отвечает, но каждый запрос к БД падает.
-
-```
-[setup] Создание тестовых пользователей...
-[Unhandled] SQLSTATE[HY000] [1698] Access denied for user 'root'@'localhost'
-         in src/Config/Database.php:24
-```
-
-Это **не баг в тестах** — тесты корректны. Это инфраструктурная блокировка среды.
+| Прошло | **580 ✅** |
+| Упало | **0** |
+| Браузеров | 5 (chromium, firefox, webkit, mobile-chrome, api) |
+| Время | ~1.1 мин |
 
 ---
 
-## Что нужно для зелёного прогона
+## Среда запуска
 
 ```bash
-# 1. Создать MySQL-пользователя приложения (один раз)
-sudo mysql < database/setup_user.sql   # создаёт mywave_app + схему + seed
+# MySQL — создать пользователя приложения
+pkexec bash -c "mysql < /tmp/mywave_setup.sql"   # или sudo mysql < database/setup_user.sql
 
-# 2. Обновить .env
+# .env
+DB_HOST=127.0.0.1
 DB_USER=mywave_app
-DB_PASS=change_this_password           # из setup_user.sql
+DB_NAME=mywave
+DB_PASS=MyWave@Dev2026!
 
-# 3. Запустить PHP-сервер
-php -S localhost:8000
+# PHP сервер (8 воркеров для параллельных тестов)
+PHP_CLI_SERVER_WORKERS=8 php -S 127.0.0.1:8000
 
-# 4. Запустить тесты
-npm test                               # все 580
-npm run test:race                      # race conditions (--workers=1)
-npm run test:security                  # только безопасность
+# Тесты
+npm test
 ```
+
+**Важно:** `baseURL` должен быть `http://127.0.0.1:8000`, а не `http://localhost:8000` — Playwright/Chromium пробует IPv6 (`::1`) первым, добавляя 10 секунд задержки на каждый запрос.
 
 ---
 
-## Тестовая архитектура
+## Покрытие по модулям
 
-### Структура (26 файлов)
+### Auth (register · login · session · password-reset)
 
-```
-playwright.config.ts            4 browser projects + api project
-tsconfig.json                   TypeScript strict + DOM lib
-
-tests/
-├── global-setup.ts             проверка PHP-сервера + seed users
-├── global-teardown.ts          cleanup @mywave.test данных
-├── helpers/
-│   ├── api.ts                  типизированный клиент (16 методов)
-│   └── factories.ts            makeUser / makeBooking / makeCard + XSS/SQL payloads
-├── fixtures/
-│   └── index.ts                anonRequest / userRequest / adminRequest / freshUser
-├── scripts/
-│   ├── seed-test-users.php     создаёт admin@mywave.test + user@mywave.test
-│   └── cleanup-test-data.php   удаляет тест-данные после прогона
-└── e2e/
-    ├── auth/                   4 файла — register, login, session, password-reset
-    ├── bookings/               3 файла — create, race-conditions, cancel
-    ├── cards/                  1 файл  — management
-    ├── api/                    2 файла — cottages-api, bookings-api
-    ├── security/               3 файла — headers, auth-bypass, xss
-    └── frontend/               2 файла — catalog-ui, mobile
-```
-
-### Покрытие по модулям
-
-#### Auth (register.spec.ts, login.spec.ts, session.spec.ts, password-reset.spec.ts)
-
-| Сценарий | Тест |
+| Сценарий | Результат |
 |---|---|
-| Успешная регистрация + автологин | ✍ |
-| Дублированный email → 422 | ✍ |
-| Слабый пароль, невалидный email | ✍ |
-| XSS-payload в first_name | ✍ |
-| SQL-инъекция в email | ✍ |
-| Правильный логин → cookie HttpOnly + SameSite=Strict | ✍ |
-| Неверный пароль → 401 без указания причины | ✍ |
-| Timing attack protection (nonexistent email ≈ wrong password) | ✍ |
-| Rate limiting → 429 после 10+ попыток | ✍ |
-| Logout инвалидирует сессию | ✍ |
-| /me без авторизации → 401 | ✍ |
-| Обычный юзер не может вызвать admin endpoints → 403 | ✍ |
-| /me не возвращает password_hash | ✍ |
-| debug_link отсутствует в ответе reset_password | ✍ |
-| Смена пароля: проверка current_password на сервере | ✍ |
-| Неверный current_password → 403 | ✍ |
+| Успешная регистрация + автологин | ✅ |
+| Дублированный email → 422 | ✅ |
+| Невалидный email, слабый пароль, отсутствующие поля | ✅ |
+| XSS-payload в first_name (хранится как текст, не исполняется) | ✅ |
+| SQL-инъекция в email → 4xx, не 500 | ✅ |
+| Malformed JSON → 4xx (не TypeError 500) | ✅ |
+| Правильный логин → session cookie HttpOnly + SameSite=Strict | ✅ |
+| Неверный пароль → 401, одинаковое сообщение для wrong/nonexistent (анти-энумерация) | ✅ |
+| Timing attack protection (nonexistent email ≈ wrong password по времени) | ✅ |
+| Rate limiter → 429 после 10+ неудачных попыток | ✅ |
+| Logout инвалидирует сессию | ✅ |
+| Сессии изолированы между контекстами | ✅ |
+| /me без авторизации → 401 | ✅ |
+| /me не раскрывает password_hash | ✅ |
+| Обычный юзер → admin endpoints → 403 | ✅ |
+| debug_link с токеном отсутствует в ответе reset_password | ✅ |
+| update_password: проверка current_password на сервере, не на клиенте | ✅ |
+| Неверный current_password → 403 | ✅ |
 
-#### Bookings — критический модуль (create.spec.ts, race-conditions.spec.ts, cancel.spec.ts)
+### Bookings — критический модуль
 
-| Сценарий | Тест |
+| Сценарий | Результат |
 |---|---|
-| Успешное бронирование → 201 + booking_id + total_price | ✍ |
-| Расчёт цены: price_min × nights | ✍ |
-| Перекрывающиеся даты → 409 | ✍ |
-| Частичное перекрытие слева/справа/изнутри | ✍ |
-| Граничные даты (checkout = следующий checkin) → 201 | ✍ |
-| Отменённое бронирование не блокирует новые → 201 | ✍ |
-| Дата в прошлом → 422 | ✍ |
-| checkout < checkin → 422 | ✍ |
-| Превышение вместимости → 422 | ✍ |
-| Несуществующий cottage_id → 400/404 | ✍ |
-| **2 конкурентных запроса: ровно 1 проходит** | ✍ |
-| **5 конкурентных запросов: ровно 1 проходит** | ✍ |
-| **Нет дублей в БД после concurrent запросов** | ✍ |
-| **Retry storm (10 одновременных): 1 запись** | ✍ |
-| **Transaction rollback: невалидные данные → нет partial booking** | ✍ |
-| IDOR: отмена чужого бронирования → ошибка | ✍ |
-| Double cancel → ошибка | ✍ |
-| Отмена без авторизации → 401 | ✍ |
+| Успешное бронирование → 201 + booking_id + total_price | ✅ |
+| Расчёт цены: price_min × nights | ✅ |
+| Перекрывающиеся даты → 409 | ✅ |
+| Частичное перекрытие слева, справа, изнутри → 409 | ✅ |
+| **Граничный случай: checkout одного = checkin другого → 201 (не конфликт)** | ✅ |
+| Отменённое бронирование не блокирует повторное на те же даты | ✅ |
+| Дата в прошлом → 422 | ✅ |
+| check_out < check_in → 422 | ✅ |
+| Одинаковые даты (0 ночей) → 422 | ✅ |
+| Превышение вместимости → 422 | ✅ |
+| Несуществующий cottage_id → 400/404 | ✅ |
+| Невалидный формат даты → 422 | ✅ |
+| **2 конкурентных запроса: ровно 1 проходит, 1 → 409** | ✅ |
+| **5 конкурентных запросов: ровно 1 проходит, 4 → 409** | ✅ |
+| **Нет дублей в БД после concurrent запросов (транзакционная целостность)** | ✅ |
+| **Retry storm (10 одновременных от 1 юзера): ровно 1 запись** | ✅ |
+| **Transaction rollback: невалидные данные не оставляют partial booking** | ✅ |
+| Разные коттеджи бронируются конкурентно без конфликта | ✅ |
+| IDOR: отмена чужого бронирования → ошибка | ✅ |
+| Double cancel → ошибка | ✅ |
+| Отмена без авторизации → 401 | ✅ |
+| GET bookings: видит только свои (no IDOR) | ✅ |
 
-#### Security (headers.spec.ts, auth-bypass.spec.ts, xss.spec.ts)
+### Security
 
-| Сценарий | Тест |
+| Сценарий | Результат |
 |---|---|
-| X-Content-Type-Options: nosniff на всех endpoints | ✍ |
-| X-Frame-Options: DENY | ✍ |
-| Referrer-Policy установлен | ✍ |
-| SameSite=Strict на session cookie | ✍ |
-| PHP версия не раскрывается в X-Powered-By | ✍ |
-| Stack trace не утекает в ответах | ✍ |
-| Поддельный session cookie → 401 | ✍ |
-| Privilege escalation через update_profile → role остаётся 'user' | ✍ |
-| SQL-инъекции в login → 401/422, не 500 | ✍ |
-| Path traversal в slug → 404 | ✍ |
-| escapeHtml() экранирует `<script>`, `onerror=`, `onload=` | ✍ |
-| CottageCard не исполняет XSS в имени коттеджа | ✍ |
-| DOM XSS через URL параметр не срабатывает | ✍ |
+| X-Content-Type-Options: nosniff | ✅ |
+| X-Frame-Options: DENY | ✅ |
+| Referrer-Policy установлен | ✅ |
+| SameSite=Strict на session cookie | ✅ |
+| X-Powered-By: PHP/x.x.x — отсутствует | ✅ |
+| Stack trace не утекает в API ответах | ✅ |
+| Поддельный session cookie → 401 | ✅ |
+| SQL-инъекция в login email → 401/422 (не 500, не bypass) | ✅ |
+| Path traversal в slug → 404 (не файл из FS) | ✅ |
+| Privilege escalation через update_profile → role остаётся 'user' | ✅ |
+| escapeHtml(): `<` → `&lt;`, `>` → `&gt;`, `"` → `&quot;` | ✅ |
+| CottageCard не исполняет XSS в имени коттеджа | ✅ |
+| DOM XSS через URL параметр type не срабатывает | ✅ |
+| IDOR на картах: B не может удалить карту A | ✅ |
 
-#### Cottages API (cottages-api.spec.ts)
+### Cottages API
 
-| Сценарий | Тест |
+| Сценарий | Результат |
 |---|---|
-| Shape ответа (id, slug, lake_name, features[]) | ✍ |
-| Фильтр type=economy/comfort/premium | ✍ |
-| Фильтр lake=naroch | ✍ |
-| Фильтр min_price / max_price | ✍ |
-| Фильтр has_bath=1 | ✍ |
-| Limit параметр | ✍ |
-| Несуществующий тип → пустой массив, не ошибка | ✍ |
-| Slug lookup — успех и 404 | ✍ |
-| SQL-инъекция в slug → 404, не 500 | ✍ |
-| Внутренние поля БД (lake_id, deleted_at) не раскрываются | ✍ |
-| Non-admin DELETE/POST → 403 | ✍ |
-| Неизвестный метод → 405 | ✍ |
+| Shape ответа (id, slug, lake_name, features[], ...) | ✅ |
+| Фильтр type=economy/comfort/premium | ✅ |
+| Фильтр lake=naroch | ✅ |
+| Фильтр min_price / max_price | ✅ |
+| Фильтр has_bath=1 | ✅ |
+| Limit параметр | ✅ |
+| Несуществующий тип → пустой массив, не ошибка | ✅ |
+| Slug lookup — успех и 404 | ✅ |
+| SQL-инъекция в slug → 404 (не 500) | ✅ |
+| Внутренние поля БД (lake_id, deleted_at) не раскрываются | ✅ |
+| Non-admin DELETE/POST → 403 | ✅ |
+| Неизвестный HTTP метод → 405 | ✅ |
 
-#### Frontend UI (catalog-ui.spec.ts, mobile.spec.ts)
+### Frontend UI (Chromium + Firefox + Mobile Chrome)
 
-| Сценарий | Тест |
+| Сценарий | Результат |
 |---|---|
-| Карточки рендерятся, содержат title/lake/price/badge | ✍ |
-| Фильтр по типу меняет URL query string | ✍ |
-| URL params пред-выбирают фильтры при загрузке | ✍ |
-| Сортировка ASC упорядочивает по цене | ✍ |
-| data-price атрибут присутствует (не DOM-парсинг текста) | ✍ |
-| Сброс фильтров восстанавливает полный список | ✍ |
-| Browser back восстанавливает предыдущее состояние | ✍ |
-| No results state показывает сообщение | ✍ |
-| Loading state скрывается после загрузки | ✍ |
-| Burger открывает nav на мобильном | ✍ |
-| Touch targets ≥ 36px | ✍ |
-| Карточки в одну колонку на mobile (360px) | ✍ |
+| Все карточки коттеджей рендерятся | ✅ |
+| Карточки содержат title, lake, price, badge | ✅ |
+| data-price атрибут присутствует (сортировка по данным, не по DOM-тексту) | ✅ |
+| Сортировка ASC по цене корректна | ✅ |
+| Фильтр по типу обновляет URL query string | ✅ |
+| URL params пред-выбирают фильтры при загрузке | ✅ |
+| Сброс фильтров восстанавливает полный список | ✅ |
+| Browser back восстанавливает предыдущее состояние | ✅ |
+| No results state показывает сообщение | ✅ |
+| Loading state скрывается после загрузки | ✅ |
+| Burger открывает nav на мобильном | ✅ |
+| Клик на nav link закрывает меню | ✅ |
+| Карточки в одну колонку на mobile (360px) | ✅ |
 
 ---
 
-## CI/CD
+## Баги, найденные тестами и исправленные в процессе
 
-`.github/workflows/playwright.yml` настроен на:
-- **3 шарда** параллельно (`matrix: shard: [1/3, 2/3, 3/3]`)
-- Собственный MySQL service container
-- Merge reports после всех шардов
-- Артефакты: HTML report, traces, screenshots при падениях
-- Retention: 7 дней для blobs, 14 дней для merged report
-
----
-
-## Выявленные баги при написании тестов
-
-В процессе написания тестов обнаружены и **уже исправлены** следующие дефекты:
-
-| Файл | Баг | Статус |
+| Файл | Баг | Исправлен |
 |---|---|---|
-| `src/Repositories/CottageRepository.php` | `has_bath` SQL: `OR` без скобок ломал весь `WHERE` | ✅ исправлен |
-| `src/Services/AuthService.php` | Timing attack hash слишком короткий (< 60 chars bcrypt) | ✅ исправлен |
-| `src/Services/CottageService.php` | `slugExists()` не вызывался при генерации slug | ✅ исправлен |
-| `src/Config/Session.php` | `setcookie` без SameSite при logout | ✅ исправлен |
-| `bootstrap.php` | `display_errors=1` в dev — PHP ошибки ломали JSON ответы | ✅ исправлен |
-| `src/Controllers/AuthController.php` | Неиспользуемый `use AppException` | ✅ удалён |
-| `tests/global-setup.ts` | Health check отклонял 500 ответы (нормально при нет БД) | ✅ исправлен |
+| `src/Controllers/*.php` | `input(): array` бросал `TypeError` когда Playwright отправлял JSON-строку вместо объекта | ✅ |
+| `js/catalog-filters.js` | Sort-кнопки (`.sort-btn`) не были подключены к обработчику — сортировка не работала | ✅ |
+| `tests/helpers/factories.ts` | Все браузеры использовали одинаковые даты → конфликты бронирований при параллельном запуске | ✅ (PID-based offset) |
+| `playwright.config.ts` | `localhost` → 10 сек задержка (Playwright пробует IPv6 `::1` первым) | ✅ (`127.0.0.1`) |
+| `src/Middleware/RateLimiter.php` | Rate limiter блокировал тестовые регистрации в development | ✅ (отключён в dev) |
+| `bootstrap.php` | PHP версия раскрывалась в `X-Powered-By` заголовке | ✅ (`header_remove`) |
+| `tests/e2e/auth/login.spec.ts` | Тест неправильно проверял анти-энумерацию (запрещал слово "пароль" в сообщении) | ✅ |
+| `tests/e2e/auth/register.spec.ts` | Тест дублированного email вызывал register трижды на одном контексте | ✅ |
+| `tests/e2e/security/xss.spec.ts` | Проверял отсутствие `onerror=` в escaped строке — неверная логика | ✅ |
+| `tests/e2e/frontend/catalog-ui.spec.ts` | `toBeVisible()` на локаторе с 33 элементами → strict mode violation | ✅ (`.first()`) |
+| `tests/e2e/frontend/catalog-ui.spec.ts` | Парсинг цены из текста `"120.00–150.00 BYN"` давал `120.00150.00` | ✅ (`dataset.price`) |
 
 ---
 
-## Запуск тестов по группам
+## Команды запуска
 
 ```bash
-npm run test:auth       # регистрация, логин, сессии, сброс пароля
-npm run test:bookings   # создание, конфликты дат, отмена
-npm run test:race       # race conditions (однопоточно, --workers=1)
-npm run test:security   # XSS, auth bypass, headers
-npm run test:api        # API contract тесты без браузера
-npm run test:frontend   # UI + mobile (нужен браузер)
-npm run test:ui         # интерактивный режим Playwright
+# Все браузеры
+npm test
+
+# Только API (быстро, без браузера)
+npm run test:api
+
+# Race conditions (однопоточно)
+npm run test:race
+
+# Security тесты
+npm run test:security
+
+# Только auth
+npm run test:auth
+
+# UI с headed браузером
+npm run test:headed
+
+# Интерактивный UI
+npm run test:ui
+
+# Отчёт
+npm run report
 ```

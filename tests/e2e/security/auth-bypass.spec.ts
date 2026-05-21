@@ -10,7 +10,7 @@ test.describe('Auth bypass attempts', () => {
 
   test('forged session cookie does not grant access', async ({ playwright }) => {
     const ctx = await playwright.request.newContext({
-      baseURL: 'http://localhost:8000',
+      baseURL: 'http://127.0.0.1:8000',
       extraHTTPHeaders: {
         // Поддельный session cookie
         'Cookie': 'PHPSESSID=fakeSessionId12345678901234567890',
@@ -25,8 +25,8 @@ test.describe('Auth bypass attempts', () => {
   test('manipulated user_id in session does not expose other user data', async ({ playwright }) => {
     // Нет возможности напрямую подделать сессию без доступа к серверу
     // Тест: /me возвращает только СВОИ данные
-    const ctx1 = await playwright.request.newContext({ baseURL: 'http://localhost:8000' });
-    const ctx2 = await playwright.request.newContext({ baseURL: 'http://localhost:8000' });
+    const ctx1 = await playwright.request.newContext({ baseURL: 'http://127.0.0.1:8000' });
+    const ctx2 = await playwright.request.newContext({ baseURL: 'http://127.0.0.1:8000' });
 
     const u1 = makeUser();
     const u2 = makeUser();
@@ -102,8 +102,8 @@ test.describe('Auth bypass attempts', () => {
 
   test('cards: cannot delete another user\'s card', async ({ playwright }) => {
     const { makeUser, makeCard } = await import('../../helpers/factories');
-    const ctxA = await playwright.request.newContext({ baseURL: 'http://localhost:8000' });
-    const ctxB = await playwright.request.newContext({ baseURL: 'http://localhost:8000' });
+    const ctxA = await playwright.request.newContext({ baseURL: 'http://127.0.0.1:8000' });
+    const ctxB = await playwright.request.newContext({ baseURL: 'http://127.0.0.1:8000' });
 
     await API.register(ctxA, makeUser());
     await API.register(ctxB, makeUser());

@@ -34,8 +34,8 @@ test.describe('DELETE /bookings.php?id= — cancel booking', () => {
 
   test('IDOR: user cannot cancel another user\'s booking', async ({ playwright }) => {
     // Пользователь A создаёт бронирование
-    const ctxA = await playwright.request.newContext({ baseURL: 'http://localhost:8000' });
-    const ctxB = await playwright.request.newContext({ baseURL: 'http://localhost:8000' });
+    const ctxA = await playwright.request.newContext({ baseURL: 'http://127.0.0.1:8000' });
+    const ctxB = await playwright.request.newContext({ baseURL: 'http://127.0.0.1:8000' });
 
     const { makeUser } = await import('../../helpers/factories');
     const userA = makeUser();

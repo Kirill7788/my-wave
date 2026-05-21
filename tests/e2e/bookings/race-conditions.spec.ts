@@ -21,7 +21,7 @@ async function createAuthContexts(
 ): Promise<import('@playwright/test').APIRequestContext[]> {
   const contexts = await Promise.all(
     Array.from({ length: n }, async () => {
-      const ctx  = await playwright.request.newContext({ baseURL: 'http://localhost:8000' });
+      const ctx  = await playwright.request.newContext({ baseURL: 'http://127.0.0.1:8000' });
       const user = makeUser();
       await API.register(ctx, user);
       return ctx;

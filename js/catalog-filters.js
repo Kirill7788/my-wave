@@ -107,9 +107,33 @@ document.addEventListener('DOMContentLoaded', function() {
     window.location.href = 'catalog.html';
   });
 
-  // Сортировка (работает на уже загруженных данных, без нового запроса)
+  // Сортировка через select #sortBy
   sortEl?.addEventListener('change', function() {
     if (currentData.length > 0) renderSorted();
+  });
+
+  // Сортировка через кнопки .sort-btn (альтернативный вариант в каталоге)
+  document.querySelectorAll('.sort-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.sort-btn').forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      // Перевизначаємо currentSort через data-sort атрибут кнопки
+      const sort = btn.getAttribute('data-sort') || 'default';
+      // Патчуємо sortEl value якщо він є
+      if (sortEl) sortEl.value = sort === 'asc' ? 'price_asc' : sort === 'desc' ? 'price_desc' : 'default';
+      // Тимчасово перевизначаємо renderSorted з потрібним sort
+      const sorted = [...currentData];
+      if (sort === 'asc') {
+        sorted.sort(function(a, b) { return parseFloat(a.price_min) - parseFloat(b.price_min); });
+      } else if (sort === 'desc') {
+        sorted.sort(function(a, b) { return parseFloat(b.price_min) - parseFloat(a.price_min); });
+      }
+      var grid = document.getElementById('cottagesGrid');
+      if (grid && sorted.length > 0) {
+        grid.innerHTML = '';
+        sorted.forEach(function(cottage) { grid.appendChild(CottageCard(cottage)); });
+      }
+    });
   });
 
   // Первая загрузка

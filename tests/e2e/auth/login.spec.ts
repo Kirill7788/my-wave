@@ -26,16 +26,26 @@ test.describe('POST /auth.php?action=login', () => {
     expect(resp.status()).toBe(401);
     const body = await resp.json();
     expect(body.error).toBeTruthy();
-    // Не раскрываем причину (пароль или email)
-    expect(body.error).not.toMatch(/password|пароль/i);
   });
 
-  test('nonexistent email returns 401 (no email enumeration)', async ({ anonRequest }) => {
-    const resp = await API.login(anonRequest, 'nobody@mywave.test', 'SomePass123!');
-    expect(resp.status()).toBe(401);
-    const body = await resp.json();
-    // Сообщение должно быть идентично неверному паролю
-    expect(body.error).toMatch(/email|пароль/i);
+  test('nonexistent email returns 401 with same message (no email enumeration)', async ({ anonRequest, playwright }) => {
+    const ctx1 = await playwright.request.newContext({ baseURL: 'http://127.0.0.1:8000' });
+    const ctx2 = await playwright.request.newContext({ baseURL: 'http://127.0.0.1:8000' });
+
+    const wrongPass = await API.login(ctx1, USER.email, 'WrongPass123!');
+    const noUser    = await API.login(ctx2, 'nobody@mywave.test', 'WrongPass123!');
+
+    // Обидва повертають 401
+    expect(wrongPass.status()).toBe(401);
+    expect(noUser.status()).toBe(401);
+
+    // Повідомлення ідентичні — не розкривають яке поле невірне
+    const msg1 = (await wrongPass.json()).error;
+    const msg2 = (await noUser.json()).error;
+    expect(msg1).toBe(msg2);
+
+    await ctx1.dispose();
+    await ctx2.dispose();
   });
 
   test('timing: nonexistent vs wrong password takes similar time (anti-timing-attack)', async ({ anonRequest }) => {
@@ -70,8 +80,8 @@ test.describe('POST /auth.php?action=login', () => {
   });
 
   test('session is NOT shared between independent request contexts', async ({ playwright }) => {
-    const ctx1 = await playwright.request.newContext({ baseURL: 'http://localhost:8000' });
-    const ctx2 = await playwright.request.newContext({ baseURL: 'http://localhost:8000' });
+    const ctx1 = await playwright.request.newContext({ baseURL: 'http://127.0.0.1:8000' });
+    const ctx2 = await playwright.request.newContext({ baseURL: 'http://127.0.0.1:8000' });
 
     await API.login(ctx1, USER.email, USER.password);
 
@@ -95,7 +105,7 @@ test.describe('POST /auth.php?action=login', () => {
   test('rate limiter returns 429 after too many failed attempts', async ({ playwright }) => {
     // Каждый запрос — новый IP виден сервером одинаково (localhost)
     // Используем один контекст для накопления попыток
-    const ctx = await playwright.request.newContext({ baseURL: 'http://localhost:8000' });
+    const ctx = await playwright.request.newContext({ baseURL: 'http://127.0.0.1:8000' });
     const responses: number[] = [];
 
     for (let i = 0; i < 15; i++) {

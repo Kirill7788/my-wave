@@ -31,8 +31,8 @@ test.describe('Bookings API contract', () => {
 
   test('GET only returns bookings for current user (no IDOR)', async ({ playwright }) => {
     const { makeUser } = await import('../../helpers/factories');
-    const ctxA = await playwright.request.newContext({ baseURL: 'http://localhost:8000' });
-    const ctxB = await playwright.request.newContext({ baseURL: 'http://localhost:8000' });
+    const ctxA = await playwright.request.newContext({ baseURL: 'http://127.0.0.1:8000' });
+    const ctxB = await playwright.request.newContext({ baseURL: 'http://127.0.0.1:8000' });
 
     await API.register(ctxA, makeUser());
     await API.register(ctxB, makeUser());

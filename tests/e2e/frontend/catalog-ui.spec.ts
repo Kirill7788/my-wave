@@ -8,19 +8,17 @@ test.describe('Catalog page UI', () => {
 
   test.beforeEach(async ({ page }) => {
     await page.goto('/catalog.html');
-    // Ждём загрузки коттеджей
-    await expect(page.locator('.cottage-card')).toBeVisible({ timeout: 10_000 });
+    await expect(page.locator('.cottage-card').first()).toBeVisible({ timeout: 10_000 });
   });
 
   test('all cottage cards are rendered', async ({ page }) => {
-    const cards = page.locator('.cottage-card');
-    await expect(cards).toHaveCount(await cards.count()); // хотя бы один
-    const count = await cards.count();
+    const count = await page.locator('.cottage-card').count();
     expect(count).toBeGreaterThan(0);
   });
 
   test('cottage cards contain required elements', async ({ page }) => {
     const firstCard = page.locator('.cottage-card').first();
+    await expect(firstCard).toBeVisible();
     await expect(firstCard.locator('.cottage-card__title')).toBeVisible();
     await expect(firstCard.locator('.cottage-card__lake')).toBeVisible();
     await expect(firstCard.locator('.cottage-card__price')).toBeVisible();
@@ -55,7 +53,7 @@ test.describe('Catalog page UI', () => {
 
   test('URL params pre-select filters on load', async ({ page }) => {
     await page.goto('/catalog.html?type=comfort&lake=naroch');
-    await expect(page.locator('.cottage-card')).toBeVisible({ timeout: 10_000 });
+    await expect(page.locator('.cottage-card').first()).toBeVisible({ timeout: 10_000 });
 
     // Фильтр типа должен быть отмечен
     const comfortRadio = page.locator('input[name="type"][value="comfort"]');
@@ -72,12 +70,9 @@ test.describe('Catalog page UI', () => {
     }
     await ascBtn.click();
 
+    // Сортування перевіряємо за data-price атрибутом (так само як це робить JS)
     const prices = await page.locator('.cottage-card').evaluateAll(
-      (cards: HTMLElement[]) =>
-        cards.map(c => {
-          const priceEl = c.querySelector('.cottage-card__price');
-          return parseFloat((priceEl?.textContent ?? '0').replace(/[^\d.]/g, ''));
-        })
+      (cards: HTMLElement[]) => cards.map(c => parseFloat(c.dataset['price'] ?? '0'))
     );
     for (let i = 1; i < prices.length; i++) {
       expect(prices[i]).toBeGreaterThanOrEqual(prices[i - 1]);
@@ -103,7 +98,7 @@ test.describe('Catalog page UI', () => {
     // Сбрасываем
     await page.locator('#resetFilters').click();
     await page.waitForURL('/catalog.html');
-    await expect(page.locator('.cottage-card')).toBeVisible({ timeout: 8_000 });
+    await expect(page.locator('.cottage-card').first()).toBeVisible({ timeout: 8_000 });
 
     const afterCount = await page.locator('.cottage-card').count();
     expect(afterCount).toBeGreaterThanOrEqual(initialCount);
@@ -136,7 +131,7 @@ test.describe('Catalog page UI', () => {
 
   test('browser back restores previous filter state', async ({ page }) => {
     await page.goto('/catalog.html');
-    await expect(page.locator('.cottage-card')).toBeVisible({ timeout: 10_000 });
+    await expect(page.locator('.cottage-card').first()).toBeVisible({ timeout: 10_000 });
 
     await page.locator('#lakeFilter').selectOption('braslav');
     await page.locator('#applyFilters').click();

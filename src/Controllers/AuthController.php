@@ -99,7 +99,7 @@ class AuthController
 
     private function input(): array
     {
-        $raw = file_get_contents('php://input');
-        return json_decode($raw ?: '{}', true) ?? [];
+        $decoded = json_decode(file_get_contents('php://input') ?: '{}', true);
+        return is_array($decoded) ? $decoded : [];
     }
 }

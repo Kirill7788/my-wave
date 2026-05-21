@@ -38,11 +38,13 @@ test.describe('XSS resilience', () => {
     const map = results as Record<string, string>;
     for (const payload of XSS_PAYLOADS) {
       const escaped = map[payload];
-      // Опасные символы должны быть заменены
-      expect(escaped, `payload: ${payload}`).not.toContain('<script>');
-      expect(escaped, `payload: ${payload}`).not.toContain('<img');
-      expect(escaped, `payload: ${payload}`).not.toContain('onerror=');
-      expect(escaped, `payload: ${payload}`).not.toContain('onload=');
+      // < та > мають бути замінені на HTML-entities — тоді HTML не виконається
+      expect(escaped, `payload: ${payload}`).not.toContain('<');
+      expect(escaped, `payload: ${payload}`).not.toContain('>');
+      // Лапки мають бути екрановані
+      if (payload.includes('"')) {
+        expect(escaped, `payload: ${payload}`).not.toContain('"');
+      }
     }
   });
 
