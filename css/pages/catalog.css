@@ -1,26 +1,61 @@
 /* css/pages/catalog.css */
 
-/* ===== Layout ===== */
-.catalog-layout {
-  display: grid;
-  grid-template-columns: 280px 1fr;
-  gap: 32px;
-  align-items: start;
+/* ── Page header ── */
+.catalog-page-header {
+  padding: calc(var(--sp-32) + var(--sp-5)) 0 var(--sp-10);
+  background: var(--c-linen);
+  border-bottom: 1px solid var(--c-border);
 }
 
+.catalog-page-header h1 {
+  font-family: var(--font-serif);
+  font-size: var(--text-4xl);
+  font-weight: 600;
+  font-style: italic;
+  letter-spacing: var(--tracking-snug);
+  color: var(--c-text);
+  margin-bottom: var(--sp-1);
+}
+
+.catalog-page-header p {
+  color: var(--c-text-light);
+  font-size: var(--text-base);
+  font-weight: 300;
+}
+
+/* ── Two-column layout ── */
+.catalog-layout {
+  display: grid;
+  grid-template-columns: 272px 1fr;
+  gap: var(--sp-8);
+  align-items: start;
+  padding: var(--sp-10) 0 var(--sp-24);
+}
+
+/* ── Sidebar ── */
 .filters-sidebar {
-  background: white;
-  padding: 24px;
-  border-radius: var(--radius);
-  box-shadow: var(--shadow-md);
+  background: var(--c-white);
+  padding: var(--sp-6);
+  border-radius: var(--r-xl);
+  border: 1px solid var(--c-border);
+  box-shadow: var(--sh-ambient);
   position: sticky;
-  top: 100px;
+  top: 96px;
+}
+
+.sidebar-title {
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  color: var(--c-text-muted);
+  margin-bottom: var(--sp-5);
 }
 
 .filter-group {
-  margin-bottom: 24px;
-  padding-bottom: 24px;
-  border-bottom: 1px solid var(--color-border);
+  margin-bottom: var(--sp-5);
+  padding-bottom: var(--sp-5);
+  border-bottom: 1px solid var(--c-border);
 }
 
 .filter-group:last-child {
@@ -30,223 +65,129 @@
 }
 
 .filter-group h4 {
-  margin-bottom: 12px;
+  font-size: var(--text-sm);
   font-weight: 600;
+  color: var(--c-text);
+  margin-bottom: var(--sp-3);
+  letter-spacing: var(--tracking-normal);
 }
 
 .filter-group label {
   display: flex;
   align-items: center;
-  gap: 8px;
-  margin-bottom: 8px;
+  gap: var(--sp-2);
+  margin-bottom: var(--sp-2);
   cursor: pointer;
-  font-size: 0.95rem;
+  font-size: var(--text-sm);
+  color: var(--c-text-mid);
+  transition: color var(--dur-fast);
+}
+
+.filter-group label:hover { color: var(--c-text); }
+
+.filter-group input[type="radio"],
+.filter-group input[type="checkbox"] {
+  accent-color: var(--c-amber);
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  flex-shrink: 0;
 }
 
 .filter-group select,
 .filter-group input[type="number"] {
   width: 100%;
   padding: 10px 14px;
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-sm);
-  font-family: var(--font-main);
+  border: 1.5px solid var(--c-border);
+  border-radius: var(--r-md);
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  color: var(--c-text);
+  background: var(--c-warm-white);
+  transition: border-color var(--dur-fast);
+  appearance: none;
+  -webkit-appearance: none;
 }
 
-.price-range {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
+.filter-group select:focus,
+.filter-group input[type="number"]:focus {
+  outline: none;
+  border-color: var(--c-amber);
+  box-shadow: 0 0 0 3px rgba(196,144,90,0.12);
 }
 
-/* ===== Results Header & Sort Buttons (Исправлено) ===== */
+/* Sidebar filter actions */
+.sidebar-actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+  margin-top: var(--sp-5);
+  padding-top: var(--sp-5);
+  border-top: 1px solid var(--c-border);
+}
+
+/* ── Results area ── */
 .results-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 24px;
+  margin-bottom: var(--sp-6);
   flex-wrap: wrap;
-  gap: 12px;
+  gap: var(--sp-3);
 }
 
-.sort-buttons {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
+.results-count {
+  font-size: var(--text-sm);
+  color: var(--c-text-light);
+  font-weight: 400;
 }
 
-/* Убран красный фон, сделан аккуратный белый */
-.sort-btn {
-  padding: 10px 20px;
-  border: 2px solid var(--color-border);
-  background: white;
-  border-radius: 50px;
-  cursor: pointer;
-  font-weight: 500;
-  font-size: 0.9rem;
-  font-family: var(--font-main);
-  color: var(--color-text);
-  transition: var(--transition);
-  display: flex;
-  align-items: center;
-  gap: 6px;
+.results-count strong {
+  color: var(--c-text);
+  font-weight: 600;
 }
 
-.sort-btn:hover {
-  border-color: var(--color-primary);
-  color: var(--color-primary);
-  transform: translateY(-1px);
-  box-shadow: var(--shadow-sm);
-}
-
-.sort-btn.active {
-  background: var(--color-primary);
-  border-color: var(--color-primary);
-  color: white;
-  box-shadow: 0 4px 10px rgba(74, 144, 164, 0.3);
-}
-
-/* ===== Grid ===== */
+/* ── Cottages grid ── */
 .cottages-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 24px;
+  gap: var(--sp-5);
 }
 
-/* ===== Cottage Card ===== */
-.cottage-card {
-  background: white;
-  border-radius: var(--radius);
-  overflow: hidden;
-  box-shadow: var(--shadow-md);
-  transition: var(--transition);
-  display: flex;
-  flex-direction: column;
-}
-
-.cottage-card:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-lg);
-}
-
-.cottage-card__image {
-  height: 200px;
-  background-size: cover;
-  background-position: center;
-  position: relative;
-}
-
-.cottage-card__badge {
-  position: absolute;
-  top: 12px;
-  left: 12px;
-  padding: 4px 12px;
-  border-radius: 50px;
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: white;
-}
-
-.cottage-card__badge.economy {
-  background: #0ea5e9;
-}
-
-.cottage-card__badge.comfort {
-  background: #22c55e;
-}
-
-.cottage-card__badge.premium {
-  background: linear-gradient(135deg, #8b5cf6, #ec4899);
-}
-
-.cottage-card__content {
-  padding: 20px;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
-
-.cottage-card__title {
-  font-size: 1.2rem;
-  font-weight: 600;
-  margin-bottom: 4px;
-}
-
-.cottage-card__lake {
-  color: var(--color-primary);
-  font-size: 0.9rem;
-  margin-bottom: 12px;
-}
-
-/* ===== Styles for Feature Tags (Circles + Shadows) ===== */
-.cottage-card__features {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin: 12px 0;
-  flex-grow: 1;
-  /* Pushes price to bottom */
-}
-
-.feature-tag {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 4px 12px 4px 4px;
-  background: #ffffff;
-  border: 1px solid #e2e8f0;
-  border-radius: 50px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
-  font-size: 0.85rem;
-  color: var(--color-text);
-  font-weight: 500;
-  transition: all 0.3s ease;
-}
-
-.feature-tag:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
-  border-color: var(--color-primary);
-}
-
-/* Круглая иконка с тенью */
-.feature-tag__icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  background: #f8fafc;
-  border: 1px solid #e2e8f0;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06);
-  font-size: 1rem;
-  flex-shrink: 0;
-}
-
-/* ===== Price & Button ===== */
-.cottage-card__price {
-  font-weight: 700;
-  font-size: 1.3rem;
-  color: var(--color-primary);
-  margin: 12px 0 16px;
-}
-
-.cottage-card__price span {
-  font-weight: 400;
-  font-size: 0.9rem;
-  color: var(--color-text-light);
-}
-
-/* ===== Utilities ===== */
+/* ── Loading / empty states ── */
 .loading,
 .no-results {
   text-align: center;
-  padding: 40px;
-  color: var(--color-text-light);
+  padding: var(--sp-16) var(--sp-5);
+  color: var(--c-text-light);
+  grid-column: 1 / -1;
+  font-size: var(--text-base);
 }
 
-/* ===== Адаптивность ===== */
-@media (max-width: 992px) {
+.loading::before {
+  content: '';
+  display: block;
+  width: 24px;
+  height: 24px;
+  border: 2px solid var(--c-border);
+  border-top-color: var(--c-amber);
+  border-radius: 50%;
+  margin: 0 auto var(--sp-4);
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ── Responsive ── */
+@media (max-width: 1024px) {
+  .catalog-layout {
+    grid-template-columns: 240px 1fr;
+  }
+}
+
+@media (max-width: 768px) {
   .catalog-layout {
     grid-template-columns: 1fr;
   }
@@ -254,9 +195,7 @@
   .filters-sidebar {
     position: static;
   }
-}
 
-@media (max-width: 768px) {
   .results-header {
     flex-direction: column;
     align-items: flex-start;
@@ -264,16 +203,5 @@
 
   .sort-buttons {
     width: 100%;
-    justify-content: flex-start;
-  }
-
-  .sort-btn {
-    flex: 1;
-    justify-content: center;
-    min-width: 100px;
-  }
-
-  .price-range {
-    grid-template-columns: 1fr;
   }
 }

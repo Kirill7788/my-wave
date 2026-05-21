@@ -1,491 +1,296 @@
 /* css/pages/lakes.css */
 
-/* ===== Page Hero ===== */
+/* ── Page header ── */
 .page-hero {
-  background: linear-gradient(135deg, #e0f2f7 0%, #f0f9ff 100%);
-  padding: 140px 20px 60px;
+  padding: calc(var(--sp-32) + var(--sp-8)) var(--sp-5) var(--sp-16);
+  background: linear-gradient(160deg, var(--c-forest) 0%, var(--c-deep) 100%);
   text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.page-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0.08;
+  background-size: cover;
+  background-position: center;
 }
 
 .page-hero__title {
-  font-size: clamp(2rem, 5vw, 3rem);
-  font-weight: 700;
-  margin-bottom: 16px;
-  color: var(--color-text);
+  font-family: var(--font-serif);
+  font-size: var(--text-5xl);
+  font-weight: 600;
+  font-style: italic;
+  color: var(--c-warm-white);
+  line-height: var(--leading-snug);
+  letter-spacing: var(--tracking-snug);
+  margin-bottom: var(--sp-4);
 }
 
 .page-hero__subtitle {
-  font-size: 1.2rem;
-  color: var(--color-text-light);
-  max-width: 600px;
+  font-size: var(--text-lg);
+  color: rgba(250,250,248,0.65);
+  font-weight: 300;
+  max-width: 580px;
   margin: 0 auto;
+  line-height: var(--leading-relaxed);
 }
 
-/* ===== Filters ===== */
-.filters {
-  display: flex;
-  gap: 12px;
-  margin-bottom: 40px;
-  flex-wrap: wrap;
-  justify-content: center;
+/* ── Lakes page layout ── */
+.lakes-section,
+.lakes-page {
+  padding: var(--sp-16) 0 var(--sp-24);
+  background: var(--c-linen);
+  min-height: 60vh;
 }
 
-.filter-btn {
-  padding: 10px 24px;
-  border: 2px solid var(--color-border);
-  background: white;
-  border-radius: 50px;
-  cursor: pointer;
-  font-weight: 500;
-  transition: var(--transition);
-  font-family: var(--font-main);
-  font-size: 0.95rem;
-}
-
-.filter-btn:hover,
-.filter-btn.active {
-  border-color: var(--color-primary);
-  background: var(--color-primary);
-  color: white;
-}
-
-/* ===== Lakes Grid ===== */
+/* ── Lakes grid (catalog-style) ── */
 .lakes-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-  gap: 32px;
-}
-
-/* ===== Страница озёр (Исправление дизайна) ===== */
-.lakes-page {
-  padding: 100px 20px 60px;
-  background: var(--color-bg-light);
-  min-height: 100vh;
+  gap: var(--sp-6);
+  margin-top: var(--sp-8);
 }
 
 .lakes-filters {
   display: flex;
-  gap: 12px;
+  gap: var(--sp-2);
   justify-content: center;
-  margin-bottom: 40px;
+  margin-bottom: var(--sp-8);
   flex-wrap: wrap;
 }
 
-.lakes-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 32px;
-  max-width: 1400px;
-  margin: 0 auto;
-}
-
-.lake-card {
-  background: white;
-  border-radius: var(--radius);
+/* ── Lake card (catalog/lakes page style — NOT homepage mosaic) ── */
+.lake-card--catalog {
+  background: var(--c-white);
+  border-radius: var(--r-xl);
   overflow: hidden;
-  box-shadow: var(--shadow-md);
-  transition: var(--transition);
+  border: 1px solid var(--c-border);
+  box-shadow: var(--sh-ambient);
+  transition:
+    transform var(--dur-base) var(--ease-smooth),
+    box-shadow var(--dur-base) var(--ease-natural);
   display: flex;
   flex-direction: column;
-}
-
-.lake-card:hover {
-  transform: translateY(-6px);
-  box-shadow: var(--shadow-lg);
-}
-
-.lake-card__image {
-  height: 220px;
-  background-size: cover;
-  background-position: center;
-  position: relative;
-}
-
-.lake-card__badge {
-  position: absolute;
-  top: 12px;
-  left: 12px;
-  padding: 6px 14px;
-  background: rgba(255, 255, 255, 0.95);
-  border-radius: 50px;
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: var(--color-text);
-  backdrop-filter: blur(4px);
-}
-
-.lake-card__content {
-  padding: 24px;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.lake-card__title {
-  font-size: 1.4rem;
-  font-weight: 700;
-  margin: 0;
-  color: var(--color-text);
-}
-
-.lake-card__region {
-  color: var(--color-primary);
-  font-weight: 600;
-  font-size: 0.95rem;
-  margin: 0;
-}
-
-.lake-card__desc {
-  color: var(--color-text-light);
-  font-size: 0.95rem;
-  line-height: 1.6;
-  margin: 0;
-  flex: 1;
-}
-
-.lake-card__count {
-  font-weight: 700;
-  font-size: 1.1rem;
-  color: var(--color-text);
-  margin: 8px 0;
-}
-
-.lake-card__types {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin: 12px 0;
-}
-
-.lake-type-badge {
-  padding: 4px 12px;
-  border-radius: 50px;
-  font-size: 0.8rem;
-  font-weight: 600;
-}
-
-.lake-type-badge.economy {
-  background: #e0f2fe;
-  color: #0369a1;
-}
-
-.lake-type-badge.comfort {
-  background: #dcfce7;
-  color: #15803d;
-}
-
-.lake-type-badge.premium {
-  background: #f3e8ff;
-  color: #7c3aed;
-}
-
-.lake-card__features {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-top: auto;
-  padding-top: 16px;
-  border-top: 1px solid var(--color-border);
-}
-
-.lake-feature {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  padding: 6px 12px;
-  background: var(--color-bg-light);
-  border-radius: 50px;
-  font-size: 0.85rem;
-  color: var(--color-text);
-}
-
-.lake-card__link {
-  margin-top: 16px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 12px 24px;
-  background: var(--color-primary);
-  color: white;
-  border-radius: 50px;
-  font-weight: 600;
   text-decoration: none;
-  transition: var(--transition);
+  color: inherit;
 }
 
-.lake-card__link:hover {
-  background: var(--color-primary-dark);
-  transform: translateY(-2px);
+.lake-card--catalog:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--sh-lg);
 }
 
-/* Адаптивность */
-@media (max-width: 768px) {
-  .lakes-grid {
-    grid-template-columns: 1fr;
-    gap: 24px;
-  }
-
-  .lakes-filters {
-    overflow-x: auto;
-    flex-wrap: nowrap;
-    justify-content: flex-start;
-    padding-bottom: 8px;
-    scrollbar-width: none;
-  }
-
-  .lakes-filters::-webkit-scrollbar {
-    display: none;
-  }
-}
-
-/* ===== Lake Card ===== */
-.lake-card {
-  background: white;
-  border-radius: var(--radius);
-  overflow: hidden;
-  box-shadow: var(--shadow-md);
-  transition: var(--transition);
-  display: flex;
-  flex-direction: column;
-}
-
-.lake-card:hover {
-  transform: translateY(-8px);
-  box-shadow: var(--shadow-lg);
-}
-
-.lake-card__image {
+.lake-card--catalog .lake-card__image-top {
   height: 220px;
   background-size: cover;
   background-position: center;
   position: relative;
+  overflow: hidden;
 }
 
-.lake-card__badge {
+.lake-card--catalog .lake-card__image-top::after {
+  content: '';
   position: absolute;
-  top: 16px;
-  left: 16px;
-  padding: 6px 16px;
-  border-radius: 50px;
-  font-size: 0.85rem;
-  font-weight: 600;
-  background: var(--color-primary);
-  color: white;
+  inset: 0;
+  background: linear-gradient(to bottom, transparent 60%, rgba(17,27,20,0.25));
 }
 
-.lake-card__badge--secondary {
-  background: var(--color-secondary);
-}
-
-.lake-card__badge--accent {
-  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-}
-
-.lake-card__content {
-  padding: 24px;
+.lake-card--catalog .lake-card__body {
+  padding: var(--sp-5) var(--sp-6);
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: var(--sp-3);
 }
 
-.lake-card__header {
-  margin-bottom: 4px;
-}
-
-.lake-card__title {
-  font-size: 1.4rem;
+.lake-card--catalog .lake-card__title {
+  font-family: var(--font-serif);
+  font-size: var(--text-2xl);
   font-weight: 600;
-  margin-bottom: 4px;
-  color: var(--color-text);
+  font-style: italic;
+  color: var(--c-text);
+  line-height: var(--leading-snug);
 }
 
-.lake-card__region {
-  color: var(--color-text-light);
-  font-size: 0.9rem;
+.lake-card--catalog .lake-card__region {
+  font-size: var(--text-xs);
+  color: var(--c-text-muted);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
 }
 
-.lake-card__desc {
-  color: var(--color-text-light);
-  font-size: 0.95rem;
-  line-height: 1.6;
+.lake-card--catalog .lake-card__desc {
+  font-size: var(--text-sm);
+  color: var(--c-text-light);
+  line-height: var(--leading-relaxed);
+  flex: 1;
 }
 
-/* Stats */
-.lake-card__stats {
+.lake-card--catalog .lake-card__stats {
   display: flex;
-  align-items: center;
-  gap: 16px;
-  padding: 16px;
-  background: var(--color-bg-light);
-  border-radius: var(--radius-sm);
-  margin: 8px 0;
+  gap: var(--sp-5);
+  padding: var(--sp-4) 0;
+  border-top: 1px solid var(--c-border);
+  margin-top: auto;
 }
 
-.stat {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.stat__number {
-  font-size: 1.8rem;
+.lake-card__stat-value {
+  font-family: var(--font-serif);
+  font-size: var(--text-2xl);
   font-weight: 700;
-  color: var(--color-primary);
+  font-style: italic;
+  color: var(--c-text);
+  display: block;
   line-height: 1;
 }
 
-.stat__label {
-  font-size: 0.85rem;
-  color: var(--color-text-light);
-  margin-top: 4px;
+.lake-card__stat-label {
+  font-size: var(--text-xs);
+  color: var(--c-text-muted);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wide);
 }
 
-.stat-divider {
-  width: 1px;
-  height: 40px;
-  background: var(--color-border);
-}
-
-.stat__types {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  align-items: flex-start;
-}
-
-/* Features */
-.lake-card__features {
+.lake-card--catalog .lake-card__types {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
-  margin: 8px 0;
+  gap: var(--sp-2);
 }
 
-/* Hidden for filtering */
-.lake-card.hidden {
-  display: none;
+.lake-card--catalog .lake-card__link {
+  display: block;
+  text-align: center;
+  margin-top: var(--sp-2);
 }
 
-/* ===== Lake Detail Page ===== */
+/* ── Lake detail page ── */
 .lake-detail {
-  padding: 40px 0;
+  padding: var(--sp-16) 0 var(--sp-24);
 }
 
-.lake-detail__header {
+.lake-detail__grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 40px;
-  align-items: center;
-  margin-bottom: 40px;
+  grid-template-columns: 1fr 380px;
+  gap: var(--sp-12);
+  align-items: start;
+  margin-bottom: var(--sp-16);
 }
 
 .lake-detail__image {
+  border-radius: var(--r-xl);
+  overflow: hidden;
   height: 400px;
-  border-radius: var(--radius);
   background-size: cover;
   background-position: center;
-  box-shadow: var(--shadow-lg);
+  box-shadow: var(--sh-md);
 }
 
-.lake-detail__info h1 {
-  font-size: 2.2rem;
-  margin-bottom: 8px;
+.lake-detail__info h2 {
+  font-family: var(--font-serif);
+  font-size: var(--text-4xl);
+  font-weight: 600;
+  font-style: italic;
+  line-height: var(--leading-snug);
+  letter-spacing: var(--tracking-snug);
+  margin-bottom: var(--sp-4);
 }
 
-.lake-detail__region {
-  color: var(--color-primary);
-  font-weight: 500;
-  margin-bottom: 16px;
-  display: block;
+.lake-detail__info p {
+  font-size: var(--text-base);
+  color: var(--c-text-mid);
+  line-height: var(--leading-relaxed);
 }
 
-.lake-detail__desc {
-  color: var(--color-text-light);
-  line-height: 1.7;
-  margin-bottom: 24px;
-}
-
-.lake-detail__stats {
+.lake-stats {
+  background: var(--c-linen);
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-lg);
+  padding: var(--sp-5) var(--sp-6);
   display: flex;
-  gap: 24px;
-  flex-wrap: wrap;
+  gap: 0;
 }
 
 .lake-stat {
-  background: var(--color-bg-light);
-  padding: 12px 20px;
-  border-radius: var(--radius-sm);
+  flex: 1;
+  text-align: center;
+  padding: 0 var(--sp-4);
+  border-right: 1px solid var(--c-border);
 }
 
+.lake-stat:last-child { border-right: none; }
+
 .lake-stat__value {
+  font-family: var(--font-serif);
+  font-size: var(--text-3xl);
   font-weight: 700;
-  font-size: 1.3rem;
-  color: var(--color-primary);
+  font-style: italic;
+  color: var(--c-text);
+  display: block;
+  line-height: 1;
 }
 
 .lake-stat__label {
-  font-size: 0.9rem;
-  color: var(--color-text-light);
+  font-size: var(--text-xs);
+  color: var(--c-text-muted);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wide);
+  margin-top: var(--sp-1);
+  display: block;
 }
 
-/* Cottages section on lake page */
-.lake-cottages__header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 24px;
-  flex-wrap: wrap;
-  gap: 12px;
+/* ── Cottages on lake page ── */
+.lake-cottages {
+  margin-top: var(--sp-16);
 }
 
-.lake-cottages__grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 24px;
+.lake-cottages h3 {
+  font-family: var(--font-serif);
+  font-size: var(--text-3xl);
+  font-weight: 600;
+  font-style: italic;
+  letter-spacing: var(--tracking-snug);
+  margin-bottom: var(--sp-8);
 }
 
-/* ===== Адаптивность ===== */
+/* ── CTA on lake page ── */
+.lake-cta {
+  background: linear-gradient(135deg, var(--c-forest-mid), var(--c-deep));
+  padding: var(--sp-16) var(--sp-5);
+  text-align: center;
+  border-radius: var(--r-2xl);
+  margin-top: var(--sp-16);
+}
+
+.lake-cta h3 {
+  font-family: var(--font-serif);
+  font-size: var(--text-3xl);
+  font-weight: 600;
+  font-style: italic;
+  color: var(--c-warm-white);
+  margin-bottom: var(--sp-4);
+}
+
+.lake-cta p {
+  color: rgba(250,250,248,0.65);
+  font-size: var(--text-base);
+  margin-bottom: var(--sp-6);
+  font-weight: 300;
+}
+
+/* ── Responsive ── */
+@media (max-width: 1024px) {
+  .lake-detail__grid { grid-template-columns: 1fr; }
+  .lake-detail__image { height: 300px; }
+}
+
 @media (max-width: 768px) {
-  .lakes-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .lake-card__stats {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 12px;
-  }
-
-  .stat-divider {
-    width: 100%;
-    height: 1px;
-  }
-
-  .stat__types {
-    flex-direction: row;
-    flex-wrap: wrap;
-    width: 100%;
-  }
-
-  .filters {
-    overflow-x: auto;
-    flex-wrap: nowrap;
-    justify-content: flex-start;
-    padding-bottom: 8px;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  .filter-btn {
-    flex-shrink: 0;
-  }
-
-  .lake-detail__header {
-    grid-template-columns: 1fr;
-  }
-
-  .lake-detail__image {
-    height: 300px;
-  }
+  .lakes-grid { grid-template-columns: 1fr; }
+  .page-hero { padding: calc(var(--sp-20) + var(--sp-6)) var(--sp-4) var(--sp-12); }
+  .page-hero__title { font-size: var(--text-4xl); }
+  .lake-stats { flex-direction: column; gap: var(--sp-3); }
+  .lake-stat { border-right: none; border-bottom: 1px solid var(--c-border); padding: var(--sp-3) 0; }
+  .lake-stat:last-child { border-bottom: none; }
 }

@@ -1,309 +1,351 @@
 <!DOCTYPE html>
 <html lang="ru">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Моя волна — Аренда домиков у озёр Беларуси</title>
-  <meta name="description"
-    content="Уютные домики на берегу озёр Беларуси: Нарочь, Браславские озёра, Свитязь. Бронируйте онлайн!">
+  <meta name="description" content="Уютные домики на берегу озёр Беларуси: Нарочь, Браслав, Свитязь. Эконом, комфорт и премиум-отдых. Бронируйте онлайн.">
+  <meta name="theme-color" content="#111B14" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Моя волна — Аренда домиков у озёр Беларуси" />
+  <meta property="og:description" content="30+ домиков на 10 озёрах. Природа, тишина и premium-отдых." />
+  <meta property="og:image" content="images/hero-lake.jpg" />
+  <meta property="og:type" content="website" />
+
+  <!-- Fonts: Cormorant Garamond (serif display) + Inter (UI) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
 
   <!-- Styles -->
   <link rel="stylesheet" href="css/style.css" />
-
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 </head>
 
 <body>
-  <!-- ===== Header ===== -->
-  <header class="header" id="header">
+
+  <!-- ═══════════════ HEADER ═══════════════ -->
+  <header class="header header--transparent header--on-hero" id="header">
     <div class="container header__container">
+
       <a href="index.html" class="logo">
-        <span class="logo__icon">🌊</span>
-        <span class="logo__text">Моя волна</span>
+        <span class="logo__wordmark">My Wave</span>
       </a>
 
-      <nav class="nav" id="nav">
+      <nav class="nav" id="nav" aria-label="Главное меню">
         <ul class="nav__list">
           <li><a href="catalog.html" class="nav__link">Каталог</a></li>
-          <li><a href="lakes.html" class="nav__link">Озёра</a></li>
-          <li><a href="about.html" class="nav__link">О компании</a></li>
+          <li><a href="lakes.html"   class="nav__link">Озёра</a></li>
+          <li><a href="about.html"   class="nav__link">О компании</a></li>
         </ul>
       </nav>
 
       <div class="header__actions">
-        <a href="cabinet.html" class="btn btn--outline" id="authBtn">Войти</a>
-        <button class="burger" id="burger" aria-label="Меню">
+        <a href="cabinet.html" class="btn btn--inv btn--small" id="authBtn">Войти</a>
+        <button class="burger" id="burger" aria-label="Открыть меню" aria-expanded="false">
           <span></span><span></span><span></span>
         </button>
       </div>
+
     </div>
   </header>
 
-  <!-- ===== Hero ===== -->
-  <section class="hero">
-    <div class="hero__overlay"></div>
-    <div class="container hero__content">
-      <h1 class="hero__title">Отдых у воды, который запомнится</h1>
-      <p class="hero__subtitle">Уютные домики на берегу крупнейших озёр Беларуси: Нарочь, Браславские озёра, Свитязь,
-        Заславское водохранилище</p>
-      <div class="hero__buttons">
-        <a href="catalog.html" class="btn btn--primary">Выбрать домик</a>
-        <a href="lakes.html" class="btn btn--secondary">Посмотреть озёра</a>
-      </div>
-    </div>
-  </section>
+  <main>
 
-  <!-- ===== Популярные домики ===== -->
-  <section class="section">
-    <div class="container">
-      <h2 class="section-title">Популярные домики</h2>
-      <p class="section-subtitle">Выберите формат отдыха под ваш бюджет и предпочтения</p>
+    <!-- ═══════════════ HERO — CINEMATIC ═══════════════ -->
+    <section class="hero" aria-label="Главный баннер">
 
-      <div class="cottage-types-grid">
-
-        <!-- Эконом -->
-        <div class="cottage-type-card">
-          <div class="cottage-type-card__header">
-            <span class="cottage-type-card__badge economy">Эконом</span>
-          </div>
-          <div class="cottage-type-card__content">
-            <h3 class="cottage-type-card__title">Уютный эконом</h3>
-            <p class="cottage-type-card__desc">Базовые удобства для комфортного отдыха: кухня, санузел, отопление,
-              простая мебель</p>
-
-            <div class="cottage-type-card__features">
-              <div class="feature-item">
-                <span class="feature-icon">👥</span>
-                <span>3-4 человека</span>
-              </div>
-              <div class="feature-item">
-                <span class="feature-icon">🍳</span>
-                <span>Кухня</span>
-              </div>
-              <div class="feature-item">
-                <span class="feature-icon">🚿</span>
-                <span>Санузел</span>
-              </div>
-              <div class="feature-item">
-                <span class="feature-icon">🔥</span>
-                <span>Отопление</span>
-              </div>
-            </div>
-
-            <div class="cottage-type-card__price">
-              от 120–150 BYN <span>/ ночь</span>
-            </div>
-
-            <a href="catalog.html?type=economy" class="btn btn--primary btn--full">Смотреть варианты</a>
-          </div>
-        </div>
-
-        <!-- Комфорт -->
-        <div class="cottage-type-card">
-          <div class="cottage-type-card__header">
-            <span class="cottage-type-card__badge comfort">Комфорт</span>
-          </div>
-          <div class="cottage-type-card__content">
-            <h3 class="cottage-type-card__title">Домик с баней</h3>
-            <p class="cottage-type-card__desc">Улучшенные условия: баня, телевизор, Wi-Fi, оборудованная кухня, веранда
-            </p>
-
-            <div class="cottage-type-card__features">
-              <div class="feature-item">
-                <span class="feature-icon">👥</span>
-                <span>3-4 человека</span>
-              </div>
-              <div class="feature-item">
-                <span class="feature-icon">🛁</span>
-                <span>Баня</span>
-              </div>
-              <div class="feature-item">
-                <span class="feature-icon">📺</span>
-                <span>ТВ + Wi-Fi</span>
-              </div>
-              <div class="feature-item">
-                <span class="feature-icon">🪑</span>
-                <span>Веранда</span>
-              </div>
-            </div>
-
-            <div class="cottage-type-card__price">
-              от 200–250 BYN <span>/ ночь</span>
-            </div>
-
-            <a href="catalog.html?type=comfort" class="btn btn--primary btn--full">Смотреть варианты</a>
-          </div>
-        </div>
-
-        <!-- Премиум -->
-        <div class="cottage-type-card">
-          <div class="cottage-type-card__header">
-            <span class="cottage-type-card__badge premium">Премиум</span>
-          </div>
-          <div class="cottage-type-card__content">
-            <h3 class="cottage-type-card__title">Премиум у воды</h3>
-            <p class="cottage-type-card__desc">Максимальный комфорт: панорамные окна, сауна, барбекю-зона,
-              премиум-мебель</p>
-
-            <div class="cottage-type-card__features">
-              <div class="feature-item">
-                <span class="feature-icon">👥</span>
-                <span>3-4 человека</span>
-              </div>
-              <div class="feature-item">
-                <span class="feature-icon">🧖</span>
-                <span>Сауна/баня</span>
-              </div>
-              <div class="feature-item">
-                <span class="feature-icon">🪟</span>
-                <span>Панорамные окна</span>
-              </div>
-              <div class="feature-item">
-                <span class="feature-icon">🔥</span>
-                <span>Барбекю-зона</span>
-              </div>
-            </div>
-
-            <div class="cottage-type-card__price">
-              от 300–425 BYN <span>/ ночь</span>
-            </div>
-
-            <a href="catalog.html?type=premium" class="btn btn--primary btn--full">Смотреть варианты</a>
-          </div>
-        </div>
-
+      <!-- Background media -->
+      <div class="hero__media" aria-hidden="true">
+        <div class="hero__bg" role="img" aria-label="Озеро Нарочь на рассвете"></div>
       </div>
 
-      <div style="text-align:center; margin-top:40px;">
-        <a href="catalog.html" class="btn btn--secondary">Весь каталог →</a>
+      <!-- Content -->
+      <div class="hero__content">
+        <div class="hero__inner container">
+
+          <div class="hero__left">
+            <p class="hero__eyebrow">Аренда домиков у озёр Беларуси</p>
+            <h1 class="hero__title">
+              <span class="hero__title-line">Отдых у воды,</span>
+              <span class="hero__title-line">который</span>
+              <span class="hero__title-line">запомнится</span>
+            </h1>
+            <p class="hero__subtitle">Нарочь, Браслав, Свитязь — 10 озёр, 30+ домиков, один выбор</p>
+            <div class="hero__actions">
+              <a href="catalog.html" class="btn btn--primary btn--large">Выбрать домик</a>
+              <a href="lakes.html"   class="btn btn--inv">Наши озёра</a>
+            </div>
+          </div>
+
+          <div class="hero__right" aria-hidden="true">
+            <div class="hero__stats">
+              <div>
+                <span class="hero__stat-value">10</span>
+                <span class="hero__stat-label">Озёр Беларуси</span>
+              </div>
+              <div>
+                <span class="hero__stat-value">30+</span>
+                <span class="hero__stat-label">Домиков на выбор</span>
+              </div>
+              <div>
+                <span class="hero__stat-value">24/7</span>
+                <span class="hero__stat-label">Поддержка гостей</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
       </div>
-    </div>
-  </section>
 
-  <!-- ===== Преимущества ===== -->
-  <section class="section section--light" id="about">
-    <div class="container">
-      <h2 class="section__title">Почему выбирают нас</h2>
-      <div class="features">
-        <div class="feature">
-          <div class="feature__icon">📍</div>
-          <h3 class="feature__title">Локации по всей Беларуси</h3>
-          <p class="feature__desc">Домики на берегу Нарочи, Браславских озёр, Свитязи, Заславского и Лукомльского
-            водохранилищ</p>
-        </div>
-        <div class="feature">
-          <div class="feature__icon">✨</div>
-          <h3 class="feature__title">Чистота и комфорт</h3>
-          <p class="feature__desc">Регулярная уборка, свежее постельное бельё, проверка качества перед каждым заездом
-          </p>
-        </div>
-        <div class="feature">
-          <div class="feature__icon">📱</div>
-          <h3 class="feature__title">Простое бронирование</h3>
-          <p class="feature__desc">Онлайн-бронь в личном кабинете или быстрый звонок — как вам удобнее</p>
-        </div>
-        <div class="feature">
-          <div class="feature__icon">💬</div>
-          <h3 class="feature__title">Поддержка 24/7</h3>
-          <p class="feature__desc">Поможем с выбором, ответим на вопросы и решим любые ситуации во время отдыха</p>
+      <!-- Scroll cue -->
+      <div class="hero__scroll" aria-hidden="true">
+        <span>Листать</span>
+        <div class="hero__scroll-line"></div>
+      </div>
+
+    </section>
+
+    <!-- ═══════════════ STATEMENT ═══════════════ -->
+    <section class="statement" aria-label="О проекте">
+      <div class="statement__inner reveal">
+        <blockquote class="statement__quote">
+          «Тишина у воды — это не пустота.<br>Это наполненность.»
+        </blockquote>
+        <div class="statement__locations">
+          <span>Нарочь</span>
+          <span class="statement__dot"></span>
+          <span>Браслав</span>
+          <span class="statement__dot"></span>
+          <span>Свитязь</span>
+          <span class="statement__dot"></span>
+          <span>Заславль</span>
+          <span class="statement__dot"></span>
+          <span>Лукомль</span>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- ===== Популярные озёра (превью) ===== -->
-  <section class="section lakes-section">
-    <div class="container">
-      <h2 class="section-title">Наши локации</h2>
-      <p class="section-subtitle">Кликните на озеро, чтобы увидеть подробности</p>
+    <!-- ═══════════════ EXPERIENCE TYPES — Editorial ═══════════════ -->
+    <section class="experience" aria-labelledby="exp-heading">
 
-      <div class="lakes-grid">
-        <!-- Озеро 1 -->
-        <a href="catalog.html?lake=naroch" class="lake-card">
-          <div class="lake-card__image" style="background-image: url('images/lakes/naroch.jpg')"></div>
-          <div class="lake-card__content">
+      <div class="experience__header">
+        <h2 class="experience__heading" id="exp-heading">Выберите<br>свой формат</h2>
+        <a href="catalog.html" class="experience__link">Весь каталог →</a>
+      </div>
+
+      <!-- ROW 1 — Эконом -->
+      <div class="exp-row reveal">
+        <div class="exp-media">
+          <div class="exp-media__img"
+            style="background-image: url('images/lakes/naroch.jpg'); height: 100%;
+                   background-size: cover; background-position: center;"></div>
+          <div class="exp-media__overlay"></div>
+        </div>
+        <div class="exp-content">
+          <span class="exp-tag exp-tag--economy">Эконом</span>
+          <h3 class="exp-title">Уютный домик для отдыха</h3>
+          <p class="exp-desc">Всё необходимое для комфортного отдыха — кухня, санузел, отопление, простая мебель. Идеально для тех, кто ценит природу больше интерьера.</p>
+          <div class="exp-features">
+            <span class="exp-feat">👥 3–4 человека</span>
+            <span class="exp-feat">🍳 Кухня</span>
+            <span class="exp-feat">🚿 Санузел</span>
+            <span class="exp-feat">🔥 Отопление</span>
+          </div>
+          <div class="exp-actions">
+            <p class="exp-price">от 120 BYN<span class="exp-price__unit">/ ночь</span></p>
+            <a href="catalog.html?type=economy" class="btn btn--outline btn--small">Смотреть →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- ROW 2 — Комфорт (reverse) -->
+      <div class="exp-row exp-row--reverse reveal">
+        <div class="exp-media">
+          <div class="exp-media__img"
+            style="background-image: url('images/lakes/braslav.jpg'); height: 100%;
+                   background-size: cover; background-position: center;"></div>
+          <div class="exp-media__overlay"></div>
+        </div>
+        <div class="exp-content">
+          <span class="exp-tag exp-tag--comfort">Комфорт</span>
+          <h3 class="exp-title">С баней у воды</h3>
+          <p class="exp-desc">Улучшенные условия: настоящая баня, телевизор, Wi-Fi, оборудованная кухня, открытая веранда с видом на озеро.</p>
+          <div class="exp-features">
+            <span class="exp-feat">👥 3–6 человек</span>
+            <span class="exp-feat">🛁 Баня</span>
+            <span class="exp-feat">📶 Wi-Fi</span>
+            <span class="exp-feat">🪑 Веранда</span>
+          </div>
+          <div class="exp-actions">
+            <p class="exp-price">от 200 BYN<span class="exp-price__unit">/ ночь</span></p>
+            <a href="catalog.html?type=comfort" class="btn btn--outline btn--small">Смотреть →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- ROW 3 — Премиум -->
+      <div class="exp-row reveal">
+        <div class="exp-media">
+          <div class="exp-media__img"
+            style="background-image: url('images/lakes/svityaz.jpg'); height: 100%;
+                   background-size: cover; background-position: center;"></div>
+          <div class="exp-media__overlay"></div>
+        </div>
+        <div class="exp-content">
+          <span class="exp-tag exp-tag--premium">Премиум</span>
+          <h3 class="exp-title">У самой воды</h3>
+          <p class="exp-desc">Максимальный комфорт: панорамные окна с видом на озеро, сауна, барбекю-зона, дизайнерская мебель. Для тех, кто привык к лучшему.</p>
+          <div class="exp-features">
+            <span class="exp-feat">👥 4–8 человек</span>
+            <span class="exp-feat">🧖 Сауна</span>
+            <span class="exp-feat">🪟 Панорамные окна</span>
+            <span class="exp-feat">🔥 Барбекю</span>
+          </div>
+          <div class="exp-actions">
+            <p class="exp-price">от 300 BYN<span class="exp-price__unit">/ ночь</span></p>
+            <a href="catalog.html?type=premium" class="btn btn--forest btn--small">Смотреть →</a>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ═══════════════ LAKES — Mosaic ═══════════════ -->
+    <section class="lakes-section" aria-labelledby="lakes-heading">
+
+      <div class="lakes-section__header">
+        <h2 class="section-title" id="lakes-heading">Наши локации</h2>
+        <div class="lakes-section__line"></div>
+        <a href="lakes.html" class="lakes-section__cta">Все озёра →</a>
+      </div>
+
+      <div class="lakes-mosaic-grid reveal-stagger">
+
+        <a href="lake-naroch.html" class="lake-mosaic lake-mosaic--wide">
+          <div class="lake-mosaic__image" style="background-image: url('images/lakes/naroch.jpg')"></div>
+          <div class="lake-mosaic__content">
             <h3>Озеро Нарочь</h3>
+            <p class="lake-mosaic__region">Мядельский район</p>
           </div>
+          <div class="lake-mosaic__arrow" aria-hidden="true">→</div>
         </a>
 
-        <!-- Озеро 2 -->
-        <a href="catalog.html?lake=braslav" class="lake-card">
-          <div class="lake-card__image" style="background-image: url('images/lakes/braslav.jpg')"></div>
-          <div class="lake-card__content">
-            <h3>Браславские озёра</h3>
+        <a href="lake-braslav.html" class="lake-mosaic">
+          <div class="lake-mosaic__image" style="background-image: url('images/lakes/braslav.jpg')"></div>
+          <div class="lake-mosaic__content">
+            <h3>Браслав</h3>
+            <p class="lake-mosaic__region">Витебская область</p>
           </div>
+          <div class="lake-mosaic__arrow" aria-hidden="true">→</div>
         </a>
 
-        <!-- Озеро 3 -->
-        <a href="catalog.html?lake=svityaz" class="lake-card">
-          <div class="lake-card__image" style="background-image: url('images/lakes/svityaz.jpg')"></div>
-          <div class="lake-card__content">
-            <h3>Озеро Свитязь</h3>
+        <a href="lake-svityaz.html" class="lake-mosaic">
+          <div class="lake-mosaic__image" style="background-image: url('images/lakes/svityaz.jpg')"></div>
+          <div class="lake-mosaic__content">
+            <h3>Свитязь</h3>
+            <p class="lake-mosaic__region">Новогрудский район</p>
           </div>
+          <div class="lake-mosaic__arrow" aria-hidden="true">→</div>
         </a>
 
-        <!-- Озеро 4 -->
-        <a href="catalog.html?lake=zaslavl" class="lake-card">
-          <div class="lake-card__image" style="background-image: url('images/lakes/zaslavl.jpg')"></div>
-          <div class="lake-card__content">
+        <a href="lake-zaslavl.html" class="lake-mosaic">
+          <div class="lake-mosaic__image" style="background-image: url('images/lakes/zaslavl.jpg')"></div>
+          <div class="lake-mosaic__content">
             <h3>Заславское</h3>
+            <p class="lake-mosaic__region">Минская область</p>
           </div>
+          <div class="lake-mosaic__arrow" aria-hidden="true">→</div>
         </a>
+
+        <a href="lake-lukoml.html" class="lake-mosaic lake-mosaic--wide">
+          <div class="lake-mosaic__image" style="background-image: url('images/lakes/lukoml.jpg')"></div>
+          <div class="lake-mosaic__content">
+            <h3>Лукомль</h3>
+            <p class="lake-mosaic__region">Чашникский район</p>
+          </div>
+          <div class="lake-mosaic__arrow" aria-hidden="true">→</div>
+        </a>
+
       </div>
 
-      <div style="text-align:center; margin-top:40px;">
-        <a href="lakes.html" class="btn btn--secondary">Все озёра →</a>
+    </section>
+
+    <!-- ═══════════════ TRUST SIGNALS ═══════════════ -->
+    <section class="trust" aria-label="Преимущества">
+      <div class="trust__inner reveal-stagger">
+
+        <div class="trust__item">
+          <span class="trust__icon" aria-hidden="true">📍</span>
+          <h3 class="trust__title">Локации по всей Беларуси</h3>
+          <p class="trust__desc">10 озёр от Нарочи до Чернавчиц — выбирайте ближайшее или самое красивое</p>
+        </div>
+
+        <div class="trust__item">
+          <span class="trust__icon" aria-hidden="true">✦</span>
+          <h3 class="trust__title">Чистота и комфорт</h3>
+          <p class="trust__desc">Проверка и уборка перед каждым заездом, свежее бельё, работающий инвентарь</p>
+        </div>
+
+        <div class="trust__item">
+          <span class="trust__icon" aria-hidden="true">⚡</span>
+          <h3 class="trust__title">Мгновенное бронирование</h3>
+          <p class="trust__desc">Онлайн-бронь за 2 минуты в личном кабинете — без звонков и ожидания</p>
+        </div>
+
+        <div class="trust__item">
+          <span class="trust__icon" aria-hidden="true">◎</span>
+          <h3 class="trust__title">Поддержка 24/7</h3>
+          <p class="trust__desc">На связи в любое время — поможем с выбором и решим вопросы во время отдыха</p>
+        </div>
+
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- ===== Призыв к действию ===== -->
-  <section class="cta">
-    <div class="container cta__container">
-      <h2 class="cta__title">Готовы к отдыху у воды?</h2>
-      <p class="cta__text">Выберите домик, укажите даты — и наслаждайтесь природой Беларуси без забот</p>
-      <a href="catalog.html" class="btn btn--primary btn--large">Перейти в каталог</a>
-    </div>
-  </section>
+    <!-- ═══════════════ CTA — Cinematic ═══════════════ -->
+    <section class="cta" aria-label="Призыв к действию">
+      <div class="container cta__container reveal">
+        <h2 class="cta__title">Готовы к отдыху у воды?</h2>
+        <p class="cta__text">Выберите домик, укажите даты — и наслаждайтесь природой Беларуси без забот</p>
+        <a href="catalog.html" class="btn btn--primary btn--large">Перейти в каталог</a>
+      </div>
+    </section>
 
-  <!-- ===== Footer ===== -->
+  </main>
+
+  <!-- ═══════════════ FOOTER ═══════════════ -->
   <footer class="footer" id="contacts">
     <div class="container footer__container">
+
       <div class="footer__brand">
         <a href="index.html" class="logo">
-          <span class="logo__icon">🌊</span>
-          <span class="logo__text">Моя волна</span>
+          <span class="logo__wordmark">My Wave</span>
         </a>
-        <p class="footer__desc">Аренда уютных домиков на берегу озёр Беларуси. Отдых, который заряжает.</p>
+        <p class="footer__tagline">Аренда уютных домиков<br>на берегу озёр Беларуси.</p>
       </div>
 
-      <div class="footer__links">
-        <div class="footer__col">
-          <h4 class="footer__heading">Навигация</h4>
-          <ul class="footer__list">
-            <li><a href="catalog.html">Каталог домиков</a></li>
-            <li><a href="lakes.html">Озёра</a></li>
-            <li><a href="about.html">О компании</a></li>
-            <li><a href="rules.html">Правила проживания</a></li>
-            <li><a href="faq.html">FAQ</a></li>
-          </ul>
-        </div>
-        <div class="footer__col">
-          <h4 class="footer__heading">Контакты</h4>
-          <ul class="footer__list">
-            <li>📞 <a href="tel:+375291234567">+375 (29) 123-45-67</a></li>
-            <li>✉️ <a href="mailto:info@mywave.by">info@mywave.by</a></li>
-            <li>🕒 Пн–Вс: 9:00–21:00</li>
-          </ul>
-        </div>
+      <div class="footer__col">
+        <h4 class="footer__heading">Навигация</h4>
+        <ul class="footer__list">
+          <li><a href="catalog.html">Каталог домиков</a></li>
+          <li><a href="lakes.html">Озёра</a></li>
+          <li><a href="about.html">О компании</a></li>
+        </ul>
       </div>
+
+      <div class="footer__col">
+        <h4 class="footer__heading">Контакты</h4>
+        <ul class="footer__list">
+          <li><a href="tel:+375291234567">+375 (29) 123-45-67</a></li>
+          <li><a href="mailto:info@mywave.by">info@mywave.by</a></li>
+          <li>Пн–Вс: 9:00–21:00</li>
+        </ul>
+      </div>
+
     </div>
-    <div class="footer__bottom">
-      <div class="container">© 2026 «Моя волна». Все права защищены.</div>
+
+    <div class="footer__bottom container">
+      <span>© 2026 «Моя волна». Все права защищены.</span>
     </div>
   </footer>
 
@@ -311,82 +353,8 @@
   <script src="js/utils/dom.js"></script>
   <script src="js/components/CottageCard.js"></script>
   <script src="js/api.js"></script>
-  <script src="js/main.js"></script>
   <script src="js/auth.js"></script>
-  <script>
-    document.addEventListener('DOMContentLoaded', async function() {
-      const grid      = document.getElementById('cottagesGrid');
-      const loading   = document.getElementById('loading');
-      const noResults = document.getElementById('noResults');
-      const countEl   = document.getElementById('resultsCount');
+  <script src="js/main.js"></script>
 
-      let currentData = [];
-      let currentSort = 'default';
-
-      function getFiltersFromUrl() {
-        const p = new URLSearchParams(window.location.search);
-        return {
-          type:      p.get('type')      || '',
-          lake:      p.get('lake')      || '',
-          min_price: p.get('min_price') || '',
-          max_price: p.get('max_price') || '',
-        };
-      }
-
-      async function loadData(filters) {
-        if (!grid || !loading) return;
-        loading.style.display = 'block';
-        grid.innerHTML = '';
-
-        try {
-          const clean = Object.fromEntries(
-            Object.entries(filters || {}).filter(([, v]) => v !== '')
-          );
-          const data = await API.getCottages(clean);
-          loading.style.display = 'none';
-
-          if (!data.cottages || data.cottages.length === 0) {
-            if (noResults) noResults.style.display = 'block';
-            if (countEl) countEl.textContent = 'Найдено: 0';
-            currentData = [];
-            return;
-          }
-
-          if (noResults) noResults.style.display = 'none';
-          if (countEl) countEl.textContent = `Найдено: ${data.cottages.length}`;
-          currentData = data.cottages;
-          renderCards(currentData);
-
-        } catch (e) {
-          console.error('Ошибка загрузки:', e);
-          if (loading) loading.textContent = '⚠️ Ошибка загрузки';
-        }
-      }
-
-      function renderCards(data) {
-        const sorted = [...data];
-        if (currentSort === 'asc') {
-          sorted.sort(function(a, b) { return parseFloat(a.price_min) - parseFloat(b.price_min); });
-        } else if (currentSort === 'desc') {
-          sorted.sort(function(a, b) { return parseFloat(b.price_min) - parseFloat(a.price_min); });
-        }
-        grid.innerHTML = '';
-        sorted.forEach(function(cottage) { grid.appendChild(CottageCard(cottage)); });
-      }
-
-      document.querySelectorAll('.sort-btn').forEach(function(btn) {
-        btn.addEventListener('click', function() {
-          document.querySelectorAll('.sort-btn').forEach(function(b) { b.classList.remove('active'); });
-          btn.classList.add('active');
-          currentSort = btn.dataset.sort;
-          if (currentData.length > 0) renderCards(currentData);
-        });
-      });
-
-      const initialFilters = getFiltersFromUrl();
-      loadData(initialFilters);
-    });
-  </script>
 </body>
-
 </html>

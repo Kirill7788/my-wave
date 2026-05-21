@@ -1,59 +1,69 @@
 /* css/feature-tags.css */
 
-/* Контейнер-обертка для списка фич (чтобы они стояли в ряд с переносом) */
 .feature-tags-list {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: var(--sp-2);
 }
 
-/* Сам тег: обертка, содержащая кружок и текст */
 .feature-tag {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  padding: 6px 16px 6px 6px;
-  /* Слева меньше, чтобы кружок "выступал" */
-  background: #ffffff;
-  border: 1px solid #e2e8f0;
-  border-radius: 50px;
-  /* Форма таблетки */
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-  transition: all 0.3s ease;
-  font-size: 0.9rem;
-  color: var(--color-text);
-  font-weight: 500;
+  gap: var(--sp-2);
+  padding: 7px 16px 7px 7px;
+  background: var(--c-linen);
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-full);
+  box-shadow: var(--sh-ambient);
+  transition:
+    border-color var(--dur-fast) var(--ease-natural),
+    background var(--dur-fast) var(--ease-natural),
+    transform var(--dur-fast) var(--ease-smooth),
+    box-shadow var(--dur-fast) var(--ease-natural);
+  font-size: var(--text-sm);
+  color: var(--c-text-mid);
+  font-weight: 400;
   cursor: default;
 }
 
-/* Эффект при наведении на весь тег */
 .feature-tag:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  border-color: var(--color-primary);
+  box-shadow: var(--sh-sm);
+  border-color: var(--c-amber-light);
+  background: var(--c-cream);
 }
 
-/* Кружок для иконки (то, что ты просил сделать выразительным) */
 .feature-tag__icon {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
-  /* Легкий градиент для объема */
-  background: linear-gradient(145deg, #ffffff, #f1f5f9);
-  /* Четкая граница */
-  border: 2px solid #e2e8f0;
-  /* Тень для выделения круга */
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
-  font-size: 1.2rem;
+  background: var(--c-white);
+  border: 1px solid var(--c-border);
+  box-shadow: var(--sh-ambient);
+  font-size: 1rem;
   flex-shrink: 0;
-  /* Чтобы круг не сжимался */
+  transition:
+    background var(--dur-fast),
+    border-color var(--dur-fast),
+    transform var(--dur-fast) var(--ease-spring);
 }
 
-/* Модификатор для акцентных тегов (например, на главной странице) */
+.feature-tag:hover .feature-tag__icon {
+  background: var(--c-amber);
+  border-color: var(--c-amber);
+  transform: scale(1.08);
+}
+
+.feature-tag--accent {
+  border-color: var(--c-amber-light);
+  background: var(--c-warning-bg);
+  color: var(--c-amber-deep);
+}
+
 .feature-tag--accent .feature-tag__icon {
-  border-color: var(--color-primary);
-  background: #e0f2fe;
+  border-color: var(--c-amber-light);
+  background: rgba(196,144,90,0.1);
 }
