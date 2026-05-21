@@ -1,0 +1,16 @@
+{
+    "name": "mywave/mywave",
+    "description": "My Wave — аренда коттеджей у озёр Беларуси",
+    "type": "project",
+    "require": {
+        "php": ">=8.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "config": {
+        "optimize-autoloader": true
+    }
+}

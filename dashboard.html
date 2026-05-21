@@ -420,6 +420,7 @@
         </div>
     </footer>
 
+    <script src="js/utils/dom.js"></script>
     <script src="js/api.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', async () => {
@@ -500,44 +501,30 @@
             });
         });
 
-        // Смена пароля
+        // Смена пароля — проверка текущего пароля происходит на сервере
         document.getElementById('passwordForm')?.addEventListener('submit', async (e) => {
         e.preventDefault();
         const current = document.getElementById('currentPassword').value;
         const newPass = document.getElementById('newPassword').value;
         const confirm = document.getElementById('confirmPassword').value;
-        
+
         if (newPass !== confirm) {
             alert('❌ Новые пароли не совпадают');
             return;
         }
-        
+
         if (newPass.length < 6) {
             alert('❌ Пароль должен быть не менее 6 символов');
             return;
         }
-        
+
         const btn = e.target.querySelector('button');
         btn.disabled = true;
         btn.textContent = 'Изменение...';
-        
+
         try {
-            const { user } = await API.getCurrentUser();
-            // Проверка текущего пароля
-            const checkRes = await fetch('api/auth.php?action=verify_password', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({email: user.email, password: current})
-            });
-            const checkData = await checkRes.json();
-            
-            if (!checkData.valid) {
-            throw new Error('Текущий пароль неверный');
-            }
-            
-            // Обновление пароля
-            await API.updatePassword({user_id: user.id, new_password: newPass});
-            
+            // Текущий пароль передаём на сервер — он верифицирует сам
+            await API.updatePassword({ current_password: current, new_password: newPass });
             alert('✅ Пароль успешно изменён');
             e.target.reset();
         } catch (err) {
