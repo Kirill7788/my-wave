@@ -1,0 +1,369 @@
+/* css/cotages.css — Исправленные стили для домика */
+
+/* ===== Скрытые элементы ===== */
+.hidden {
+    display: none !important;
+}
+
+#loadingPage {
+    text-align: center;
+    padding: 100px 0;
+    font-size: 1.2rem;
+    color: var(--color-text-light);
+}
+
+.cottage-hero {
+    margin-top: 85px;
+    /* ✅ Отступ, чтобы не заезжать под шапку */
+    margin-bottom: 40px;
+}
+
+#cottageImage {
+    width: 100%;
+    max-width: 1160px;
+    /* Вписываем в общую сетку сайта */
+    height: 570px;
+    /* Фиксированная высота = ровная рамка */
+    margin: 85px auto 40px;
+    /* 85px отступ от шапки + центрирование */
+    border-radius: 20px;
+    overflow: hidden;
+    /* Обрезает лишнее по краям рамки */
+    background: #f1f5f9;
+    /* Мягкий фон, если пропорции не совпадут */
+    box-shadow: var(--shadow-lg);
+
+    /* ✅ НАСТРОЙКИ ОТОБРАЖЕНИЯ ФОТО */
+    background-size: cover;
+    /* Заполняет рамку, сохраняя пропорции */
+    background-position: 50% 50%;
+    /* ✅ СТРОГО центр (никогда не берёт низ/верх) */
+    background-repeat: no-repeat;
+    filter: brightness(0.96);
+    /* Лёгкая тонировка для читаемости текста */
+}
+
+#cottageImage img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    /* ✅ Дублирует центрирование для <img> */
+    display: block;
+}
+
+/* ===== Основная сетка (Инфо + Бронь) ===== */
+.cottage-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    /* Левая часть шире */
+    gap: 48px;
+    align-items: start;
+}
+
+/* ===== Левая колонка: Информация ===== */
+.cottage-header-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+/* Бейдж типа */
+.cottage-card__badge {
+    padding: 6px 14px;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: white;
+    text-transform: uppercase;
+}
+
+.cottage-card__badge.economy {
+    background: #0ea5e9;
+}
+
+.cottage-card__badge.comfort {
+    background: #22c55e;
+}
+
+.cottage-card__badge.premium {
+    background: linear-gradient(135deg, #8b5cf6, #ec4899);
+}
+
+.cottage-location {
+    color: var(--color-text-light);
+    font-size: 1rem;
+}
+
+/* Заголовок */
+.cottage-name {
+    font-size: 2.5rem;
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 16px;
+    color: var(--color-text);
+}
+
+/* Мета-информация */
+.cottage-meta {
+    display: flex;
+    gap: 24px;
+    margin-bottom: 32px;
+    color: var(--color-text-light);
+    font-size: 1.05rem;
+}
+
+.cottage-meta span {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Блок описания */
+.cottage-desc-block {
+    background: var(--color-bg-light);
+    padding: 24px;
+    border-radius: var(--radius);
+    margin-bottom: 32px;
+}
+
+.cottage-desc-block h3 {
+    font-size: 1.3rem;
+    margin-bottom: 12px;
+}
+
+.cottage-desc-block p {
+    color: var(--color-text-light);
+    line-height: 1.7;
+}
+
+/* Блок удобств */
+.cottage-features-title {
+    font-size: 1.3rem;
+    margin-bottom: 16px;
+}
+
+/* Теги удобств */
+.feature-tags-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.feature-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background: white;
+    border: 1px solid var(--color-border);
+    border-radius: 50px;
+    font-size: 0.95rem;
+    color: var(--color-text);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
+}
+
+/* ===== Правая колонка: Форма бронирования ===== */
+.booking-sidebar {
+    background: white;
+    padding: 32px;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-lg);
+    border: 1px solid var(--color-border);
+    position: sticky;
+    /* Липнет при скролле */
+    top: 100px;
+}
+
+.booking-price-block {
+    margin-bottom: 24px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.booking-price-display {
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: var(--color-primary);
+    line-height: 1;
+    margin-bottom: 6px;
+}
+
+.booking-price-label {
+    color: var(--color-text-light);
+    font-size: 0.95rem;
+}
+
+/* Поля дат */
+.booking-dates label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--color-text);
+}
+
+.booking-dates input[type="date"] {
+    width: 100%;
+    padding: 14px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    font-family: var(--font-main);
+    font-size: 1rem;
+    margin-bottom: 20px;
+    background-color: #fff;
+    cursor: pointer;
+}
+
+.booking-dates input[type="date"]:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(74, 144, 164, 0.15);
+}
+
+/* Итоговая цена */
+.booking-total {
+    text-align: center;
+    padding: 16px;
+    background: var(--color-bg-light);
+    border-radius: var(--radius-sm);
+    margin-bottom: 24px;
+    font-weight: 600;
+    color: var(--color-text);
+    font-size: 1.1rem;
+}
+
+.booking-guests {
+    margin-bottom: 20px;
+}
+
+.guest-label {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--color-text);
+    display: block;
+    margin-bottom: 10px;
+}
+
+.guest-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.guest-input {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.guest-input span {
+    font-size: 0.8rem;
+    color: var(--color-text-light);
+    font-weight: 500;
+}
+
+.guest-input input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    font-size: 1rem;
+    font-family: var(--font-main);
+}
+
+.guest-input input:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(74, 144, 164, 0.15);
+}
+
+.guest-warning {
+    color: #dc2626;
+    font-size: 0.85rem;
+    margin-top: 8px;
+    background: #fef2f2;
+    padding: 6px 10px;
+    border-radius: 6px;
+}
+
+/* ===== Модальное окно бронирования ===== */
+.booking-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 20px;
+    backdrop-filter: blur(4px);
+}
+
+.booking-modal.hidden {
+    display: none;
+}
+
+.booking-modal__content {
+    background: white;
+    padding: 32px;
+    border-radius: var(--radius);
+    max-width: 420px;
+    width: 100%;
+    text-align: center;
+    box-shadow: var(--shadow-lg);
+    animation: fadeInUp 0.3s ease;
+}
+
+.booking-modal__icon {
+    font-size: 3rem;
+    margin-bottom: 12px;
+}
+
+.booking-modal__title {
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin: 0 0 8px;
+}
+
+.booking-modal__text {
+    color: var(--color-text-light);
+    line-height: 1.6;
+    margin-bottom: 24px;
+    font-size: 0.95rem;
+}
+
+.booking-modal__actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.booking-modal__actions .btn {
+    min-width: 140px;
+}
+
+/* ===== Адаптивность (Мобильные) ===== */
+@media (max-width: 900px) {
+    .cottage-grid {
+        grid-template-columns: 1fr;
+        /* Одна колонка */
+        gap: 32px;
+    }
+
+    .booking-sidebar {
+        position: static;
+        /* Отключаем липкость */
+    }
+
+    #cottageImage {
+        height: 250px;
+        /* Еще ниже на телефоне */
+    }
+
+    .cottage-name {
+        font-size: 2rem;
+    }
+}

@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Вход — Моя волна</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    .auth-wrapper {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+      background: #f8fafc;
+    }
+
+    .auth-card {
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      width: 100%;
+      max-width: 400px;
+      padding: 32px;
+    }
+
+    .auth-header {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    .auth-header h1 {
+      font-size: 1.5rem;
+      margin: 0 0 8px;
+    }
+
+    .auth-header p {
+      color: #64748b;
+      margin: 0;
+      font-size: 0.95rem;
+    }
+
+    .auth-form {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .auth-form label {
+      font-weight: 500;
+      font-size: 0.9rem;
+    }
+
+    .auth-form input {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      font-size: 1rem;
+    }
+
+    .auth-form .btn {
+      margin-top: 8px;
+      padding: 14px;
+    }
+
+    .auth-divider {
+      text-align: center;
+      margin: 20px 0;
+      color: #94a3b8;
+      position: relative;
+    }
+
+    .auth-divider::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: #e2e8f0;
+    }
+
+    .auth-divider span {
+      background: white;
+      padding: 0 12px;
+      position: relative;
+    }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+    }
+
+    .credit-card {
+      background: linear-gradient(135deg, #4a90a4 0%, #2b5876 100%);
+      color: white;
+      padding: 24px;
+      border-radius: 16px;
+      position: relative;
+      box-shadow: 0 6px 20px rgba(74, 144, 164, 0.25);
+      min-height: 170px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .credit-card.is-default {
+      border: 2px solid #22c55e;
+    }
+
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .card-chip {
+      width: 40px;
+      height: 30px;
+      background: linear-gradient(135deg, #ffd700, #daa520);
+      border-radius: 6px;
+      opacity: 0.8;
+    }
+
+    .card-number {
+      font-size: 1.5rem;
+      letter-spacing: 2px;
+      font-family: monospace;
+      margin: 20px 0;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    .card-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+
+    .card-holder {
+      text-transform: uppercase;
+      font-size: 0.9rem;
+      opacity: 0.9;
+      letter-spacing: 1px;
+    }
+
+    .card-expiry {
+      font-size: 0.9rem;
+      opacity: 0.8;
+      font-family: monospace;
+    }
+
+    .card-actions {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      display: flex;
+      gap: 8px;
+    }
+
+    .card-btn {
+      background: rgba(255, 255, 255, 0.2);
+      border: none;
+      color: white;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      transition: 0.2s;
+    }
+
+    .card-btn:hover {
+      background: rgba(255, 255, 255, 0.4);
+    }
+
+    .badge-default {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: #22c55e;
+      color: white;
+      font-size: 0.7rem;
+      padding: 2px 8px;
+      border-radius: 10px;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="auth-wrapper">
+    <div class="auth-card">
+      <div class="auth-header">
+        <h1 id="formTitle">Вход в аккаунт</h1>
+        <p id="formDesc">Введите данные для доступа к личному кабинету</p>
+      </div>
+
+      <form id="loginForm" class="auth-form">
+        <div>
+          <label for="email">Email</label>
+          <input type="email" id="email" required>
+        </div>
+        <div>
+          <label for="password">Пароль</label>
+          <input type="password" id="password" required>
+        </div>
+        <button type="submit" class="btn btn--primary" id="submitBtn">Войти</button>
+      </form>
+      <p style="text-align: center; margin-top: 16px;">
+        <a href="reset-password.html" style="color: var(--color-primary); font-size: 0.9rem;">
+          🔗 Забыли пароль?
+        </a>
+      </p>
+      <div class="auth-divider"><span>или</span></div>
+      <button id="toggleAuth" class="btn btn--outline" style="width:100%;">Создать аккаунт</button>
+    </div>
+    
+
+  <script src="js/api.js"></script>
+  <script>
+    // 1. Проверка сессии ПЕРЕД отрисовкой (предотвращает мелькание)
+    (async () => {
+      try {
+        const cached = sessionStorage.getItem('currentUser');
+        if (cached) {
+          const u = JSON.parse(cached);
+          window.location.replace(u.role === 'admin' ? 'admin.html' : 'dashboard.html');
+          return;
+        }
+        const { user } = await API.getCurrentUser();
+        if (user) {
+          sessionStorage.setItem('currentUser', JSON.stringify(user));
+          window.location.replace(user.role === 'admin' ? 'admin.html' : 'dashboard.html');
+        }
+      } catch { }
+    })();
+
+    // 2. Логика формы
+    let isLogin = true;
+    const form = document.getElementById('loginForm');
+    const title = document.getElementById('formTitle');
+    const desc = document.getElementById('formDesc');
+    const toggle = document.getElementById('toggleAuth');
+    const submitBtn = document.getElementById('submitBtn');
+
+    toggle.addEventListener('click', () => {
+      isLogin = !isLogin;
+      title.textContent = isLogin ? 'Вход в аккаунт' : 'Регистрация';
+      desc.textContent = isLogin ? 'Введите данные для доступа' : 'Создайте аккаунт за минуту';
+      toggle.textContent = isLogin ? 'Создать аккаунт' : 'Уже есть аккаунт? Войти';
+      submitBtn.textContent = isLogin ? 'Войти' : 'Зарегистрироваться';
+    });
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      if (!email || !password) return alert('Заполните поля');
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Загрузка...';
+
+      try {
+        const payload = { email, password };
+        if (!isLogin) {
+          payload.first_name = email.split('@')[0];
+          payload.phone = '+375000000000';
+        }
+
+        const res = await (isLogin ? API.login(payload) : API.register(payload));
+
+        if (isLogin) {
+          sessionStorage.setItem('currentUser', JSON.stringify(res.user));
+          window.location.replace(res.user.role === 'admin' ? 'admin.html' : 'dashboard.html');
+        } else {
+          alert('✅ Регистрация успешна! Теперь войдите.');
+          isLogin = true; toggle.click();
+        }
+      } catch (err) {
+        alert('❌ ' + err.message);
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = isLogin ? 'Войти' : 'Зарегистрироваться';
+      }
+    });
+  </script>
+</body>
+
+</html>

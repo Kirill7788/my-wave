@@ -1,0 +1,419 @@
+/* css/style.css — точка входа */
+@import 'base.css';
+@import 'components.css';
+@import 'layout.css';
+@import 'utilities.css';
+@import 'feature-tags.css';
+
+/* ===== Hero ===== */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 120px 20px 100px;
+  background: linear-gradient(160deg, #1e3a5f 0%, #2b5876 35%, #4a90a4 65%, #87ceeb 100%);
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('../images/hero-lake.jpg') center/cover no-repeat;
+  opacity: 0.3;
+  mix-blend-mode: overlay;
+  z-index: 0;
+}
+
+.hero__overlay {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.15) 0%, rgba(30, 58, 95, 0.4) 70%);
+  z-index: 1;
+}
+
+.hero__content {
+  position: relative;
+  z-index: 2;
+  max-width: 800px;
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.hero__title {
+  font-size: clamp(2.2rem, 5vw, 3.5rem);
+  font-weight: 800;
+  margin-bottom: 20px;
+  color: #ffffff;
+  line-height: 1.15;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
+}
+
+.hero__subtitle {
+  font-size: clamp(1rem, 2.5vw, 1.25rem);
+  color: rgba(255, 255, 255, 0.92);
+  margin-bottom: 36px;
+  max-width: 620px;
+  line-height: 1.5;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.2);
+}
+
+.hero__buttons {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 100%;
+  height: 100px;
+  background: var(--color-bg);
+  clip-path: ellipse(80% 100% at 50% 100%);
+  z-index: 2;
+}
+
+/* ===== Filters (для страниц озёр) ===== */
+.filters {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 32px;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 4px;
+}
+
+.filter-btn {
+  position: relative;
+  padding: 10px 22px;
+  border: 1.5px solid var(--color-border);
+  background: white;
+  border-radius: 50px;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 0.95rem;
+  font-family: var(--font-main);
+  color: var(--color-text);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  outline: none;
+}
+
+.filter-btn:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(74, 144, 164, 0.15);
+}
+
+.filter-btn.active,
+.filter-btn:active {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: white;
+  box-shadow: 0 4px 10px rgba(74, 144, 164, 0.3);
+  transform: translateY(0);
+}
+
+.filter-btn:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* ===== Sort Buttons ===== */
+.sort-buttons {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.sort-btn {
+  padding: 10px 20px;
+  border: 2px solid var(--color-border);
+  background: white;
+  border-radius: 50px;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 0.9rem;
+  font-family: var(--font-main);
+  color: var(--color-text);
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.sort-btn:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
+}
+
+.sort-btn.active {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: white;
+  box-shadow: 0 4px 10px rgba(74, 144, 164, 0.3);
+}
+
+/* ===== Checkbox Styling ===== */
+.checkbox {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  user-select: none;
+}
+
+.checkbox input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--color-primary);
+  cursor: pointer;
+}
+
+/* ===== Price Range Inputs ===== */
+.price-range {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.price-range input {
+  padding: 10px 14px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-main);
+  font-size: 0.95rem;
+  width: 100%;
+}
+
+.price-range input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(74, 144, 164, 0.1);
+}
+
+/* Badge colors */
+.cottage-card__badge.economy {
+  background: #0ea5e9;
+}
+
+.cottage-card__badge.comfort {
+  background: #22c55e;
+}
+
+.cottage-card__badge.premium {
+  background: linear-gradient(135deg, #8b5cf6, #ec4899);
+}
+
+/* ===== Lake Cards (для главной страницы) ===== */
+.lakes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 24px;
+  margin-top: 32px;
+}
+
+.lake-card {
+  background: white;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  transition: var(--transition);
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
+.lake-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+.lake-card__image {
+  height: 180px;
+  /* ✅ Обязательно: задаём высоту */
+  background-size: cover;
+  /* ✅ Заполняет блок, сохраняя пропорции */
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+}
+
+.lake-card__image::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.4), transparent 60%);
+  pointer-events: none;
+}
+
+.lake-card__content {
+  padding: 16px 20px;
+}
+
+.lake-card__content h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.lake-card__content p {
+  color: var(--color-text-light);
+  font-size: 0.9rem;
+}
+
+/* ===== Cottage Types Grid (Эконом/Комфорт/Премиум) ===== */
+.cottage-types-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 32px;
+  margin-top: 40px;
+}
+
+.cottage-type-card {
+  background: white;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  transition: var(--transition);
+  display: flex;
+  flex-direction: column;
+}
+
+.cottage-type-card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-lg);
+}
+
+.cottage-type-card__header {
+  padding: 24px 24px 0;
+}
+
+.cottage-type-card__badge {
+  display: inline-block;
+  padding: 6px 16px;
+  border-radius: 50px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: white;
+  text-transform: uppercase;
+}
+
+.cottage-type-card__badge.economy {
+  background: #0ea5e9;
+}
+
+.cottage-type-card__badge.comfort {
+  background: #22c55e;
+}
+
+.cottage-type-card__badge.premium {
+  background: linear-gradient(135deg, #8b5cf6, #ec4899);
+}
+
+.cottage-type-card__content {
+  padding: 24px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.cottage-type-card__title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin: 0;
+  color: var(--color-text);
+}
+
+.cottage-type-card__desc {
+  color: var(--color-text-light);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.cottage-type-card__features {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin: 8px 0;
+}
+
+.feature-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+  color: var(--color-text);
+}
+
+.feature-icon {
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+.cottage-type-card__price {
+  font-weight: 700;
+  font-size: 1.4rem;
+  color: var(--color-primary);
+  margin: 8px 0 12px;
+}
+
+.cottage-type-card__price span {
+  font-weight: 400;
+  font-size: 0.9rem;
+  color: var(--color-text-light);
+}
+
+/* ===== Адаптивность ===== */
+@media (max-width: 768px) {
+  .sort-buttons {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .sort-btn {
+    flex: 1;
+    justify-content: center;
+    min-width: 120px;
+  }
+}
+
+@media (max-width: 600px) {
+  .filters {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    padding-bottom: 12px;
+    scrollbar-width: none;
+  }
+
+  .filters::-webkit-scrollbar {
+    display: none;
+  }
+
+  .filter-btn {
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+}

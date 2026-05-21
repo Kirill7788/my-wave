@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>{LAKE_NAME} — Домики у озера | Моя волна</title>
+  <meta name="description" content="{LAKE_DESC_SHORT}">
+  
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/pages/lakes.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="header" id="header">
+    <div class="container header__container">
+      <a href="index.html" class="logo">
+        <span class="logo__icon">🌊</span>
+        <span class="logo__text">Моя волна</span>
+      </a>
+      <nav class="nav" id="nav">
+        <ul class="nav__list">
+          <li><a href="catalog.html" class="nav__link">Каталог</a></li>
+          <li><a href="lakes.html" class="nav__link active">Озёра</a></li>
+          <li><a href="about.html" class="nav__link">О компании</a></li>
+        </ul>
+      </nav>
+      <div class="header__actions">
+        <a href="cabinet.html" class="btn btn--outline" id="authBtn">Войти</a>
+        <button class="burger" id="burger"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Lake Hero -->
+  <section class="page-hero">
+    <div class="container">
+      <h1 class="page-hero__title">{LAKE_NAME}</h1>
+      <p class="page-hero__subtitle">{LAKE_REGION} • {COTTAGES_COUNT} домиков</p>
+    </div>
+  </section>
+
+  <!-- Lake Detail -->
+  <section class="section lake-detail">
+    <div class="container">
+      <div class="lake-detail__header">
+        <div class="lake-detail__image" style="background-image: url('{LAKE_IMAGE}')"></div>
+        <div class="lake-detail__info">
+          <h1>{LAKE_NAME}</h1>
+          <span class="lake-detail__region">{LAKE_REGION}</span>
+          <p class="lake-detail__desc">{LAKE_DESC}</p>
+          
+          <div class="lake-detail__stats">
+            <div class="lake-stat">
+              <span class="lake-stat__value">{COTTAGES_COUNT}</span>
+              <span class="lake-stat__label">домиков</span>
+            </div>
+            <div class="lake-stat">
+              <span class="lake-stat__value">{ECON_COUNT}</span>
+              <span class="lake-stat__label">эконом</span>
+            </div>
+            <div class="lake-stat">
+              <span class="lake-stat__value">{COMF_COUNT}</span>
+              <span class="lake-stat__label">комфорт</span>
+            </div>
+            <div class="lake-stat">
+              <span class="lake-stat__value">{PREM_COUNT}</span>
+              <span class="lake-stat__label">премиум</span>
+            </div>
+          </div>
+          
+          <div class="lake-card__features" style="margin-top: 20px;">
+            {LAKE_FEATURES}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Cottages at this lake -->
+  <section class="section section--light">
+    <div class="container">
+      <div class="lake-cottages__header">
+        <h2 class="section__title" style="text-align: left; margin: 0;">Домики на {LAKE_NAME}</h2>
+        <div class="filters">
+          <button class="filter-btn active" data-filter="all">Все</button>
+          <button class="filter-btn" data-filter="economy">Эконом</button>
+          <button class="filter-btn" data-filter="comfort">Комфорт</button>
+          <button class="filter-btn" data-filter="premium">Премиум</button>
+        </div>
+      </div>
+      
+      <div class="lake-cottages__grid" id="cottagesGrid">
+        <!-- Загружаются через JS или статически -->
+        {COTTAGES_CARDS}
+      </div>
+      
+      <div class="section__center">
+        <a href="catalog.html?lake={LAKE_SLUG}" class="btn btn--outline">Все домики в каталоге →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta">
+    <div class="container cta__container">
+      <h2 class="cta__title">Готовы отдохнуть на {LAKE_NAME}?</h2>
+      <p class="cta__text">Выберите домик и забронируйте даты онлайн</p>
+      <a href="catalog.html?lake={LAKE_SLUG}" class="btn btn--secondary btn--large">Выбрать домик</a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer__container">
+      <div class="footer__brand">
+        <a href="index.html" class="logo">
+          <span class="logo__icon">🌊</span>
+          <span class="logo__text">Моя волна</span>
+        </a>
+        <p class="footer__desc">Аренда уютных домиков на берегу озёр Беларуси.</p>
+      </div>
+      <div class="footer__links">
+        <div class="footer__col">
+          <h4 class="footer__heading">Навигация</h4>
+          <ul class="footer__list">
+            <li><a href="catalog.html">Каталог</a></li>
+            <li><a href="lakes.html">Озёра</a></li>
+            <li><a href="about.html">О компании</a></li>
+          </ul>
+        </div>
+        <div class="footer__col">
+          <h4 class="footer__heading">Контакты</h4>
+          <ul class="footer__list">
+            <li>📞 <a href="tel:+375291234567">+375 (29) 123-45-67</a></li>
+            <li>✉️ <a href="mailto:info@mywave.by">info@mywave.by</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <div class="container">© 2026 «Моя волна». Все права защищены.</div>
+    </div>
+  </footer>
+
+  <script src="js/api.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    // Статические данные для демо (если API недоступен)
+    const LAKE_DATA = {
+      slug: '{LAKE_SLUG}',
+      cottages: {COTTAGES_JSON}
+    };
+    
+    // Простой фильтр на странице
+    document.addEventListener('DOMContentLoaded', () => {
+      const filterBtns = document.querySelectorAll('.lake-cottages__header .filter-btn');
+      const cards = document.querySelectorAll('#cottagesGrid .cottage-card');
+      
+      filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          filterBtns.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          const filter = btn.dataset.filter;
+          
+          cards.forEach(card => {
+            if (filter === 'all' || card.dataset.type === filter) {
+              card.classList.remove('hidden');
+            } else {
+              card.classList.add('hidden');
+            }
+          });
+        });
+      });
+    });
+  </script>
+</body>
+</html>

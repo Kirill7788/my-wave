@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Личный кабинет — Моя волна</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* ===== Dashboard Layout ===== */
+        .dashboard-layout {
+            display: grid;
+            grid-template-columns: 260px 1fr;
+            min-height: calc(100vh - 80px);
+            background: var(--color-bg-light);
+        }
+
+        .dashboard-sidebar {
+            background: white;
+            padding: 32px 20px;
+            border-right: 1px solid var(--color-border);
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .sidebar-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 24px;
+            color: var(--color-primary);
+        }
+
+        .nav-link {
+            padding: 12px 16px;
+            border-radius: var(--radius-sm);
+            color: var(--color-text);
+            font-weight: 500;
+            transition: var(--transition);
+            text-decoration: none;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            background: var(--color-bg-light);
+            color: var(--color-primary);
+        }
+
+        .nav-link.logout {
+            color: #dc2626;
+            margin-top: auto;
+        }
+
+        .nav-link.logout:hover {
+            background: #fee2e2;
+        }
+
+        .dashboard-content {
+            padding: 40px;
+            max-width: 1000px;
+        }
+
+        .tab-pane {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .tab-pane.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ===== Profile Form ===== */
+        .profile-form {
+            background: white;
+            padding: 32px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-md);
+            display: grid;
+            gap: 20px;
+            max-width: 600px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-sm);
+            font-family: var(--font-main);
+        }
+
+        /* ===== Cards Grid ===== */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+
+        .credit-card {
+            background: linear-gradient(135deg, #4a90a4 0%, #2b5876 100%);
+            color: white;
+            padding: 24px;
+            border-radius: 16px;
+            position: relative;
+            min-height: 180px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: 0 8px 24px rgba(74, 144, 164, 0.25);
+            transition: var(--transition);
+            word-break: break-word;
+            /* ✅ Разрыв длинных слов */
+        }
+
+        .credit-card.is-default {
+            border: 2px solid #22c55e;
+        }
+
+        .card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 16px;
+        }
+
+        .card-chip {
+            width: 40px;
+            height: 30px;
+            background: linear-gradient(135deg, #ffd700, #daa520);
+            border-radius: 6px;
+            opacity: 0.85;
+        }
+
+        .card-number {
+            font-size: 1.4rem;
+            /* ✅ Чуть меньше для переноса */
+            letter-spacing: 2px;
+            font-family: monospace;
+            margin: 16px 0;
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+            word-spacing: 8px;
+        }
+
+        .card-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            flex-wrap: wrap;
+            /* ✅ Перенос на мобильных */
+            gap: 12px;
+        }
+
+        .card-holder {
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            /* ✅ Чуть меньше */
+            opacity: 0.9;
+            letter-spacing: 1px;
+            max-width: 60%;
+            word-break: break-word;
+        }
+
+        .card-expiry {
+            font-size: 0.9rem;
+            opacity: 0.85;
+            font-family: monospace;
+        }
+
+
+
+        .card-actions {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            display: flex;
+            gap: 8px;
+        }
+
+        .card-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            transition: 0.2s;
+        }
+
+        .card-btn:hover {
+            background: rgba(255, 255, 255, 0.4);
+        }
+
+        .badge-default {
+            position: absolute;
+            top: 14px;
+            left: 14px;
+            background: #22c55e;
+            color: white;
+            font-size: 0.7rem;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-weight: bold;
+            text-transform: uppercase;
+            z-index: 2;
+        }
+
+        /* ===== Add Card Form ===== */
+        .add-card-form {
+            background: white;
+            padding: 28px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-md);
+        }
+
+        .add-card-form h3 {
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+
+        .form-row {
+            display: grid;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .row-3 {
+            grid-template-columns: 2fr 2fr 1fr;
+        }
+
+        .row-2 {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .input-hint {
+            font-size: 0.8rem;
+            color: var(--color-text-light);
+            margin-top: 4px;
+        }
+
+        @media (max-width: 900px) {
+            .dashboard-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .dashboard-sidebar {
+                flex-direction: row;
+                overflow-x: auto;
+                padding: 16px;
+            }
+
+            .nav-link {
+                white-space: nowrap;
+            }
+
+            .dashboard-content {
+                padding: 24px 16px;
+            }
+
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="header" id="header">
+        <div class="container header__container">
+            <a href="index.html" class="logo">🌊 Моя волна</a>
+            <nav class="nav">
+                <a href="catalog.html">Каталог</a>
+                <a href="lakes.html">Озёра</a>
+                <a href="about.html">О нас</a>
+            </nav>
+            <a href="dashboard.html" class="btn btn--primary" id="authBtn">Кабинет</a>
+        </div>
+    </header>
+
+    <div class="dashboard-layout">
+        <!-- Сайдбар -->
+        <aside class="dashboard-sidebar">
+            <div class="sidebar-title" id="userName">Загрузка...</div>
+            <a href="#" class="nav-link active" data-tab="bookings">📋 Мои бронирования</a>
+            <a href="#" class="nav-link" data-tab="profile">⚙️ Профиль</a>
+            <a href="#" class="nav-link" data-tab="cards">💳 Карты</a>
+            <a href="#" class="nav-link logout" id="logoutBtn">🚪 Выйти</a>
+        </aside>
+
+        <!-- Основной контент -->
+        <main class="dashboard-content">
+
+            <!-- Вкладка: Бронирования -->
+            <div id="tab-bookings" class="tab-pane active">
+                <h2 style="margin-bottom: 24px;">📋 История бронирований</h2>
+                <div id="bookingsList" style="display: grid; gap: 16px;"></div>
+                <div id="noBookings"
+                    style="text-align: center; padding: 40px; color: var(--color-text-light); display: none;">
+                    У вас пока нет бронирований.<br>
+                    <a href="catalog.html" class="btn btn--primary" style="margin-top: 16px;">Выбрать домик</a>
+                </div>
+            </div>
+
+            <!-- Вкладка: Профиль -->
+            <div id="tab-profile" class="tab-pane">
+                <h2 style="margin-bottom: 24px;">⚙️ Редактировать профиль</h2>
+                <form id="profileForm" class="profile-form">
+                    <div class="form-group"><label>Имя</label><input type="text" id="pName" required></div>
+                    <div class="form-group"><label>Фамилия</label><input type="text" id="pSurname"></div>
+                    <div class="form-group"><label>Email</label><input type="email" id="pEmail" disabled
+                            style="background: #f8fafc; cursor: not-allowed;"></div>
+                    <div class="form-group"><label>Телефон</label><input type="tel" id="pPhone"></div>
+                    <button type="submit" class="btn btn--primary" style="justify-self: start;">Сохранить
+                        изменения</button>
+                </form>
+            </div>
+
+            <!-- Смена пароля -->
+            <div style="margin-top: 40px; padding-top: 32px; border-top: 1px solid var(--color-border);">
+            <h3 style="margin-bottom: 20px;">🔒 Изменить пароль</h3>
+            <form id="passwordForm" class="profile-form" style="max-width: 600px;">
+                <div class="form-group">
+                <label>Текущий пароль</label>
+                <input type="password" id="currentPassword" required>
+                </div>
+                <div class="form-group">
+                <label>Новый пароль</label>
+                <input type="password" id="newPassword" required minlength="6">
+                </div>
+                <div class="form-group">
+                <label>Подтвердите новый пароль</label>
+                <input type="password" id="confirmPassword" required minlength="6">
+                </div>
+                <button type="submit" class="btn btn--primary" style="justify-self: start;">🔐 Сменить пароль</button>
+            </form>
+            </div>
+
+            <!-- Вкладка: Карты -->
+            <div id="tab-cards" class="tab-pane">
+                <h2 style="margin-bottom: 24px;">💳 Способы оплаты</h2>
+                <div id="cardsList" class="cards-grid"></div>
+                <div id="noCards"
+                    style="text-align: center; padding: 20px; color: var(--color-text-light); margin-bottom: 24px; display: none;">
+                    Нет сохранённых карт</div>
+
+                <div class="add-card-form">
+                    <h3>Добавить новую карту</h3>
+                    <form id="cardForm">
+                        <div class="form-row row-3">
+                            <div class="form-group">
+                                <label>Номер карты</label>
+                                <input type="text" id="cNumber" placeholder="0000 0000 0000 0000" maxlength="19"
+                                    required>
+                            </div>
+                            <div class="form-group">
+                                <label>Имя держателя (лат.)</label>
+                                <input type="text" id="cHolder" placeholder="IVAN IVANOV"
+                                    style="text-transform: uppercase;" required>
+                            </div>
+                            <div class="form-group">
+                                <label>CVC</label>
+                                <input type="password" id="cCvc" placeholder="123" maxlength="3" required
+                                    style="text-align: center;">
+                            </div>
+                        </div>
+                        <div class="form-row row-2">
+                            <div class="form-group" style="display: flex; gap: 12px; align-items: flex-end;">
+                                <div style="flex: 1;">
+                                    <label>Срок действия (ММ)</label>
+                                    <input type="text" id="cMonth" placeholder="MM" maxlength="2" required
+                                        style="text-align: center;">
+                                </div>
+                                <div style="flex: 1;">
+                                    <label>Год (ГГ)</label>
+                                    <input type="text" id="cYear" placeholder="YY" maxlength="2" required
+                                        style="text-align: center;">
+                                </div>
+                            </div>
+                            <div class="form-group" style="display: flex; align-items: flex-end;">
+                                <button type="submit" class="btn btn--primary btn--full">💾 Сохранить карту</button>
+                            </div>
+                        </div>
+                        <p class="input-hint">🔒 Данные передаются в зашифрованном виде. Полный номер не хранится на
+                            сервере.</p>
+                    </form>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <footer class="footer" style="margin-top: auto;">
+        <div class="container"
+            style="padding: 24px 0; text-align: center; color: var(--color-text-light); font-size: 0.9rem;">
+            © 2026 «Моя волна». Все права защищены.
+        </div>
+    </footer>
+
+    <script src="js/api.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            // 1. Проверка авторизации
+            try {
+                const { user } = await API.getCurrentUser();
+                if (!user) window.location.replace('cabinet.html');
+                document.getElementById('userName').textContent = `👤 ${user.name || user.first_name || 'Пользователь'}`;
+
+                // Заполняем профиль
+                if (user) {
+                    document.getElementById('pName').value = user.first_name || '';
+                    document.getElementById('pSurname').value = user.last_name || '';
+                    document.getElementById('pEmail').value = user.email || '';
+                    document.getElementById('pPhone').value = user.phone || '';
+                }
+                loadBookings();
+                loadCards(); // Загружаем карты сразу
+            } catch { window.location.replace('cabinet.html'); }
+
+            // 2. Переключение вкладок
+            document.querySelectorAll('.nav-link[data-tab]').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+                    link.classList.add('active');
+                    document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+                    document.getElementById(`tab-${link.dataset.tab}`).classList.add('active');
+                });
+            });
+
+            // 3. Сохранение профиля
+            document.getElementById('profileForm')?.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const btn = e.target.querySelector('button');
+                btn.disabled = true; btn.textContent = 'Сохранение...';
+                try {
+                    await API.updateProfile({
+                        first_name: document.getElementById('pName').value,
+                        last_name: document.getElementById('pSurname').value,
+                        phone: document.getElementById('pPhone').value
+                    });
+                    alert('✅ Профиль обновлён');
+                } catch (err) { alert('❌ ' + err.message); }
+                finally { btn.disabled = false; btn.textContent = 'Сохранить изменения'; }
+            });
+
+            // 4. Выход
+            document.getElementById('logoutBtn')?.addEventListener('click', async () => {
+                await API.logout();
+                sessionStorage.removeItem('currentUser');
+                window.location.href = 'index.html';
+            });
+
+            // 5. Форматирование номера карты
+            document.getElementById('cNumber')?.addEventListener('input', (e) => {
+                e.target.value = e.target.value.replace(/\D/g, '').replace(/(.{4})/g, '$1 ').trim();
+            });
+
+            // 6. Добавление карты
+            document.getElementById('cardForm')?.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const btn = e.target.querySelector('button[type="submit"]');
+                btn.disabled = true; btn.textContent = 'Проверка...';
+                try {
+                    await API.addCard({
+                        card_number: document.getElementById('cNumber').value,
+                        card_holder: document.getElementById('cHolder').value.toUpperCase(),
+                        exp_month: parseInt(document.getElementById('cMonth').value),
+                        exp_year: parseInt(document.getElementById('cYear').value),
+                        cvc: document.getElementById('cCvc').value
+                    });
+                    e.target.reset();
+                    alert('✅ Карта успешно добавлена');
+                    loadCards();
+                } catch (err) { alert('❌ ' + err.message); }
+                finally { btn.disabled = false; btn.textContent = '💾 Сохранить карту'; }
+            });
+        });
+
+        // Смена пароля
+        document.getElementById('passwordForm')?.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const current = document.getElementById('currentPassword').value;
+        const newPass = document.getElementById('newPassword').value;
+        const confirm = document.getElementById('confirmPassword').value;
+        
+        if (newPass !== confirm) {
+            alert('❌ Новые пароли не совпадают');
+            return;
+        }
+        
+        if (newPass.length < 6) {
+            alert('❌ Пароль должен быть не менее 6 символов');
+            return;
+        }
+        
+        const btn = e.target.querySelector('button');
+        btn.disabled = true;
+        btn.textContent = 'Изменение...';
+        
+        try {
+            const { user } = await API.getCurrentUser();
+            // Проверка текущего пароля
+            const checkRes = await fetch('api/auth.php?action=verify_password', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({email: user.email, password: current})
+            });
+            const checkData = await checkRes.json();
+            
+            if (!checkData.valid) {
+            throw new Error('Текущий пароль неверный');
+            }
+            
+            // Обновление пароля
+            await API.updatePassword({user_id: user.id, new_password: newPass});
+            
+            alert('✅ Пароль успешно изменён');
+            e.target.reset();
+        } catch (err) {
+            alert('❌ ' + err.message);
+        } finally {
+            btn.disabled = false;
+            btn.textContent = '🔐 Сменить пароль';
+        }
+        });
+
+        // --- Функции загрузки данных ---
+        async function loadBookings() {
+            try {
+                const { bookings } = await API.getMyBookings();
+                const list = document.getElementById('bookingsList');
+                const empty = document.getElementById('noBookings');
+                list.innerHTML = '';
+
+                if (!bookings?.length) {
+                    empty.style.display = 'block';
+                    return;
+                }
+                empty.style.display = 'none';
+
+                bookings.forEach(b => {
+                    const statusClass = b.status;
+                    const statusText = {
+                        'pending': '⏳ Ожидает оплаты',
+                        'confirmed': '✅ Подтверждено',
+                        'cancelled': '❌ Отменено',
+                        'completed': '🏁 Завершено'
+                    }[b.status] || b.status;
+
+                    // Кнопки действий
+                    let actions = '';
+                    if (b.status === 'pending') {
+                        actions = `
+                <button class="btn btn--primary btn--small" onclick="payBooking(${b.id})">💳 Оплатить</button>
+                <button class="btn btn--outline btn--small" style="color:#dc2626;border-color:#dc2626" onclick="cancelBooking(${b.id})">❌ Отменить</button>
+                `;
+                    } else if (b.status === 'confirmed') {
+                        actions = `<button class="btn btn--outline btn--small" onclick="cancelBooking(${b.id})">❌ Отменить</button>`;
+                    }
+
+                    list.innerHTML += `
+                <div class="card" style="display: flex; justify-content: space-between; align-items: center; padding: 20px; gap: 16px; flex-wrap: wrap;">
+                <div style="flex: 1; min-width: 200px;">
+                    <strong style="font-size: 1.1rem;">${b.cottage_name || 'Домик'}</strong><br>
+                    <span style="color: var(--color-text-light);">📅 ${b.check_in} — ${b.check_out}<br>
+                    👥 ${b.guests_count || 2} гостей</span>
+                </div>
+                <div style="text-align: right; min-width: 150px;">
+                    <span class="badge badge--${statusClass}" style="display: inline-block; margin-bottom: 8px;">${statusText}</span><br>
+                    <span style="font-weight: 700; color: var(--color-primary); font-size: 1.2rem;">${b.total_price} BYN</span><br>
+                    <div style="margin-top: 8px; display: flex; gap: 8px; justify-content: flex-end;">${actions}</div>
+                </div>
+                </div>`;
+                });
+            } catch (err) {
+                console.error('Error loading bookings:', err);
+            }
+        }
+
+        // Оплата бронирования
+        window.payBooking = async (id) => {
+            const card = confirm('💳 Оплата будет произведена с сохранённой карты.\n\nПродолжить?');
+            if (!card) return;
+
+            try {
+                // Здесь будет интеграция с платёжной системой
+                alert('✅ Оплата успешно проведена!\n\nВ реальном проекте здесь будет перенаправление на платёжный шлюз.');
+                loadBookings();
+            } catch (err) {
+                alert('❌ Ошибка оплаты: ' + err.message);
+            }
+        };
+
+        // Отмена бронирования
+        window.cancelBooking = async (id) => {
+            if (!confirm('❌ Вы уверены, что хотите отменить бронирование?')) return;
+
+            try {
+                await API.cancelBooking(id);
+                alert('✅ Бронирование отменено');
+                loadBookings();
+            } catch (err) {
+                alert('❌ Ошибка: ' + err.message);
+            }
+        };
+
+        async function loadCards() {
+            try {
+                const { cards } = await API.getCards();
+                const grid = document.getElementById('cardsList');
+                const empty = document.getElementById('noCards');
+                grid.innerHTML = '';
+                if (!cards?.length) { empty.style.display = 'block'; return; }
+                empty.style.display = 'none';
+                cards.forEach(c => {
+                    const masked = `**** **** **** ${c.card_last_4}`;
+                    const isDef = c.is_default;
+                    grid.innerHTML += `
+            <div class="credit-card ${isDef ? 'is-default' : ''}">
+              ${isDef ? '<span class="badge-default">Основная</span>' : ''}
+              <div class="card-top">
+                <div class="card-chip"></div>
+                <div class="card-actions">
+                  ${!isDef ? `<button class="card-btn" onclick="makeDefault(${c.id})" title="Сделать основной">★</button>` : ''}
+                  <button class="card-btn" onclick="deleteCard(${c.id})" title="Удалить">×</button>
+                </div>
+              </div>
+              <div class="card-number">${masked}</div>
+              <div class="card-bottom">
+                <div class="card-holder">${c.card_holder}</div>
+                <div class="card-expiry">${String(c.exp_month).padStart(2, '0')}/${c.exp_year}</div>
+              </div>
+            </div>`;
+                });
+            } catch { }
+        }
+
+        function translateStatus(s) {
+            return { pending: '⏳ Ожидает', confirmed: '✅ Подтверждено', cancelled: '❌ Отменено', completed: '🏁 Завершено' }[s] || s;
+        }
+
+        // Глобальные действия для кнопок в HTML
+        window.makeDefault = async (id) => {
+            if (!confirm('Сделать эту карту основной для оплат?')) return;
+            try { await API.setDefaultCard(id); loadCards(); } catch (e) { alert(e.message); }
+        };
+        window.deleteCard = async (id) => {
+            if (!confirm('Удалить карту из аккаунта?')) return;
+            try { await API.removeCard(id); loadCards(); } catch (e) { alert(e.message); }
+        };
+    </script>
+</body>
+
+</html>

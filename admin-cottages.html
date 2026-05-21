@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Управление домиками — Админ</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    .admin-wrapper {
+      min-height: 100vh;
+      background: var(--color-bg-light);
+      padding: 100px 20px 60px;
+    }
+
+    .form-card {
+      background: white;
+      border-radius: var(--radius);
+      padding: 32px;
+      box-shadow: var(--shadow-md);
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 500;
+      font-size: 0.95rem;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-sm);
+      font-family: var(--font-main);
+      font-size: 1rem;
+    }
+
+    .form-group textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .form-actions {
+      display: flex;
+      gap: 12px;
+      justify-content: flex-end;
+      margin-top: 24px;
+    }
+
+    .features-input {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .feature-chip {
+      background: var(--color-bg-light);
+      padding: 6px 12px;
+      border-radius: 50px;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .feature-chip button {
+      background: none;
+      border: none;
+      color: var(--color-text-light);
+      cursor: pointer;
+      font-size: 1.1rem;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="header">
+    <div class="container header__container">
+      <a href="index.html" class="logo">🌊 Моя волна</a>
+      <nav class="nav"><a href="admin.html">← Назад</a></nav>
+    </div>
+  </header>
+
+  <div class="admin-wrapper container">
+    <div class="form-card">
+      <h2 id="formTitle">Добавить домик</h2>
+      <form id="cottageForm">
+        <input type="hidden" id="cottageId">
+
+        <div class="form-group">
+          <label>Название *</label>
+          <input type="text" id="name" required>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Озеро *</label>
+            <select id="lake" required>
+              <option value="">Выберите...</option>
+              <option value="naroch">Нарочь</option>
+              <option value="braslav">Браславские озёра</option>
+              <option value="svityaz">Свитязь</option>
+              <option value="zaslavl">Заславское</option>
+              <option value="lukoml">Лукомльское</option>
+              <option value="myastro">Мястро</option>
+              <option value="beloe">Белое</option>
+              <option value="osveya">Освейское</option>
+              <option value="vygonovskoe">Выгоновское</option>
+              <option value="chervonoe">Червоное</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Тип *</label>
+            <select id="type" required>
+              <option value="economy">Эконом</option>
+              <option value="comfort">Комфорт</option>
+              <option value="premium">Премиум</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Цена от (BYN) *</label>
+            <input type="number" id="priceMin" step="0.01" required>
+          </div>
+          <div class="form-group">
+            <label>Цена до (BYN) *</label>
+            <input type="number" id="priceMax" step="0.01" required>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Вместимость (чел.) *</label>
+            <input type="number" id="capacity" min="1" max="10" required>
+          </div>
+          <div class="form-group">
+            <label>URL фото</label>
+            <input type="url" id="image" placeholder="images/cottages/...">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Описание</label>
+          <textarea id="description" placeholder="Краткое описание домика..."></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>Удобства (через запятую)</label>
+          <input type="text" id="featuresInput" placeholder="🍳 Кухня, 🚿 Санузел, 📶 Wi-Fi">
+          <div id="featuresPreview" class="features-input"></div>
+        </div>
+
+        <div class="form-actions">
+          <button type="button" class="btn btn--outline" onclick="history.back()">Отмена</button>
+          <button type="submit" class="btn btn--primary">Сохранить</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="js/api.js"></script>
+  <script>
+    // Проверка админа
+    (async () => {
+      try {
+        const { user } = await API.getCurrentUser();
+        if (!user || user.role !== 'admin') window.location.replace('index.html');
+      } catch { window.location.replace('cabinet.html'); }
+    })();
+
+    // Загрузка данных для редактирования
+    const urlParams = new URLSearchParams(window.location.search);
+    const editId = urlParams.get('edit');
+    if (editId) {
+      document.getElementById('formTitle').textContent = 'Редактировать домик';
+      (async () => {
+        try {
+          // Получаем все домики и ищем по ID (т.к. API отдаёт по slug)
+          const { cottages } = await API.getCottages({ limit: 999 });
+          const c = cottages.find(x => x.id == editId);
+          if (!c) throw new Error('Не найден');
+          document.getElementById('cottageId').value = c.id;
+          document.getElementById('name').value = c.name;
+          document.getElementById('lake').value = c.lake_slug;
+          document.getElementById('type').value = c.type_slug;
+          document.getElementById('priceMin').value = c.price_min;
+          document.getElementById('priceMax').value = c.price_max;
+          document.getElementById('capacity').value = c.capacity;
+          document.getElementById('image').value = c.image_url || '';
+          document.getElementById('description').value = c.description || '';
+          if (Array.isArray(c.features)) {
+            document.getElementById('featuresInput').value = c.features.join(', ');
+            renderFeatures(c.features);
+          }
+        } catch (e) { alert('Ошибка загрузки: ' + e.message); history.back(); }
+      })();
+    }
+
+    // Превью удобств
+    const featuresInput = document.getElementById('featuresInput');
+    const featuresPreview = document.getElementById('featuresPreview');
+    function renderFeatures(list) {
+      featuresPreview.innerHTML = (list || []).map(f =>
+        `<span class="feature-chip">${f} <button type="button" onclick="removeFeature('${f}')">×</button></span>`
+      ).join('');
+    }
+    featuresInput?.addEventListener('input', (e) => {
+      const list = e.target.value.split(',').map(s => s.trim()).filter(Boolean);
+      renderFeatures(list);
+    });
+    window.removeFeature = (val) => {
+      const list = featuresInput.value.split(',').map(s => s.trim()).filter(f => f !== val);
+      featuresInput.value = list.join(', ');
+      renderFeatures(list);
+    };
+
+    // Сохранение
+    document.getElementById('cottageForm')?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = e.target.querySelector('button[type="submit"]');
+      btn.disabled = true; btn.textContent = 'Сохранение...';
+
+      const features = featuresInput.value.split(',').map(s => s.trim()).filter(Boolean);
+      const payload = {
+        name: document.getElementById('name').value,
+        lake_slug: document.getElementById('lake').value,
+        type_slug: document.getElementById('type').value,
+        price_min: parseFloat(document.getElementById('priceMin').value),
+        price_max: parseFloat(document.getElementById('priceMax').value),
+        capacity: parseInt(document.getElementById('capacity').value),
+        description: document.getElementById('description').value,
+        features: features,
+        image_url: document.getElementById('image').value
+      };
+
+      try {
+        const id = document.getElementById('cottageId').value;
+        if (id) {
+          await API.request(`cottages.php?id=${id}`, { method: 'PUT', body: payload });
+          alert('✅ Домик обновлён');
+        } else {
+          const res = await API.request('cottages.php', { method: 'POST', body: payload });
+          alert('✅ Домик создан');
+        }
+        window.location.href = 'admin.html';
+      } catch (err) {
+        alert('❌ ' + err.message);
+        btn.disabled = false; btn.textContent = 'Сохранить';
+      }
+    });
+  </script>
+</body>
+
+</html>

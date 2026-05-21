@@ -1,0 +1,59 @@
+/* css/feature-tags.css */
+
+/* Контейнер-обертка для списка фич (чтобы они стояли в ряд с переносом) */
+.feature-tags-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+/* Сам тег: обертка, содержащая кружок и текст */
+.feature-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 16px 6px 6px;
+  /* Слева меньше, чтобы кружок "выступал" */
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 50px;
+  /* Форма таблетки */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+  font-size: 0.9rem;
+  color: var(--color-text);
+  font-weight: 500;
+  cursor: default;
+}
+
+/* Эффект при наведении на весь тег */
+.feature-tag:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  border-color: var(--color-primary);
+}
+
+/* Кружок для иконки (то, что ты просил сделать выразительным) */
+.feature-tag__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  /* Легкий градиент для объема */
+  background: linear-gradient(145deg, #ffffff, #f1f5f9);
+  /* Четкая граница */
+  border: 2px solid #e2e8f0;
+  /* Тень для выделения круга */
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  font-size: 1.2rem;
+  flex-shrink: 0;
+  /* Чтобы круг не сжимался */
+}
+
+/* Модификатор для акцентных тегов (например, на главной странице) */
+.feature-tag--accent .feature-tag__icon {
+  border-color: var(--color-primary);
+  background: #e0f2fe;
+}

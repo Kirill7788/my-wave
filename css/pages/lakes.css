@@ -1,0 +1,491 @@
+/* css/pages/lakes.css */
+
+/* ===== Page Hero ===== */
+.page-hero {
+  background: linear-gradient(135deg, #e0f2f7 0%, #f0f9ff 100%);
+  padding: 140px 20px 60px;
+  text-align: center;
+}
+
+.page-hero__title {
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 700;
+  margin-bottom: 16px;
+  color: var(--color-text);
+}
+
+.page-hero__subtitle {
+  font-size: 1.2rem;
+  color: var(--color-text-light);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* ===== Filters ===== */
+.filters {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 40px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.filter-btn {
+  padding: 10px 24px;
+  border: 2px solid var(--color-border);
+  background: white;
+  border-radius: 50px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: var(--transition);
+  font-family: var(--font-main);
+  font-size: 0.95rem;
+}
+
+.filter-btn:hover,
+.filter-btn.active {
+  border-color: var(--color-primary);
+  background: var(--color-primary);
+  color: white;
+}
+
+/* ===== Lakes Grid ===== */
+.lakes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 32px;
+}
+
+/* ===== Страница озёр (Исправление дизайна) ===== */
+.lakes-page {
+  padding: 100px 20px 60px;
+  background: var(--color-bg-light);
+  min-height: 100vh;
+}
+
+.lakes-filters {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-bottom: 40px;
+  flex-wrap: wrap;
+}
+
+.lakes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 32px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.lake-card {
+  background: white;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  transition: var(--transition);
+  display: flex;
+  flex-direction: column;
+}
+
+.lake-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-lg);
+}
+
+.lake-card__image {
+  height: 220px;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+.lake-card__badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  padding: 6px 14px;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 50px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-text);
+  backdrop-filter: blur(4px);
+}
+
+.lake-card__content {
+  padding: 24px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.lake-card__title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin: 0;
+  color: var(--color-text);
+}
+
+.lake-card__region {
+  color: var(--color-primary);
+  font-weight: 600;
+  font-size: 0.95rem;
+  margin: 0;
+}
+
+.lake-card__desc {
+  color: var(--color-text-light);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin: 0;
+  flex: 1;
+}
+
+.lake-card__count {
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--color-text);
+  margin: 8px 0;
+}
+
+.lake-card__types {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 12px 0;
+}
+
+.lake-type-badge {
+  padding: 4px 12px;
+  border-radius: 50px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.lake-type-badge.economy {
+  background: #e0f2fe;
+  color: #0369a1;
+}
+
+.lake-type-badge.comfort {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.lake-type-badge.premium {
+  background: #f3e8ff;
+  color: #7c3aed;
+}
+
+.lake-card__features {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: auto;
+  padding-top: 16px;
+  border-top: 1px solid var(--color-border);
+}
+
+.lake-feature {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 12px;
+  background: var(--color-bg-light);
+  border-radius: 50px;
+  font-size: 0.85rem;
+  color: var(--color-text);
+}
+
+.lake-card__link {
+  margin-top: 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 24px;
+  background: var(--color-primary);
+  color: white;
+  border-radius: 50px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: var(--transition);
+}
+
+.lake-card__link:hover {
+  background: var(--color-primary-dark);
+  transform: translateY(-2px);
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+  .lakes-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .lakes-filters {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    padding-bottom: 8px;
+    scrollbar-width: none;
+  }
+
+  .lakes-filters::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* ===== Lake Card ===== */
+.lake-card {
+  background: white;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  transition: var(--transition);
+  display: flex;
+  flex-direction: column;
+}
+
+.lake-card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-lg);
+}
+
+.lake-card__image {
+  height: 220px;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+.lake-card__badge {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  padding: 6px 16px;
+  border-radius: 50px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  background: var(--color-primary);
+  color: white;
+}
+
+.lake-card__badge--secondary {
+  background: var(--color-secondary);
+}
+
+.lake-card__badge--accent {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+}
+
+.lake-card__content {
+  padding: 24px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.lake-card__header {
+  margin-bottom: 4px;
+}
+
+.lake-card__title {
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-bottom: 4px;
+  color: var(--color-text);
+}
+
+.lake-card__region {
+  color: var(--color-text-light);
+  font-size: 0.9rem;
+}
+
+.lake-card__desc {
+  color: var(--color-text-light);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+/* Stats */
+.lake-card__stats {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px;
+  background: var(--color-bg-light);
+  border-radius: var(--radius-sm);
+  margin: 8px 0;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.stat__number {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  line-height: 1;
+}
+
+.stat__label {
+  font-size: 0.85rem;
+  color: var(--color-text-light);
+  margin-top: 4px;
+}
+
+.stat-divider {
+  width: 1px;
+  height: 40px;
+  background: var(--color-border);
+}
+
+.stat__types {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: flex-start;
+}
+
+/* Features */
+.lake-card__features {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 8px 0;
+}
+
+/* Hidden for filtering */
+.lake-card.hidden {
+  display: none;
+}
+
+/* ===== Lake Detail Page ===== */
+.lake-detail {
+  padding: 40px 0;
+}
+
+.lake-detail__header {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  align-items: center;
+  margin-bottom: 40px;
+}
+
+.lake-detail__image {
+  height: 400px;
+  border-radius: var(--radius);
+  background-size: cover;
+  background-position: center;
+  box-shadow: var(--shadow-lg);
+}
+
+.lake-detail__info h1 {
+  font-size: 2.2rem;
+  margin-bottom: 8px;
+}
+
+.lake-detail__region {
+  color: var(--color-primary);
+  font-weight: 500;
+  margin-bottom: 16px;
+  display: block;
+}
+
+.lake-detail__desc {
+  color: var(--color-text-light);
+  line-height: 1.7;
+  margin-bottom: 24px;
+}
+
+.lake-detail__stats {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.lake-stat {
+  background: var(--color-bg-light);
+  padding: 12px 20px;
+  border-radius: var(--radius-sm);
+}
+
+.lake-stat__value {
+  font-weight: 700;
+  font-size: 1.3rem;
+  color: var(--color-primary);
+}
+
+.lake-stat__label {
+  font-size: 0.9rem;
+  color: var(--color-text-light);
+}
+
+/* Cottages section on lake page */
+.lake-cottages__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.lake-cottages__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 24px;
+}
+
+/* ===== Адаптивность ===== */
+@media (max-width: 768px) {
+  .lakes-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .lake-card__stats {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .stat-divider {
+    width: 100%;
+    height: 1px;
+  }
+
+  .stat__types {
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+
+  .filters {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    padding-bottom: 8px;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .filter-btn {
+    flex-shrink: 0;
+  }
+
+  .lake-detail__header {
+    grid-template-columns: 1fr;
+  }
+
+  .lake-detail__image {
+    height: 300px;
+  }
+}

@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Каталог домиков — Моя волна</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/pages/catalog.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+  <header class="header" id="header">
+    <div class="container header__container">
+      <a href="index.html" class="logo"><span class="logo__icon">🌊</span><span class="logo__text">Моя волна</span></a>
+      <nav class="nav" id="nav">
+        <ul class="nav__list">
+          <li><a href="catalog.html" class="nav__link active">Каталог</a></li>
+          <li><a href="lakes.html" class="nav__link">Озёра</a></li>
+          <li><a href="about.html" class="nav__link">О компании</a></li>
+        </ul>
+      </nav>
+      <div class="header__actions">
+        <a href="cabinet.html" class="btn btn--outline">Войти</a>
+        <button class="burger" id="burger"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </header>
+
+  <section class="page-hero">
+    <div class="container">
+      <h1 class="page-hero__title">Каталог домиков</h1>
+      <p class="page-hero__subtitle">Найдите идеальный домик для вашего отдыха</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="catalog-layout">
+
+        <!-- Filters Sidebar -->
+        <aside class="filters-sidebar">
+          <div class="filter-group">
+            <h4>Тип домика</h4>
+            <label><input type="checkbox" name="type" value="economy"> 🔵 Эконом (120-150 BYN)</label>
+            <label><input type="checkbox" name="type" value="comfort"> 🟢 Комфорт (200-250 BYN)</label>
+            <label><input type="checkbox" name="type" value="premium"> 🟣 Премиум (300-425 BYN)</label>
+          </div>
+
+          <div class="filter-group">
+            <h4>Озеро</h4>
+            <select id="lakeFilter">
+              <option value="">Все озёра</option>
+              <option value="naroch">Нарочь</option>
+              <option value="braslav">Браславские озёра</option>
+              <option value="svityaz">Свитязь</option>
+              <option value="zaslavl">Заславское</option>
+              <option value="lukoml">Лукомльское</option>
+              <option value="myastro">Мястро</option>
+              <option value="beloe">Белое</option>
+              <option value="osveya">Освейское</option>
+              <option value="vygonovskoe">Выгоновское</option>
+              <option value="chervonoe">Червоное</option>
+            </select>
+          </div>
+
+          <div class="filter-group">
+            <h4>Цена за сутки</h4>
+            <div class="price-range">
+              <input type="number" id="minPrice" placeholder="От" min="120" max="425">
+              <input type="number" id="maxPrice" placeholder="До" min="120" max="425">
+            </div>
+          </div>
+
+          <div class="filter-group">
+            <label class="checkbox">
+              <input type="checkbox" id="hasBath"> 🛁 Только с баней/сауной
+            </label>
+          </div>
+
+          <button class="btn btn--primary btn--full" id="applyFilters">Применить фильтры</button>
+          <button class="btn btn--outline btn--full" id="resetFilters">Сбросить</button>
+        </aside>
+
+        <!-- Results + Sort -->
+        <main class="catalog-results">
+          <div class="results-header">
+            <span id="resultsCount">Загрузка...</span>
+
+            <!-- ✅ Новые кнопки сортировки по цене -->
+            <div class="sort-buttons">
+              <button class="sort-btn" data-sort="default">🔄 По умолчанию</button>
+              <button class="sort-btn" data-sort="asc">💰 По цене ↑</button>
+              <button class="sort-btn" data-sort="desc">💰 По цене ↓</button>
+            </div>
+          </div>
+
+          <div class="cottages-grid" id="cottagesGrid"></div>
+          <div id="loading" style="text-align:center;padding:40px;">Загрузка домиков...</div>
+          <div id="noResults" class="hidden" style="text-align:center;padding:40px;">Ничего не найдено 😔</div>
+        </main>
+
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container footer__container">
+      <div class="footer__brand">
+        <a href="index.html" class="logo"><span class="logo__icon">🌊</span><span class="logo__text">Моя
+            волна</span></a>
+        <p class="footer__desc">Аренда уютных домиков на берегу озёр Беларуси.</p>
+      </div>
+      <div class="footer__links">
+        <div class="footer__col">
+          <h4 class="footer__heading">Навигация</h4>
+          <ul class="footer__list">
+            <li><a href="catalog.html">Каталог</a></li>
+            <li><a href="lakes.html">Озёра</a></li>
+            <li><a href="about.html">О компании</a></li>
+          </ul>
+        </div>
+        <div class="footer__col">
+          <h4 class="footer__heading">Контакты</h4>
+          <ul class="footer__list">
+            <li>📞 <a href="tel:+375291234567">+375 (29) 123-45-67</a></li>
+            <li>✉️ <a href="mailto:info@mywave.by">info@mywave.by</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <div class="container">© 2026 «Моя волна». Все права защищены.</div>
+    </div>
+  </footer>
+
+  <!-- ✅ Встроенный скрипт — гарантированно работает -->
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      const grid = document.getElementById('cottagesGrid');
+      const loading = document.getElementById('loading');
+      const noResults = document.getElementById('noResults');
+      const countEl = document.getElementById('resultsCount');
+
+      let currentData = [];
+      let currentSort = 'default';
+
+      // Загрузка данных
+      async function loadData(filters = {}) {
+        loading.style.display = 'block';
+        grid.innerHTML = '';
+
+        try {
+          const params = new URLSearchParams();
+          if (filters.type) params.set('type', filters.type);
+          if (filters.lake) params.set('lake', filters.lake);
+          if (filters.min_price) params.set('min_price', filters.min_price);
+          if (filters.max_price) params.set('max_price', filters.max_price);
+          if (filters.has_bath) params.set('has_bath', '1');
+
+          const res = await fetch(`api/cottages.php?${params}`);
+          const data = await res.json();
+
+          loading.style.display = 'none';
+
+          if (!data.cottages || data.cottages.length === 0) {
+            noResults.style.display = 'block';
+            countEl.textContent = 'Найдено: 0';
+            currentData = [];
+            return;
+          }
+
+          noResults.style.display = 'none';
+          countEl.textContent = `Найдено: ${data.cottages.length}`;
+          currentData = data.cottages;
+          renderCottages(currentData);
+
+        } catch (e) {
+          console.error('Ошибка:', e);
+          loading.textContent = '⚠️ Ошибка загрузки';
+        }
+      }
+
+      // Рендер карточек
+      function renderCottages(data) {
+        // Сортировка
+        let sorted = [...data];
+        if (currentSort === 'asc') {
+          sorted.sort((a, b) => parseFloat(a.price_min) - parseFloat(b.price_min));
+        } else if (currentSort === 'desc') {
+          sorted.sort((a, b) => parseFloat(b.price_min) - parseFloat(a.price_min));
+        }
+
+        grid.innerHTML = sorted.map(c => {
+          // ✅ Используем type_slug и type_name из API
+          const badgeClass = c.type_slug || c.type || 'economy';
+          const typeName = c.type_name || (c.type === 'economy' ? 'Эконом' : c.type === 'comfort' ? 'Комфорт' : 'Премиум');
+
+          const img = c.image_url || 'https://via.placeholder.com/400x300?text=No+Image';
+
+          return `
+        <article class="cottage-card" data-type="${c.type_slug || c.type}">
+          <div class="cottage-card__image" style="background-image:url('${img}')">
+            <span class="cottage-card__badge ${badgeClass}">${typeName}</span>
+          </div>
+          <div class="cottage-card__content">
+            <h3 class="cottage-card__title">${c.name}</h3>
+            <div class="cottage-card__lake">📍 ${c.lake_name}, ${c.region}</div>
+            <div class="cottage-card__features">
+              ${(c.features || []).slice(0, 3).map(f => `<span>${f}</span>`).join('') ||
+            '<span>🍳 Кухня</span><span>🚿 Санузел</span><span>📶 Wi-Fi</span>'}
+            </div>
+            <div class="cottage-card__price">${c.price_min}–${c.price_max} BYN <span>/ сутки</span></div>
+            <a href="cottage.html?slug=${c.slug}" class="btn btn--primary btn--full">Подробнее</a>
+          </div>
+        </article>
+      `;
+        }).join('');
+      }
+
+      // Применение фильтров
+      document.getElementById('applyFilters')?.addEventListener('click', () => {
+        const type = document.querySelector('input[name="type"]:checked')?.value;
+        const lake = document.getElementById('lakeFilter').value;
+        const min_price = document.getElementById('minPrice').value;
+        const max_price = document.getElementById('maxPrice').value;
+        const has_bath = document.getElementById('hasBath').checked;
+
+        loadData({ type, lake, min_price, max_price, has_bath });
+      });
+
+      // Сброс фильтров
+      document.getElementById('resetFilters')?.addEventListener('click', () => {
+        document.querySelectorAll('input[name="type"]').forEach(cb => cb.checked = false);
+        document.getElementById('lakeFilter').value = '';
+        document.getElementById('minPrice').value = '';
+        document.getElementById('maxPrice').value = '';
+        document.getElementById('hasBath').checked = false;
+        loadData();
+      });
+
+      // Сортировка по цене
+      document.querySelectorAll('.sort-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.sort-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          currentSort = btn.dataset.sort;
+          if (currentData.length > 0) renderCottages(currentData);
+        });
+      });
+
+      // Сортировка по цене
+      document.querySelectorAll('.sort-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.sort-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          currentSort = btn.dataset.sort;
+          if (currentData.length > 0) renderCottages(currentData);
+        });
+      });
+
+      // ✅ ЧИТАЕМ ФИЛЬТРЫ ИЗ URL ПРИ ПЕРВОЙ ЗАГРУЗКЕ
+      function getFiltersFromUrl() {
+        const params = new URLSearchParams(window.location.search);
+        return {
+          type: params.get('type') || '',
+          lake: params.get('lake') || '',
+          min_price: params.get('min_price') || '',
+          max_price: params.get('max_price') || '',
+          has_bath: params.get('has_bath') === '1'
+        };
+      }
+
+      // ✅ Применяем фильтры из URL + подсвечиваем активные элементы формы
+      const urlFilters = getFiltersFromUrl();
+      if (urlFilters.type) {
+        document.querySelector(`input[name="type"][value="${urlFilters.type}"]`)?.setAttribute('checked', 'checked');
+      }
+      if (urlFilters.lake) {
+        document.getElementById('lakeFilter').value = urlFilters.lake;
+      }
+      if (urlFilters.min_price) {
+        document.getElementById('minPrice').value = urlFilters.min_price;
+      }
+      if (urlFilters.max_price) {
+        document.getElementById('maxPrice').value = urlFilters.max_price;
+      }
+      if (urlFilters.has_bath) {
+        document.getElementById('hasBath').checked = true;
+      }
+
+      // ✅ Первая загрузка с фильтрами из URL
+      loadData(urlFilters);
+    });
+  </script>
+
+</body>
+
+</html>
