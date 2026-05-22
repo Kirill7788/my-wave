@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Выгоновское озеро — Домики | Моя волна</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <header class="header" id="header">
+        <div class="container header__container"><a href="index.html" class="logo"><span
+                    class="logo__icon">🌊</span><span class="logo__text">Моя волна</span></a>
+            <nav class="nav" id="nav">
+                <ul class="nav__list">
+                    <li><a href="catalog.html" class="nav__link">Каталог</a></li>
+                    <li><a href="lakes.html" class="nav__link active">Озёра</a></li>
+                    <li><a href="about.html" class="nav__link">О компании</a></li>
+                </ul>
+            </nav>
+            <div class="header__actions"><a href="cabinet.html" class="btn btn--outline btn--small" id="authBtn">Войти</a><button
+                    class="burger" id="burger"><span></span><span></span><span></span></button></div>
+        </div>
+    </header>
+    <section class="page-hero">
+        <div class="container">
+            <h1 class="page-hero__title">Выгоновское озеро</h1>
+            <p class="page-hero__subtitle">Брестская область • 6 домиков</p>
+        </div>
+    </section>
+    <section class="section">
+        <div class="container">
+            <div class="lake-detail__header">
+                <div class="lake-detail__image" style="background-image:url('images/lakes/vygonovskoe.jpg')"></div>
+                <div class="lake-detail__info">
+                    <h1>Выгоновское озеро</h1><span class="lake-detail__region">Брестская область</span>
+                    <p class="lake-detail__desc">Уникальная экосистема, богатый растительный и животный мир. Отличное
+                        место для наблюдения за птицами.</p>
+                    <div class="lake-detail__stats">
+                        <div class="lake-stat"><span class="lake-stat__value">6</span><span
+                                class="lake-stat__label">домиков</span></div>
+                        <div class="lake-stat"><span class="lake-stat__value">3</span><span
+                                class="lake-stat__label">эконом</span></div>
+                        <div class="lake-stat"><span class="lake-stat__value">3</span><span
+                                class="lake-stat__label">комфорт</span></div>
+                    </div>
+                    <div class="lake-card__features" style="margin-top:20px"><span class="feature-tag">🦆 Наблюдение за
+                            птицами</span><span class="feature-tag">🌿 Уникальная природа</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="section section--light">
+        <div class="container">
+            <div class="lake-cottages__header">
+                <h2 class="section__title" style="text-align:left;margin:0">Домики на Выгоновском</h2>
+                <div class="filters"><button class="filter-btn active" data-filter="all">Все</button><button
+                        class="filter-btn" data-filter="economy">Эконом</button><button class="filter-btn"
+                        data-filter="comfort">Комфорт</button></div>
+            </div>
+            <div class="lake-cottages__grid" id="grid"></div>
+            <div class="section__center"><a href="catalog.html?lake=vygonovskoe" class="btn btn--outline">Все домики в
+                    каталоге →</a></div>
+        </div>
+    </section>
+    <section class="cta">
+        <div class="container cta__container">
+            <h2 class="cta__title">Готовы отдохнуть на Выгоновском?</h2>
+            <p class="cta__text">Выберите домик и забронируйте даты онлайн</p><a href="catalog.html?lake=vygonovskoe"
+                class="btn btn--secondary btn--large">Выбрать домик</a>
+        </div>
+    </section>
+    <footer class="footer">
+        <div class="container footer__container">
+            <div class="footer__brand"><a href="index.html" class="logo"><span class="logo__icon">🌊</span><span
+                        class="logo__text">Моя волна</span></a>
+                <p class="footer__desc">Аренда уютных домиков на берегу озёр Беларуси.</p>
+            </div>
+            <div class="footer__links">
+                <div class="footer__col">
+                    <h4 class="footer__heading">Навигация</h4>
+                    <ul class="footer__list">
+                        <li><a href="catalog.html">Каталог</a></li>
+                        <li><a href="lakes.html">Озёра</a></li>
+                        <li><a href="about.html">О компании</a></li>
+                    </ul>
+                </div>
+                <div class="footer__col">
+                    <h4 class="footer__heading">Контакты</h4>
+                    <ul class="footer__list">
+                        <li>📞 <a href="tel:+375291234567">+375 (29) 123-45-67</a></li>
+                        <li>✉️ <a href="mailto:info@mywave.by">info@mywave.by</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="footer__bottom">
+            <div class="container">© 2026 «Моя волна». Все права защищены.</div>
+        </div>
+    </footer>
+    <script src="js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+        const g = document.getElementById('grid');
+        const btns = document.querySelectorAll('.filters .filter-btn');
+        
+        async function load(type = 'all') {
+            const params = new URLSearchParams({ lake: window.location.pathname.split('-')[1]?.split('.')[0] || 'all' });
+            if (type !== 'all') params.set('type', type);
+            
+            try {
+            const res = await fetch(`api/cottages.php?${params}`);
+            const data = await res.json();
+            g.innerHTML = data.cottages.map(c => `
+                <article class="cottage-card" data-type="${c.type_slug}">
+                <div class="cottage-card__image" style="background-image:url('${c.image_url}')"></div>
+                <div class="cottage-card__content">
+                    <h3 class="cottage-card__title">${c.name}</h3>
+                    <div class="cottage-card__lake">📍 ${c.lake_name}</div>
+                    <div class="cottage-card__features">${c.features.slice(0,3).map(f=>`<span>${f}</span>`).join('')}</div>
+                    <div class="cottage-card__price">${c.price_min}–${c.price_max} BYN <span>/ ночь</span></div>
+                    <a href="catalog.html?lake=${c.lake_id}&type=${c.type_slug}" class="btn btn--primary btn--full">Забронировать</a>
+                </div>
+                </article>
+            `).join('');
+            } catch(e) { g.innerHTML = '<p>Ошибка загрузки</p>'; }
+        }
+
+        load();
+        btns.forEach(b => b.addEventListener('click', () => {
+            btns.forEach(x => x.classList.remove('active'));
+            b.classList.add('active');
+            load(b.dataset.filter);
+        }));
+        });
+    </script>
+</body>
+
+</html>
