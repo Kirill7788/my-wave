@@ -1,0 +1,23 @@
+{
+  "name": "mywave-tests",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "test":          "playwright test",
+    "test:ci":       "playwright test --reporter=github,html",
+    "test:headed":   "playwright test --headed",
+    "test:ui":       "playwright test --ui",
+    "test:auth":     "playwright test tests/e2e/auth/",
+    "test:bookings": "playwright test tests/e2e/bookings/",
+    "test:security": "playwright test tests/e2e/security/",
+    "test:api":      "playwright test tests/e2e/api/",
+    "test:frontend": "playwright test tests/e2e/frontend/ tests/e2e/cottages/",
+    "test:race":     "playwright test tests/e2e/bookings/race-conditions.spec.ts --workers=1",
+    "report":        "playwright show-report"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.49.0",
+    "@types/node": "^22.0.0",
+    "typescript": "^5.7.0"
+  }
+}

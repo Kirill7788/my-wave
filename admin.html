@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Админ-панель — Моя волна</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    .admin-wrapper {
+      min-height: 100vh;
+      background: var(--color-bg-light);
+      padding: 100px 20px 60px;
+    }
+
+    .admin-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 32px;
+    }
+
+    .admin-stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+
+    .stat-card {
+      background: white;
+      padding: 20px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-md);
+      text-align: center;
+    }
+
+    .stat-card .num {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--color-primary);
+    }
+
+    .stat-card .label {
+      color: var(--color-text-light);
+      font-size: 0.9rem;
+    }
+
+    .admin-tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 24px;
+      border-bottom: 1px solid var(--color-border);
+      padding-bottom: 8px;
+    }
+
+    .admin-tab {
+      padding: 10px 20px;
+      border: none;
+      background: none;
+      cursor: pointer;
+      font-weight: 500;
+      color: var(--color-text-light);
+      border-radius: 8px 8px 0 0;
+    }
+
+    .admin-tab.active {
+      background: white;
+      color: var(--color-primary);
+      box-shadow: 0 -2px 0 var(--color-primary) inset;
+    }
+
+    .admin-content {
+      background: white;
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: var(--shadow-md);
+    }
+
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.95rem;
+    }
+
+    .data-table th {
+      text-align: left;
+      padding: 12px 16px;
+      background: var(--color-bg-light);
+      font-weight: 600;
+      border-bottom: 2px solid var(--color-border);
+    }
+
+    .data-table td {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .data-table tr:hover {
+      background: #f8fafc;
+    }
+
+    .status-select {
+      padding: 6px 12px;
+      border-radius: 6px;
+      border: 1px solid var(--color-border);
+      background: white;
+      font-size: 0.9rem;
+    }
+
+    .btn--small {
+      padding: 6px 12px;
+      font-size: 0.85rem;
+    }
+
+    .empty {
+      text-align: center;
+      padding: 40px;
+      color: var(--color-text-light);
+    }
+
+    @media (max-width: 768px) {
+      .admin-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+      }
+
+      .admin-tabs {
+        overflow-x: auto;
+        flex-wrap: nowrap;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="header" id="header">
+    <div class="container header__container">
+      <a href="index.html" class="logo"><span class="logo__wordmark">My Wave</span></a>
+      <nav class="nav">
+        <a href="catalog.html">Каталог</a>
+        <a href="lakes.html">Озёра</a>
+        <a href="about.html">О нас</a>
+      </nav>
+      <div class="header__actions">
+        <a href="index.html" class="btn btn--outline">На сайт</a>
+        <button class="burger" id="burger"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </header>
+
+  <div class="admin-wrapper container">
+    <div class="admin-header">
+      <h1>⚙️ Админ-панель</h1>
+      <button id="logoutBtn" class="btn btn--outline">🚪 Выйти</button>
+    </div>
+
+    <!-- Статистика -->
+    <div class="admin-stats">
+      <div class="stat-card">
+        <div class="num" id="statUsers">–</div>
+        <div class="label">Пользователей</div>
+      </div>
+      <div class="stat-card">
+        <div class="num" id="statBookings">–</div>
+        <div class="label">Бронирований</div>
+      </div>
+      <div class="stat-card">
+        <div class="num" id="statCottages">–</div>
+        <div class="label">Домиков</div>
+      </div>
+    </div>
+
+    <!-- Вкладки -->
+    <div class="admin-tabs">
+      <button class="admin-tab active" data-tab="bookings">📋 Бронирования</button>
+      <button class="admin-tab" data-tab="cottages">🏠 Домики</button>
+      <button class="admin-tab" data-tab="users">👥 Пользователи</button>
+    </div>
+
+    <!-- Контент -->
+    <div class="admin-content">
+
+      <!-- Бронирования -->
+      <div id="tab-bookings">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Домик</th>
+              <th>Гость</th>
+              <th>Даты</th>
+              <th>Гостей</th>
+              <th>Сумма</th>
+              <th>Статус</th>
+              <th>Действия</th>
+            </tr>
+          </thead>
+          <tbody id="bookingsTable"></tbody>
+        </table>
+        <div id="bookingsEmpty" class="empty" style="display:none;">Нет бронирований</div>
+      </div>
+
+      <!-- Домики -->
+      <div id="tab-cottages" style="display:none;">
+        <div style="margin-bottom:16px;display:flex;justify-content:space-between;align-items:center;">
+          <h3 style="margin:0;">Список домиков</h3>
+          <a href="admin-cottages.html" class="btn btn--primary btn--small">+ Добавить</a>
+        </div>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Название</th>
+              <th>Озеро</th>
+              <th>Тип</th>
+              <th>Цена</th>
+              <th>Вместимость</th>
+              <th>Действия</th>
+            </tr>
+          </thead>
+          <tbody id="cottagesTable"></tbody>
+        </table>
+        <div id="cottagesEmpty" class="empty" style="display:none;">Нет домиков</div>
+      </div>
+
+      <!-- Пользователи -->
+      <div id="tab-users" style="display:none;">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Имя</th>
+              <th>Email</th>
+              <th>Телефон</th>
+              <th>Роль</th>
+              <th>Дата</th>
+            </tr>
+          </thead>
+          <tbody id="usersTable"></tbody>
+        </table>
+        <div id="usersEmpty" class="empty" style="display:none;">Нет пользователей</div>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="js/api.js"></script>
+  <script>
+    // Проверка админа
+    (async () => {
+      try {
+        const { user } = await API.getCurrentUser();
+        if (!user || user.role !== 'admin') window.location.replace('index.html');
+      } catch { window.location.replace('cabinet.html'); }
+    })();
+
+    // Вкладки
+    document.querySelectorAll('.admin-tab').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.admin-tab').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const tab = btn.dataset.tab;
+        ['bookings', 'cottages', 'users'].forEach(t => {
+          document.getElementById(`tab-${t}`).style.display = t === tab ? 'block' : 'none';
+        });
+        if (tab === 'bookings') loadBookings();
+        if (tab === 'cottages') loadCottages();
+        if (tab === 'users') loadUsers();
+      });
+    });
+
+    // Загрузка данных
+    async function loadStats() {
+      try {
+        const [cottages, bookings] = await Promise.all([
+          API.getCottages({ limit: 999 }),
+          API.request('bookings.php?all=1')
+        ]);
+        document.getElementById('statCottages').textContent = cottages.cottages?.length || 0;
+        document.getElementById('statBookings').textContent = bookings.bookings?.length || 0;
+        // Пользователей можно добавить отдельным эндпоинтом, пока заглушка
+        document.getElementById('statUsers').textContent = '–';
+      } catch { }
+    }
+
+    async function loadBookings() {
+      try {
+        const { bookings } = await API.request('bookings.php?all=1');
+        const tbody = document.getElementById('bookingsTable');
+        const empty = document.getElementById('bookingsEmpty');
+        if (!bookings?.length) { tbody.innerHTML = ''; empty.style.display = 'block'; return; }
+        empty.style.display = 'none';
+        tbody.innerHTML = bookings.map(b => `
+          <tr>
+            <td>${b.id}</td>
+            <td><a href="cottage.html?slug=${b.cottage_slug || ''}" target="_blank">${b.cottage_name}</a></td>
+            <td>${b.guest_name}<br><small style="color:var(--color-text-light)">${b.guest_email}</small></td>
+            <td>${b.check_in}<br>${b.check_out}</td>
+            <td>${b.guests_count || 2}</td>
+            <td>${b.total_price} BYN</td>
+            <td>
+              <select class="status-select" data-id="${b.id}" data-status="${b.status}">
+                ${['pending', 'confirmed', 'cancelled', 'completed'].map(s =>
+          `<option value="${s}" ${b.status === s ? 'selected' : ''}>${translateStatus(s)}</option>`).join('')}
+              </select>
+            </td>
+            <td>
+              <button class="btn btn--outline btn--small" onclick="cancelBooking(${b.id})">Отменить</button>
+            </td>
+          </tr>
+        `).join('');
+        // Слушатели смены статуса
+        tbody.querySelectorAll('.status-select').forEach(sel => {
+          sel.addEventListener('change', async (e) => {
+            try {
+              await API.request(`bookings.php?id=${e.target.dataset.id}`, {
+                method: 'PATCH', body: { status: e.target.value }
+              });
+              alert('✅ Статус обновлён');
+            } catch (err) { alert('❌ ' + err.message); e.target.value = e.target.dataset.status; }
+          });
+        });
+      } catch (e) { console.error(e); }
+    }
+
+    async function loadCottages() {
+      try {
+        const { cottages } = await API.getCottages({ limit: 999 });
+        const tbody = document.getElementById('cottagesTable');
+        const empty = document.getElementById('cottagesEmpty');
+        if (!cottages?.length) { tbody.innerHTML = ''; empty.style.display = 'block'; return; }
+        empty.style.display = 'none';
+        tbody.innerHTML = cottages.map(c => `
+          <tr>
+            <td>${c.id}</td>
+            <td>${c.name}<br><small style="color:var(--color-text-light)">${c.slug}</small></td>
+            <td>${c.lake_name}</td>
+            <td>${c.type_name}</td>
+            <td>${c.price_min}–${c.price_max}</td>
+            <td>${c.capacity}</td>
+            <td>
+              <a href="admin-cottages.html?edit=${c.id}" class="btn btn--outline btn--small">✏️</a>
+              <button class="btn btn--outline btn--small" style="color:#dc2626" onclick="deleteCottage(${c.id})">🗑️</button>
+            </td>
+          </tr>
+        `).join('');
+      } catch { }
+    }
+
+    async function loadUsers() {
+      // Пока заглушка — можно добавить эндпоинт /api/auth.php?action=users
+      document.getElementById('usersTable').innerHTML = '<tr><td colspan="6" class="empty">Загрузка пользователей...</td></tr>';
+    }
+
+    function translateStatus(s) {
+      return { pending: 'Ожидает', confirmed: 'Подтверждено ✅', cancelled: 'Отменено', completed: 'Завершено' }[s] || s;
+    }
+
+    window.cancelBooking = async (id) => {
+      if (!confirm('Отменить это бронирование?')) return;
+      try {
+        await API.cancelBooking(id);
+        alert('✅ Отменено'); loadBookings();
+      } catch (err) { alert('❌ ' + err.message); }
+    };
+
+    window.deleteCottage = async (id) => {
+      if (!confirm('Удалить этот домик? Это действие необратимо.')) return;
+      try {
+        await API.request(`cottages.php?id=${id}`, { method: 'DELETE' });
+        alert('✅ Удалено'); loadCottages(); loadStats();
+      } catch (err) { alert('❌ ' + err.message); }
+    };
+
+    // Выход
+    document.getElementById('logoutBtn')?.addEventListener('click', async () => {
+      await API.logout();
+      sessionStorage.removeItem('currentUser');
+      window.location.replace('index.html');
+    });
+
+    // Инициализация
+    document.addEventListener('DOMContentLoaded', () => {
+      loadStats();
+      loadBookings();
+    });
+  </script>
+</body>
+
+</html>

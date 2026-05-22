@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Каталог коттеджей — Моя волна</title>
+  <meta name="description" content="Каталог домиков у озёр Беларуси. Фильтрация по типу, озеру, цене. Эконом, комфорт и премиум-отдых.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/pages/catalog.css" />
+</head>
+
+<body>
+
+  <!-- Header -->
+  <header class="header" id="header">
+    <div class="container header__container">
+      <a href="index.html" class="logo">
+        <span class="logo__wordmark">My Wave</span>
+      </a>
+      <nav class="nav" id="nav" aria-label="Главное меню">
+        <ul class="nav__list">
+          <li><a href="catalog.html" class="nav__link active">Каталог</a></li>
+          <li><a href="lakes.html"   class="nav__link">Озёра</a></li>
+          <li><a href="about.html"   class="nav__link">О компании</a></li>
+        </ul>
+      </nav>
+      <div class="header__actions">
+        <a href="cabinet.html" class="btn btn--outline btn--small" id="authBtn">Войти</a>
+        <button class="burger" id="burger" aria-label="Открыть меню" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Page header -->
+  <div class="catalog-page-header">
+    <div class="container">
+      <h1>Каталог коттеджей</h1>
+      <p>Найдите идеальный коттедж для вашего отдыха у воды</p>
+    </div>
+  </div>
+
+  <!-- Catalog -->
+  <div class="container">
+    <div class="catalog-layout">
+
+      <!-- Sidebar filters -->
+      <aside class="filters-sidebar" aria-label="Фильтры">
+        <p class="sidebar-title">Фильтры</p>
+
+        <div class="filter-group">
+          <h4>Тип коттеджа</h4>
+          <label><input type="radio" name="type" value=""> Все типы</label>
+          <label><input type="radio" name="type" value="economy"> Эконом · 120–150 BYN</label>
+          <label><input type="radio" name="type" value="comfort"> Комфорт · 200–250 BYN</label>
+          <label><input type="radio" name="type" value="premium"> Премиум · 300–425 BYN</label>
+        </div>
+
+        <div class="filter-group">
+          <h4>Озеро</h4>
+          <select id="lakeFilter" aria-label="Выбрать озеро">
+            <option value="">Все озёра</option>
+            <option value="naroch">Нарочь</option>
+            <option value="braslav">Браславские озёра</option>
+            <option value="svityaz">Свитязь</option>
+            <option value="zaslavl">Заславское</option>
+            <option value="lukoml">Лукомльское</option>
+            <option value="myastro">Мястро</option>
+            <option value="beloe">Белое</option>
+            <option value="osveya">Освейское</option>
+            <option value="vygonovskoe">Выгоновское</option>
+            <option value="chervonoe">Червоное</option>
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <h4>Цена за сутки, BYN</h4>
+          <div class="price-range">
+            <input type="number" id="minPrice" placeholder="От" min="120" max="425" aria-label="Минимальная цена" />
+            <input type="number" id="maxPrice" placeholder="До" min="120" max="425" aria-label="Максимальная цена" />
+          </div>
+        </div>
+
+        <div class="filter-group">
+          <label class="checkbox">
+            <input type="checkbox" id="hasBath" />
+            Только с баней / сауной
+          </label>
+        </div>
+
+        <div class="sidebar-actions">
+          <button class="btn btn--forest btn--full" id="applyFilters">Применить</button>
+          <button class="btn btn--ghost" id="resetFilters" style="text-align:center;">Сбросить фильтры</button>
+        </div>
+      </aside>
+
+      <!-- Results -->
+      <main class="catalog-results" aria-live="polite" aria-label="Результаты поиска">
+
+        <div class="results-header">
+          <span class="results-count" id="resultsCount">Загрузка...</span>
+          <div class="sort-buttons">
+            <button class="sort-btn active" data-sort="default">По умолчанию</button>
+            <button class="sort-btn" data-sort="asc">Цена ↑</button>
+            <button class="sort-btn" data-sort="desc">Цена ↓</button>
+          </div>
+        </div>
+
+        <div class="cottages-grid" id="cottagesGrid"></div>
+        <div id="loading" class="loading">Загрузка коттеджей...</div>
+        <div id="noResults" class="hidden no-results">Ничего не найдено. Попробуйте изменить фильтры.</div>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer" id="contacts">
+    <div class="container footer__container">
+      <div class="footer__brand">
+        <a href="index.html" class="logo">
+          <span class="logo__wordmark">My Wave</span>
+        </a>
+        <p class="footer__tagline">Аренда уютных коттеджей<br>на берегу озёр Беларуси.</p>
+      </div>
+      <div class="footer__col">
+        <h4 class="footer__heading">Навигация</h4>
+        <ul class="footer__list">
+          <li><a href="catalog.html">Каталог</a></li>
+          <li><a href="lakes.html">Озёра</a></li>
+          <li><a href="about.html">О компании</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h4 class="footer__heading">Контакты</h4>
+        <ul class="footer__list">
+          <li><a href="tel:+375291234567">+375 (29) 123-45-67</a></li>
+          <li><a href="mailto:info@mywave.by">info@mywave.by</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer__bottom container">
+      <span>© 2026 «Моя волна». Все права защищены.</span>
+    </div>
+  </footer>
+
+  <script src="js/utils/dom.js"></script>
+  <script src="js/components/CottageCard.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/catalog-filters.js"></script>
+
+</body>
+</html>

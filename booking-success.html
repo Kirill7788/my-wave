@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Бронирование успешно — Моя волна</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    .success-wrapper {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+      background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+    }
+
+    .success-card {
+      background: white;
+      border-radius: 24px;
+      padding: 48px 40px;
+      max-width: 520px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+    }
+
+    .success-icon {
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 24px;
+      font-size: 2.5rem;
+      color: white;
+    }
+
+    .success-card h1 {
+      font-size: 1.8rem;
+      margin-bottom: 12px;
+    }
+
+    .success-card p {
+      color: var(--color-text-light);
+      margin-bottom: 32px;
+      line-height: 1.6;
+    }
+
+    .booking-summary {
+      background: var(--color-bg-light);
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 32px;
+      text-align: left;
+    }
+
+    .booking-summary .row {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 0;
+      border-bottom: 1px dashed var(--color-border);
+    }
+
+    .booking-summary .row:last-child {
+      border-bottom: none;
+      font-weight: 600;
+      color: var(--color-primary);
+      font-size: 1.1rem;
+    }
+
+    .success-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .success-actions .btn {
+      padding: 14px;
+      font-size: 1rem;
+    }
+
+    .success-actions .btn--outline {
+      background: white;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="success-wrapper">
+    <div class="success-card">
+      <div class="success-icon">✓</div>
+      <h1>Бронирование успешно!</h1>
+      <p>Ваша заявка принята. Мы отправили подтверждение на вашу почту. Ожидайте звонка менеджера для уточнения деталей.
+      </p>
+
+      <div class="booking-summary" id="bookingSummary">
+        <div class="row"><span>Домик</span><strong id="sumName">Загрузка...</strong></div>
+        <div class="row"><span>Даты</span><span id="sumDates">—</span></div>
+        <div class="row"><span>Гости</span><span id="sumGuests">2</span></div>
+        <div class="row"><span>Итого</span><strong id="sumTotal">0 BYN</strong></div>
+      </div>
+
+      <div class="success-actions">
+        <a href="dashboard.html" class="btn btn--primary">Мои бронирования</a>
+        <a href="catalog.html" class="btn btn--outline">Продолжить выбор</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Получаем данные из sessionStorage (заполняются при бронировании)
+    const booking = JSON.parse(sessionStorage.getItem('booking') || '{}');
+
+    if (booking.cottage_name) {
+      document.getElementById('sumName').textContent = booking.cottage_name;
+      document.getElementById('sumDates').textContent = `${booking.check_in} — ${booking.check_out}`;
+      document.getElementById('sumGuests').textContent = booking.guests || 2;
+      document.getElementById('sumTotal').textContent = `${booking.total || 0} BYN`;
+    } else {
+      document.getElementById('bookingSummary').innerHTML = '<p style="text-align:center;color:var(--color-text-light)">Детали бронирования не найдены</p>';
+    }
+
+    // Очищаем после показа
+    sessionStorage.removeItem('booking');
+  </script>
+</body>
+
+</html>

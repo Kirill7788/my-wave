@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Озёра Беларуси — Моя волна</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Inter:wght@300;400;500;600&display=swap"
+    rel="stylesheet">
+  <style>
+    /* ===== Lakes Page Design (встроено для удобства) ===== */
+    .lakes-section {
+      padding: 100px 0 60px;
+      background: var(--c-linen);
+    }
+
+    .lakes-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 28px;
+      margin-top: 40px;
+    }
+
+    .lake-card {
+      background: var(--color-bg-card);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow-md);
+      transition: var(--transition);
+      display: flex;
+      flex-direction: column;
+      border: 1px solid var(--color-border);
+    }
+
+    .lake-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--color-primary);
+    }
+
+    .lake-card__image {
+      height: 200px;
+      background-size: cover;
+      background-position: center;
+      position: relative;
+    }
+
+    .lake-card__image::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.25), transparent 60%);
+      pointer-events: none;
+    }
+
+    .lake-card__badge {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      padding: 5px 14px;
+      border-radius: 50px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: white;
+      background: var(--color-primary);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+      z-index: 2;
+    }
+
+    .lake-card__content {
+      padding: 22px 24px 24px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .lake-card__title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin: 0;
+      color: var(--color-text);
+    }
+
+    .lake-card__region {
+      color: var(--color-primary);
+      font-weight: 500;
+      font-size: 0.9rem;
+      margin: 0;
+    }
+
+    .lake-card__desc {
+      color: var(--color-text-light);
+      font-size: 0.92rem;
+      line-height: 1.5;
+      margin: 0;
+      flex: 1;
+    }
+
+    .lake-card__count {
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: var(--color-text);
+      margin: 4px 0;
+    }
+
+    .lake-card__types {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 8px 0;
+    }
+
+    .lake-type-badge {
+      padding: 4px 12px;
+      border-radius: 50px;
+      font-size: 0.78rem;
+      font-weight: 600;
+    }
+
+    .lake-type-badge.economy {
+      background: #e0f2fe;
+      color: #0369a1;
+      border: 1px solid #bae6fd;
+    }
+
+    .lake-type-badge.comfort {
+      background: #dcfce7;
+      color: #15803d;
+      border: 1px solid #bbf7d0;
+    }
+
+    .lake-type-badge.premium {
+      background: #f3e8ff;
+      color: #7c3aed;
+      border: 1px solid #e9d5ff;
+    }
+
+    .lake-card__features {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid var(--color-border);
+    }
+
+    .lake-feature {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 12px 5px 6px;
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 50px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
+      font-size: 0.82rem;
+      color: var(--color-text);
+      font-weight: 500;
+      transition: var(--transition);
+    }
+
+    .lake-feature:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.06);
+      border-color: var(--color-primary);
+    }
+
+    .lake-feature__icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+      font-size: 0.9rem;
+      flex-shrink: 0;
+    }
+
+    .lake-card__link {
+      margin-top: 16px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 11px 24px;
+      background: var(--color-primary);
+      color: white;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      text-decoration: none;
+      transition: var(--transition);
+      box-shadow: 0 2px 6px rgba(74, 144, 164, 0.25);
+    }
+
+    .lake-card__link:hover {
+      background: var(--color-primary-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(74, 144, 164, 0.35);
+    }
+
+    @media (max-width: 768px) {
+      .lakes-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      .lakes-section {
+        padding: 80px 0 40px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="header" id="header">
+    <div class="container header__container">
+      <a href="index.html" class="logo"><span class="logo__wordmark">My Wave</span></a>
+      <nav class="nav" id="nav">
+        <ul class="nav__list">
+          <li><a href="catalog.html" class="nav__link">Каталог</a></li>
+          <li><a href="lakes.html" class="nav__link active">Озёра</a></li>
+          <li><a href="about.html" class="nav__link">О компании</a></li>
+        </ul>
+      </nav>
+      <div class="header__actions">
+        <a href="cabinet.html" class="btn btn--outline btn--small" id="authBtn">Войти</a>
+        <button class="burger" id="burger" aria-label="Открыть меню"
+          aria-expanded="false"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </header>
+
+  <section class="lakes-section">
+    <div class="container">
+      <h1 class="section-title" style="text-align:center;">Наши локации</h1>
+      <p class="section-subtitle" style="text-align:center; max-width:600px; margin:0 auto 32px;">
+        Коттеджи на берегу самых красивых озёр и водохранилищ Беларуси
+      </p>
+
+      <!-- Сетка озёр -->
+      <div class="lakes-grid">
+
+        <!-- Нарочь -->
+        <div class="lake-card" data-type="all premium comfort">
+          <div class="lake-card__image" style="background-image: url('images/lakes/naroch.jpg')">
+            <span class="lake-card__badge">Популярное</span>
+          </div>
+          <div class="lake-card__content">
+            <h3 class="lake-card__title">Озеро Нарочь</h3>
+            <p class="lake-card__region">Минская область</p>
+            <p class="lake-card__desc">Крупнейшее озеро Беларуси, «Белорусское море». Кристально чистая вода, сосновые
+              леса, развитая инфраструктура.</p>
+            <div class="lake-card__count">6 коттеджей</div>
+            <div class="lake-card__types">
+              <span class="lake-type-badge economy">эконом</span>
+              <span class="lake-type-badge comfort">комфорт</span>
+              <span class="lake-type-badge premium">премиум</span>
+            </div>
+            <div class="lake-card__features">
+              <span class="lake-feature"><span class="lake-feature__icon">🏖️</span> Пляж</span>
+              <span class="lake-feature"><span class="lake-feature__icon">🌲</span> Лес</span>
+              <span class="lake-feature"><span class="lake-feature__icon">🚤</span> Прокат лодок</span>
+            </div>
+            <a href="catalog.html?lake=naroch" class="lake-card__link">Коттеджи на Нарочи →</a>
+          </div>
+        </div>
+
+        <!-- Браслав -->
+        <div class="lake-card" data-type="all premium comfort">
+          <div class="lake-card__image" style="background-image: url('images/lakes/braslav.jpg')">
+            <span class="lake-card__badge">Нацпарк</span>
+          </div>
+          <div class="lake-card__content">
+            <h3 class="lake-card__title">Браславские озёра</h3>
+            <p class="lake-card__region">Витебская область</p>
+            <p class="lake-card__desc">Жемчужина Беларуси. Более 50 озёр, соединённых реками и протоками. Уникальная
+              природа национального парка.</p>
+            <div class="lake-card__count">3 коттеджа</div>
+            <div class="lake-card__types">
+              <span class="lake-type-badge economy">эконом</span>
+              <span class="lake-type-badge comfort">комфорт</span>
+              <span class="lake-type-badge premium">премиум</span>
+            </div>
+            <div class="lake-card__features">
+              <span class="lake-feature"><span class="lake-feature__icon">🏞️</span> Нацпарк</span>
+              <span class="lake-feature"><span class="lake-feature__icon">🎣</span> Рыбалка</span>
+              <span class="lake-feature"><span class="lake-feature__icon">🚴</span> Велопрокат</span>
+            </div>
+            <a href="catalog.html?lake=braslav" class="lake-card__link">Коттеджи на Браславских →</a>
+          </div>
+        </div>
+
+        <!-- Свитязь -->
+        <div class="lake-card" data-type="all comfort">
+          <div class="lake-card__image" style="background-image: url('images/lakes/svityaz.jpg')"></div>
+          <div class="lake-card__content">
+            <h3 class="lake-card__title">Озеро Свитязь</h3>
+            <p class="lake-card__region">Гродненская область</p>
+            <p class="lake-card__desc">Самое глубокое озеро Беларуси (более 15 м). Легендарное место с кристальной водой
+              и песчаными пляжами.</p>
+            <div class="lake-card__count">3 коттеджа</div>
+            <div class="lake-card__types">
+              <span class="lake-type-badge economy">эконом</span>
+              <span class="lake-type-badge comfort">комфорт</span>
+              <span class="lake-type-badge premium">премиум</span>
+            </div>
+            <div class="lake-card__features">
+              <span class="lake-feature"><span class="lake-feature__icon">🏖️</span> Песчаный пляж</span>
+              <span class="lake-feature"><span class="lake-feature__icon">💧</span> Чистейшая вода</span>
+            </div>
+            <a href="catalog.html?lake=svityaz" class="lake-card__link">Коттеджи на Свитязи →</a>
+          </div>
+        </div>
+
+        <!-- Заславль -->
+        <div class="lake-card" data-type="all comfort minsk">
+          <div class="lake-card__image" style="background-image: url('images/lakes/zaslavl.jpg')">
+            <span class="lake-card__badge">Рядом с Минском</span>
+          </div>
+          <div class="lake-card__content">
+            <h3 class="lake-card__title">Заславское водохранилище</h3>
+            <p class="lake-card__region">Минская область</p>
+            <p class="lake-card__desc">Всего в 25 км от Минска. Идеально для быстрого побега из города. Минское море с
+              развитой инфраструктурой.</p>
+            <div class="lake-card__count">3 коттеджа</div>
+            <div class="lake-card__types">
+              <span class="lake-type-badge economy">эконом</span>
+              <span class="lake-type-badge comfort">комфорт</span>
+              <span class="lake-type-badge premium">премиум</span>
+            </div>
+            <div class="lake-card__features">
+              <span class="lake-feature"><span class="lake-feature__icon">🚗</span> 25 км от Минска</span>
+              <span class="lake-feature"><span class="lake-feature__icon">⚡</span> Быстрый заезд</span>
+            </div>
+            <a href="catalog.html?lake=zaslavl" class="lake-card__link">Коттеджи на Заславском →</a>
+          </div>
+        </div>
+
+        <!-- Лукомль -->
+        <div class="lake-card" data-type="all comfort">
+          <div class="lake-card__image" style="background-image: url('images/lakes/lukoml.jpg')"></div>
+          <div class="lake-card__content">
+            <h3 class="lake-card__title">Лукомльское озеро</h3>
+            <p class="lake-card__region">Витебская область</p>
+            <p class="lake-card__desc">Второе по величине озеро Беларуси. Отличная рыбалка, спокойный отдых вдали от
+              туристических троп.</p>
+            <div class="lake-card__count">3 коттеджа</div>
+            <div class="lake-card__types">
+              <span class="lake-type-badge economy">эконом</span>
+              <span class="lake-type-badge comfort">комфорт</span>
+              <span class="lake-type-badge premium">премиум</span>
+            </div>
+            <div class="lake-card__features">
+              <span class="lake-feature"><span class="lake-feature__icon">🎣</span> Отличная рыбалка</span>
+              <span class="lake-feature"><span class="lake-feature__icon">🤫</span> Тихое место</span>
+            </div>
+            <a href="catalog.html?lake=lukoml" class="lake-card__link">Коттеджи на Лукомльском →</a>
+          </div>
+        </div>
+
+        <!-- Мястро -->
+        <div class="lake-card" data-type="all premium comfort">
+          <div class="lake-card__image" style="background-image: url('images/lakes/myastro.jpg')"></div>
+          <div class="lake-card__content">
+            <h3 class="lake-card__title">Озеро Мястро</h3>
+            <p class="lake-card__region">Минская область</p>
+            <p class="lake-card__desc">Второе по величине в Нарочанском регионе. Живописные берега, богатая ихтиофауна,
+              отличная экология.</p>
+            <div class="lake-card__count">3 коттеджа</div>
+            <div class="lake-card__types">
+              <span class="lake-type-badge economy">эконом</span>
+              <span class="lake-type-badge comfort">комфорт</span>
+              <span class="lake-type-badge premium">премиум</span>
+            </div>
+            <div class="lake-card__features">
+              <span class="lake-feature"><span class="lake-feature__icon">🌅</span> Живописные закаты</span>
+              <span class="lake-feature"><span class="lake-feature__icon">🐟</span> Рыбалка</span>
+            </div>
+            <a href="catalog.html?lake=myastro" class="lake-card__link">Коттеджи на Мястро →</a>
+          </div>
+        </div>
+
+        <!-- Белое -->
+        <div class="lake-card" data-type="all comfort">
+          <div class="lake-card__image" style="background-image: url('images/lakes/beloe.jpg')"></div>
+          <div class="lake-card__content">
+            <h3 class="lake-card__title">Озеро Белое</h3>
+            <p class="lake-card__region">Витебская область</p>
+            <p class="lake-card__desc">Одно из Браславских озёр. Чистая вода, песчаные пляжи, сосновый бор. Идеально для
+              семейного отдыха.</p>
+            <div class="lake-card__count">3 коттеджа</div>
+            <div class="lake-card__types">
+              <span class="lake-type-badge economy">эконом</span>
+              <span class="lake-type-badge comfort">комфорт</span>
+              <span class="lake-type-badge premium">премиум</span>
+            </div>
+            <div class="lake-card__features">
+              <span class="lake-feature"><span class="lake-feature__icon">👨‍‍👦</span> Семейный отдых</span>
+              <span class="lake-feature"><span class="lake-feature__icon">🌲</span> Сосновый лес</span>
+            </div>
+            <a href="catalog.html?lake=beloe" class="lake-card__link">Коттеджи на Белом →</a>
+          </div>
+        </div>
+
+        <!-- Освея -->
+        <div class="lake-card" data-type="all comfort">
+          <div class="lake-card__image" style="background-image: url('images/lakes/osveya.jpg')"></div>
+          <div class="lake-card__content">
+            <h3 class="lake-card__title">Освейское озеро</h3>
+            <p class="lake-card__region">Витебская область</p>
+            <p class="lake-card__desc">Второе по глубине озеро Беларуси. Дикая природа, отличная рыбалка, уединённый
+              отдых для ценителей природы.</p>
+            <div class="lake-card__count">3 коттеджа</div>
+            <div class="lake-card__types">
+              <span class="lake-type-badge economy">эконом</span>
+              <span class="lake-type-badge comfort">комфорт</span>
+              <span class="lake-type-badge premium">премиум</span>
+            </div>
+            <div class="lake-card__features">
+              <span class="lake-feature"><span class="lake-feature__icon">🎣</span> Рыболовный рай</span>
+              <span class="lake-feature"><span class="lake-feature__icon">🏕️</span> Дикая природа</span>
+            </div>
+            <a href="catalog.html?lake=osveya" class="lake-card__link">Коттеджи на Освейском →</a>
+          </div>
+        </div>
+
+        <!-- Выгоновское -->
+        <div class="lake-card" data-type="all comfort">
+          <div class="lake-card__image" style="background-image: url('images/lakes/vygonovskoe.jpg')"></div>
+          <div class="lake-card__content">
+            <h3 class="lake-card__title">Выгоновское озеро</h3>
+            <p class="lake-card__region">Брестская область</p>
+            <p class="lake-card__desc">Уникальная экосистема, богатый растительный и животный мир. Отличное место для
+              наблюдения за птицами.</p>
+            <div class="lake-card__count">3 коттеджа</div>
+            <div class="lake-card__types">
+              <span class="lake-type-badge economy">эконом</span>
+              <span class="lake-type-badge comfort">комфорт</span>
+              <span class="lake-type-badge premium">премиум</span>
+            </div>
+            <div class="lake-card__features">
+              <span class="lake-feature"><span class="lake-feature__icon">🦆</span> Наблюдение за птицами</span>
+              <span class="lake-feature"><span class="lake-feature__icon">🌿</span> Уникальная природа</span>
+            </div>
+            <a href="catalog.html?lake=vygonovskoe" class="lake-card__link">Коттеджи на Выгоновском →</a>
+          </div>
+        </div>
+
+        <!-- Червоное -->
+        <div class="lake-card" data-type="all premium comfort">
+          <div class="lake-card__image" style="background-image: url('images/lakes/chervonoe.jpg')">
+            <span class="lake-card__badge">Заповедник</span>
+          </div>
+          <div class="lake-card__content">
+            <h3 class="lake-card__title">Озеро Червоное</h3>
+            <p class="lake-card__region">Гомельская область</p>
+            <p class="lake-card__desc">Жемчужина Полесья. Биологический заказник, редкие виды птиц, первозданная природа
+              белорусского Полесья.</p>
+            <div class="lake-card__count">3 коттеджа</div>
+            <div class="lake-card__types">
+              <span class="lake-type-badge economy">эконом</span>
+              <span class="lake-type-badge comfort">комфорт</span>
+              <span class="lake-type-badge premium">премиум</span>
+            </div>
+            <div class="lake-card__features">
+              <span class="lake-feature"><span class="lake-feature__icon">🦅</span> Редкие птицы</span>
+              <span class="lake-feature"><span class="lake-feature__icon">🌳</span> Полесская природа</span>
+            </div>
+            <a href="catalog.html?lake=chervonoe" class="lake-card__link">Коттеджи на Червоном →</a>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- CTA -->
+      <div style="text-align:center; margin-top:48px;">
+        <p style="color:var(--color-text-light); margin-bottom:16px;">Не можете выбрать? Позвоните — поможем подобрать
+          идеальное место</p>
+        <a href="tel:+375291234567" class="btn btn--secondary btn--large">📞 +375 (29) 123-45-67</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container footer__container">
+      <div class="footer__brand">
+        <a href="index.html" class="logo"><span class="logo__icon">🌊</span><span class="logo__text">Моя
+            волна</span></a>
+        <p class="footer__desc">Аренда уютных коттеджей на берегу озёр Беларуси.</p>
+      </div>
+      <div class="footer__nav">
+        <div class="footer__col">
+          <h4>Навигация</h4>
+          <ul>
+            <li><a href="catalog.html">Каталог коттеджей</a></li>
+            <li><a href="lakes.html">Озёра</a></li>
+            <li><a href="about.html">О компании</a></li>
+          </ul>
+        </div>
+        <div class="footer__col">
+          <h4>Контакты</h4>
+          <ul>
+            <li>📞 <a href="tel:+375291234567">+375 (29) 123-45-67</a></li>
+            <li>✉️ <a href="mailto:info@mywave.by">info@mywave.by</a></li>
+            <li>🕒 Пн–Вс: 9:00–21:00</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <div class="container">
+        <p>© 2026 «Моя волна». Все права защищены.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+</body>
+
+</html>

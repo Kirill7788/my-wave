@@ -1,0 +1,22 @@
+# Dependencies
+/vendor/
+
+# Environment (содержит секреты — никогда не коммитить)
+.env
+
+# IDE
+/.idea/
+/.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# PHP
+*.log
+/tmp/
+
+# Rate limiter file cache
+/tmp/mywave_rate/

@@ -1,0 +1,182 @@
+/* ============================================================
+   MY WAVE — Design Tokens
+   Premium eco-luxury retreat · Forest & Lakes · Belarus
+   ============================================================ */
+
+:root {
+
+  /* ── NATURE COLOR SYSTEM ────────────────────────────────── */
+
+  /* Forest */
+  --c-deep:        #111B14;   /* deep forest night */
+  --c-forest:      #1C3025;   /* rich forest */
+  --c-forest-mid:  #2E5140;   /* forest interior */
+  --c-sage:        #4A7B65;   /* sage green */
+  --c-fern:        #5E9880;   /* lighter sage */
+  --c-mist:        #8DB4A2;   /* morning mist */
+  --c-mist-light:  #BAD3C8;   /* pale mist */
+
+  /* Earth & Stone */
+  --c-stone-dark:  #7D6E63;   /* aged stone */
+  --c-stone:       #C5B5A8;   /* driftwood stone */
+  --c-sand:        #E5D9CE;   /* sandy shore */
+  --c-cream:       #F2EDE6;   /* warm cream paper */
+  --c-linen:       #F8F4EF;   /* light linen */
+  --c-warm-white:  #FAFAF8;   /* near-white */
+  --c-white:       #FFFFFF;
+
+  /* Water */
+  --c-water-deep:  #1A3D56;   /* deep lake */
+  --c-water:       #245A78;   /* lake surface */
+  --c-sky:         #5A93B7;   /* sky reflection */
+  --c-sky-light:   #A5CCE0;   /* pale sky */
+
+  /* Warm Accent — Amber (sunset over water) */
+  --c-amber-deep:  #9B6B34;
+  --c-amber:       #C4905A;   /* PRIMARY ACCENT */
+  --c-amber-light: #E0AE78;
+  --c-gold:        #D4A86A;
+
+  /* Text */
+  --c-text:        #1A1A1A;
+  --c-text-mid:    #4D4D4D;
+  --c-text-light:  #858585;
+  --c-text-muted:  #AEAEAE;
+  --c-text-inv:    #FAFAF8;   /* text on dark */
+
+  /* Borders */
+  --c-border:      #E0D7CE;
+  --c-border-dark: #C5B9AD;
+
+  /* Semantic */
+  --c-success:     #2E5140;
+  --c-success-bg:  #E8F3EE;
+  --c-warning:     #C4905A;
+  --c-warning-bg:  #FBF0E6;
+  --c-error:       #9B3A3A;
+  --c-error-bg:    #FBEDEC;
+  --c-info:        #245A78;
+  --c-info-bg:     #E4EEF4;
+
+  /* Status Badges */
+  --badge-pending-bg:   #FEF6EC;
+  --badge-pending-fg:   #844E0E;
+  --badge-confirm-bg:   #EAF5EF;
+  --badge-confirm-fg:   #1A5C38;
+  --badge-cancel-bg:    #FBEEED;
+  --badge-cancel-fg:    #8B2020;
+  --badge-done-bg:      #EEEDF8;
+  --badge-done-fg:      #332D8A;
+
+  /* ── TYPOGRAPHY ─────────────────────────────────────────── */
+  --font-serif:  'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+  --font-sans:   'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  /* Fluid type scale (clamp: min, preferred, max) */
+  --text-xs:   clamp(0.75rem,  0.72rem + 0.15vw, 0.8125rem);
+  --text-sm:   clamp(0.875rem, 0.84rem + 0.18vw, 0.9375rem);
+  --text-base: clamp(1rem,     0.97rem + 0.15vw, 1.0625rem);
+  --text-lg:   clamp(1.125rem, 1.06rem + 0.33vw, 1.25rem);
+  --text-xl:   clamp(1.25rem,  1.16rem + 0.45vw, 1.5rem);
+  --text-2xl:  clamp(1.5rem,   1.36rem + 0.7vw,  1.875rem);
+  --text-3xl:  clamp(1.875rem, 1.64rem + 1.2vw,  2.5rem);
+  --text-4xl:  clamp(2.25rem,  1.9rem  + 1.8vw,  3.25rem);
+  --text-5xl:  clamp(2.75rem,  2.2rem  + 2.75vw, 4.5rem);
+  --text-6xl:  clamp(3.5rem,   2.6rem  + 4.5vw,  6.5rem);
+  --text-hero: clamp(4rem,     3rem    + 5vw,     8rem);
+
+  /* Line heights */
+  --leading-none:    1;
+  --leading-tight:   1.1;
+  --leading-snug:    1.25;
+  --leading-normal:  1.5;
+  --leading-relaxed: 1.65;
+  --leading-loose:   1.8;
+
+  /* Tracking */
+  --tracking-tight:   -0.04em;
+  --tracking-snug:    -0.02em;
+  --tracking-normal:   0em;
+  --tracking-wide:     0.05em;
+  --tracking-wider:    0.1em;
+  --tracking-widest:   0.15em;
+
+  /* ── SPACING ────────────────────────────────────────────── */
+  --sp-1:  4px;
+  --sp-2:  8px;
+  --sp-3:  12px;
+  --sp-4:  16px;
+  --sp-5:  20px;
+  --sp-6:  24px;
+  --sp-8:  32px;
+  --sp-10: 40px;
+  --sp-12: 48px;
+  --sp-16: 64px;
+  --sp-20: 80px;
+  --sp-24: 96px;
+  --sp-32: 128px;
+  --sp-40: 160px;
+
+  /* ── BORDER RADIUS ──────────────────────────────────────── */
+  --r-sm:   4px;
+  --r-md:   8px;
+  --r-lg:   16px;
+  --r-xl:   24px;
+  --r-2xl:  32px;
+  --r-full: 9999px;
+
+  /* ── SHADOWS (warm, sepia-toned) ────────────────────────── */
+  --sh-ambient: 0 2px 8px  rgba(30, 20, 10, 0.04);
+  --sh-sm:      0 4px 16px rgba(30, 20, 10, 0.07);
+  --sh-md:      0 8px 32px rgba(30, 20, 10, 0.11);
+  --sh-lg:      0 16px 56px rgba(30, 20, 10, 0.16);
+  --sh-xl:      0 24px 80px rgba(30, 20, 10, 0.22);
+  --sh-amber:   0 0 0 3px  rgba(196, 144, 90, 0.28);
+
+  /* ── MOTION ─────────────────────────────────────────────── */
+  --ease-smooth:  cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring:  cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  --ease-natural: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-in:      cubic-bezier(0.4, 0, 1, 1);
+  --ease-out:     cubic-bezier(0, 0, 0.2, 1);
+
+  --dur-instant:   80ms;
+  --dur-fast:      150ms;
+  --dur-base:      280ms;
+  --dur-slow:      500ms;
+  --dur-cinematic: 900ms;
+
+  /* ── Z-INDEX ────────────────────────────────────────────── */
+  --z-base:    0;
+  --z-raised:  10;
+  --z-overlay: 100;
+  --z-modal:   200;
+  --z-header:  300;
+  --z-toast:   400;
+
+  /* ── CONTAINERS ─────────────────────────────────────────── */
+  --w-sm:   640px;
+  --w-md:   768px;
+  --w-lg:   1024px;
+  --w-xl:   1200px;
+  --w-2xl:  1440px;
+
+  /* ── BACKWARDS COMPATIBILITY ────────────────────────────── */
+  /* Keep old vars working so pages we haven't redesigned yet don't break */
+  --color-primary:      var(--c-sage);
+  --color-primary-dark: var(--c-forest-mid);
+  --color-secondary:    var(--c-fern);
+  --color-text:         var(--c-text);
+  --color-text-light:   var(--c-text-light);
+  --color-bg:           var(--c-warm-white);
+  --color-bg-light:     var(--c-cream);
+  --color-bg-card:      var(--c-white);
+  --color-border:       var(--c-border);
+  --shadow-sm:          var(--sh-sm);
+  --shadow-md:          var(--sh-md);
+  --shadow-lg:          var(--sh-lg);
+  --radius:             var(--r-lg);
+  --radius-sm:          var(--r-md);
+  --transition:         all var(--dur-base) var(--ease-natural);
+  --font-main:          var(--font-sans);
+}

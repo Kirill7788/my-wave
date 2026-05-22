@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>О нас — Моя волна</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+  <!-- Header -->
+  <header class="header" id="header">
+    <div class="container header__container">
+      <a href="index.html" class="logo"><span class="logo__wordmark">My Wave</span></a>
+      <nav class="nav" id="nav">
+        <ul class="nav__list">
+          <li><a href="catalog.html" class="nav__link">Каталог</a></li>
+          <li><a href="lakes.html" class="nav__link">Озёра</a></li>
+          <li><a href="about.html" class="nav__link active">О компании</a></li>
+        </ul>
+      </nav>
+      <div class="header__actions">
+        <a href="cabinet.html" class="btn btn--outline btn--small" id="authBtn">Войти</a>
+        <button class="burger" id="burger" aria-label="Открыть меню" aria-expanded="false"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="page-hero" style="background:linear-gradient(135deg,var(--c-forest),var(--c-deep));padding:var(--sp-32) var(--sp-5) var(--sp-16);">
+    <div class="container" style="text-align:center;color:white;">
+      <h1 style="font-size:2.5rem;margin-bottom:16px;color:white;">О нас</h1>
+      <p style="font-size:1.2rem;opacity:0.95;max-width:700px;margin:0 auto;">
+        Мы помогаем найти идеальный коттедж у озера для отдыха в Беларуси
+      </p>
+    </div>
+  </section>
+
+  <!-- Content -->
+  <section class="section">
+    <div class="container" style="max-width:900px;">
+
+      <!-- About Block -->
+      <div style="margin-bottom:48px;">
+        <h2 style="font-size:1.8rem;margin-bottom:20px;">🌊 Наша история</h2>
+        <p style="line-height:1.8;color:var(--color-text-light);margin-bottom:16px;">
+          «Моя волна» — это команда энтузиастов, которые любят природу Беларуси и хотят поделиться этим с вами. Мы лично
+          отбираем каждый коттедж, проверяем чистоту, комфорт и расположение.
+        </p>
+        <p style="line-height:1.8;color:var(--color-text-light);">
+          Наша цель — сделать отдых у озера простым, доступным и запоминающимся. Без лишних хлопот, с гарантией качества
+          и поддержкой 24/7.
+        </p>
+      </div>
+
+      <!-- Stats -->
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:24px;margin-bottom:48px;">
+        <div style="text-align:center;padding:24px;background:var(--color-bg-light);border-radius:var(--radius);">
+          <div style="font-size:2rem;font-weight:700;color:var(--color-primary);margin-bottom:8px;">10</div>
+          <div style="color:var(--color-text-light);">Озёр Беларуси</div>
+        </div>
+        <div style="text-align:center;padding:24px;background:var(--color-bg-light);border-radius:var(--radius);">
+          <div style="font-size:2rem;font-weight:700;color:var(--color-primary);margin-bottom:8px;">30+</div>
+          <div style="color:var(--color-text-light);">Уютных коттеджей</div>
+        </div>
+        <div style="text-align:center;padding:24px;background:var(--color-bg-light);border-radius:var(--radius);">
+          <div style="font-size:2rem;font-weight:700;color:var(--color-primary);margin-bottom:8px;">24/7</div>
+          <div style="color:var(--color-text-light);">Поддержка гостей</div>
+        </div>
+      </div>
+
+      <!-- Contacts Block -->
+      <div style="border-top:1px solid var(--color-border);padding-top:32px;">
+        <h2 style="font-size:1.8rem;margin-bottom:24px;">📞 Свяжитесь с нами</h2>
+
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:32px;">
+
+          <!-- Contact Info -->
+          <div>
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;">
+              <span style="font-size:1.5rem;">📍</span>
+              <div>
+                <div style="font-weight:600;">Адрес</div>
+                <div style="color:var(--color-text-light);">Минск, Беларусь</div>
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;">
+              <span style="font-size:1.5rem;">📞</span>
+              <div>
+                <div style="font-weight:600;">Телефон</div>
+                <a href="tel:+375291234567" style="color:var(--color-primary);text-decoration:none;">+375 (29)
+                  123-45-67</a>
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;">
+              <span style="font-size:1.5rem;">✉️</span>
+              <div>
+                <div style="font-weight:600;">Email</div>
+                <a href="mailto:info@mywave.by"
+                  style="color:var(--color-primary);text-decoration:none;">info@mywave.by</a>
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;">
+              <span style="font-size:1.5rem;">🕒</span>
+              <div>
+                <div style="font-weight:600;">Режим работы</div>
+                <div style="color:var(--color-text-light);">Ежедневно: 9:00 — 21:00</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Simple Form -->
+          <form id="contactForm" style="display:flex;flex-direction:column;gap:16px;">
+            <input type="text" placeholder="Ваше имя" required
+              style="padding:12px 16px;border:1px solid var(--color-border);border-radius:8px;font-family:var(--font-main);">
+            <input type="email" placeholder="Email" required
+              style="padding:12px 16px;border:1px solid var(--color-border);border-radius:8px;font-family:var(--font-main);">
+            <textarea placeholder="Сообщение" rows="4" required
+              style="padding:12px 16px;border:1px solid var(--color-border);border-radius:8px;font-family:var(--font-main);resize:vertical;"></textarea>
+            <button type="submit" class="btn btn--primary">Отправить сообщение</button>
+          </form>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer__container">
+      <div class="footer__brand">
+        <a href="index.html" class="logo"><span class="logo__icon">🌊</span><span class="logo__text">Моя
+            волна</span></a>
+        <p class="footer__desc">Аренда уютных коттеджей на берегу озёр Беларуси.</p>
+      </div>
+      <div class="footer__links">
+        <div class="footer__col">
+          <h4 class="footer__heading">Навигация</h4>
+          <ul class="footer__list">
+            <li><a href="catalog.html">Каталог</a></li>
+            <li><a href="lakes.html">Озёра</a></li>
+            <li><a href="about.html">О компании</a></li>
+          </ul>
+        </div>
+        <div class="footer__col">
+          <h4 class="footer__heading">Контакты</h4>
+          <ul class="footer__list">
+            <li>📞 <a href="tel:+375291234567">+375 (29) 123-45-67</a></li>
+            <li>✉️ <a href="mailto:info@mywave.by">info@mywave.by</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <div class="container">© 2026 «Моя волна». Все права защищены.</div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script>
+    // Обработка формы контактов (демо)
+    document.getElementById('contactForm')?.addEventListener('submit', e => {
+      e.preventDefault();
+      alert('✅ Спасибо! Ваше сообщение отправлено. Мы ответим в ближайшее время.');
+      e.target.reset();
+    });
+  </script>
+</body>
+
+</html>
