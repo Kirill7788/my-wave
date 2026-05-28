@@ -95,12 +95,12 @@
               <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;">
                 <div>
                   <small>Взрослые</small>
-                  <input type="number" id="guestsAdults" value="2" min="1" max="10"
+                  <input type="number" id="guestsAdults" value="1" min="1"
                     style="width:100%;padding:10px;border:1px solid var(--color-border);border-radius:8px;">
                 </div>
                 <div>
                   <small>Дети 3-12</small>
-                  <input type="number" id="guestsChildren" value="0" min="0" max="8"
+                  <input type="number" id="guestsChildren" value="0" min="0"
                     style="width:100%;padding:10px;border:1px solid var(--color-border);border-radius:8px;">
                 </div>
                 <div>
@@ -238,18 +238,34 @@
           const total = adults + children + infants;
           const warning = guestsWarning;
           const btn = document.getElementById('bookBtn');
+          adultsInput.max = cottage.capacity;
+          childrenInput.max = cottage.capacity;
 
           if (total > cottage.capacity) {
             if (warning) {
               warning.textContent = `⚠️ Вместимость: ${cottage.capacity} чел. Вы выбрали ${total}`;
               warning.style.display = 'block';
             }
+            adultsInput.style.borderColor = '#dc2626';
+            childrenInput.style.borderColor = '#dc2626';
+            infantsInput.style.borderColor = '#dc2626';
             if (btn) btn.disabled = true;
             return false;
           }
-          if (warning) warning.style.display = 'none';
-          if (btn) btn.disabled = false;
+          else if (total < cottage.capacity) {
+            adultsInput.style.borderColor = '';
+            childrenInput.style.borderColor = '';
+            infantsInput.style.borderColor = '';
+          }
+          else if (warning) warning.style.display = 'none';
+          else if (btn) btn.disabled = false;
+          else {
+            adultsInput.style.borderColor = '';
+            childrenInput.style.borderColor = '';
+            infantsInput.style.borderColor = '';
+          }
           return true;
+
         }
 
         function calcPrice() {
@@ -283,10 +299,19 @@
         checkIn.addEventListener('change', calcPrice);
         checkOut.addEventListener('change', calcPrice);
 
-        // ✅ ВАЖНО: Слушатели на поля гостей
-        document.getElementById('guestsAdults')?.addEventListener('input', calcPrice);
-        document.getElementById('guestsChildren')?.addEventListener('input', calcPrice);
-        document.getElementById('guestsInfants')?.addEventListener('input', calcPrice);
+        // ✅ ВАЖНО: Слушатели на поля гостей с валидацией
+        document.getElementById('guestsAdults')?.addEventListener('input', () => {
+          validateGuests();
+          calcPrice();
+        });
+        document.getElementById('guestsChildren')?.addEventListener('input', () => {
+          validateGuests();
+          calcPrice();
+        });
+        document.getElementById('guestsInfants')?.addEventListener('input', () => {
+          validateGuests();
+          calcPrice();
+        });
 
 
         document.getElementById('bookBtn')?.addEventListener('click', async () => {

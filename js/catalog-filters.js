@@ -1,25 +1,52 @@
 // js/catalog-filters.js — используется на catalog.html
 // Зависимости: js/utils/dom.js, js/components/CottageCard.js
 
-document.addEventListener('DOMContentLoaded', function() {
-  const grid      = document.getElementById('cottagesGrid');
-  const loading   = document.getElementById('loading');
+document.addEventListener('DOMContentLoaded', function () {
+  const grid = document.getElementById('cottagesGrid');
+  const loading = document.getElementById('loading');
   const noResults = document.getElementById('noResults');
-  const countEl   = document.getElementById('resultsCount');
-  const sortEl    = document.getElementById('sortBy');
+  const countEl = document.getElementById('resultsCount');
+  const sortEl = document.getElementById('sortBy');
 
   if (!grid || !loading) return;
 
+  const lakesByRegion = {
+    'Минская область': ['naroch', 'zaslavl', 'myastro'],
+    'Витебская область': ['braslav', 'lukoml', 'beloe', 'osveya'],
+    'Гродненская область': ['svityaz'],
+    'Брестская область': ['vygonovskoe'],
+    'Гомельская область': ['chervonoe'],
+  };
+
+  const allLakeOptions = Array.from(document.querySelectorAll('#lakeFilter option'));
+
+  function filterLakesByRegion(region) {
+    const lakeSelect = document.getElementById('lakeFilter');
+    const allowed = region ? lakesByRegion[region] || [] : null;
+    lakeSelect.innerHTML = '<option value="">Все озёра</option>';
+    allLakeOptions.forEach(function (opt) {
+      if (!opt.value) return;
+      if (!allowed || allowed.includes(opt.value)) {
+        lakeSelect.appendChild(opt.cloneNode(true));
+      }
+    });
+    if (allowed && !allowed.includes(lakeSelect.value)) lakeSelect.value = '';
+  }
+
+  document.getElementById('regionFilter')?.addEventListener('change', function () {
+    filterLakesByRegion(this.value);
+  });
   let currentData = [];
 
   // Читаем начальные фильтры из URL
-  const urlParams   = new URLSearchParams(window.location.search);
+  const urlParams = new URLSearchParams(window.location.search);
   const activeFilters = {
-    type:      urlParams.get('type')      || undefined,
-    lake:      urlParams.get('lake')      || undefined,
+    type: urlParams.get('type') || undefined,
+    lake: urlParams.get('lake') || undefined,
     min_price: urlParams.get('min_price') || undefined,
     max_price: urlParams.get('max_price') || undefined,
-    has_bath:  urlParams.get('has_bath')  || undefined,
+    has_bath: urlParams.get('has_bath') || undefined,
+    region: urlParams.get('region') || undefined,
   };
 
   // Синхронизируем UI с URL-параметрами
@@ -69,7 +96,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   function renderSorted() {
     const sortValue = sortEl ? sortEl.value : 'default';
-    const sorted    = [...currentData];
+    const sorted = [...currentData];
 
     if (sortValue === 'price_asc') {
       sorted.sort((a, b) => parseFloat(a.price_min) - parseFloat(b.price_min));
@@ -78,19 +105,20 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     grid.innerHTML = '';
-    sorted.forEach(function(cottage) {
+    sorted.forEach(function (cottage) {
       grid.appendChild(CottageCard(cottage));
     });
   }
 
   // Применение фильтров
-  document.getElementById('applyFilters')?.addEventListener('click', function() {
+  document.getElementById('applyFilters')?.addEventListener('click', function () {
     const filters = {
-      type:      document.querySelector('input[name="type"]:checked')?.value || undefined,
-      lake:      document.getElementById('lakeFilter')?.value || undefined,
+      type: document.querySelector('input[name="type"]:checked')?.value || undefined,
+      lake: document.getElementById('lakeFilter')?.value || undefined,
       min_price: document.getElementById('minPrice')?.value || undefined,
       max_price: document.getElementById('maxPrice')?.value || undefined,
-      has_bath:  document.getElementById('hasBath')?.checked ? '1' : undefined,
+      has_bath: document.getElementById('hasBath')?.checked ? '1' : undefined,
+      region: document.getElementById('regionFilter')?.value || undefined,
     };
 
     const url = new URL(window.location);
@@ -103,19 +131,19 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
   // Сброс фильтров
-  document.getElementById('resetFilters')?.addEventListener('click', function() {
+  document.getElementById('resetFilters')?.addEventListener('click', function () {
     window.location.href = 'catalog.html';
   });
 
   // Сортировка через select #sortBy
-  sortEl?.addEventListener('change', function() {
+  sortEl?.addEventListener('change', function () {
     if (currentData.length > 0) renderSorted();
   });
 
   // Сортировка через кнопки .sort-btn (альтернативный вариант в каталоге)
-  document.querySelectorAll('.sort-btn').forEach(function(btn) {
-    btn.addEventListener('click', function() {
-      document.querySelectorAll('.sort-btn').forEach(function(b) { b.classList.remove('active'); });
+  document.querySelectorAll('.sort-btn').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      document.querySelectorAll('.sort-btn').forEach(function (b) { b.classList.remove('active'); });
       btn.classList.add('active');
       // Перевизначаємо currentSort через data-sort атрибут кнопки
       const sort = btn.getAttribute('data-sort') || 'default';
@@ -124,14 +152,14 @@ document.addEventListener('DOMContentLoaded', function() {
       // Тимчасово перевизначаємо renderSorted з потрібним sort
       const sorted = [...currentData];
       if (sort === 'asc') {
-        sorted.sort(function(a, b) { return parseFloat(a.price_min) - parseFloat(b.price_min); });
+        sorted.sort(function (a, b) { return parseFloat(a.price_min) - parseFloat(b.price_min); });
       } else if (sort === 'desc') {
-        sorted.sort(function(a, b) { return parseFloat(b.price_min) - parseFloat(a.price_min); });
+        sorted.sort(function (a, b) { return parseFloat(b.price_min) - parseFloat(a.price_min); });
       }
       var grid = document.getElementById('cottagesGrid');
       if (grid && sorted.length > 0) {
         grid.innerHTML = '';
-        sorted.forEach(function(cottage) { grid.appendChild(CottageCard(cottage)); });
+        sorted.forEach(function (cottage) { grid.appendChild(CottageCard(cottage)); });
       }
     });
   });

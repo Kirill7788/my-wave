@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -7,7 +8,9 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Inter:wght@300;400;500;600&display=swap"
+    rel="stylesheet" />
 
   <link rel="stylesheet" href="css/style.css" />
   <style>
@@ -86,10 +89,26 @@
       gap: var(--sp-3);
     }
 
-    .dash-nav__link:hover { background: var(--c-linen); color: var(--c-text); }
-    .dash-nav__link.active { background: var(--c-cream); color: var(--c-text); font-weight: 600; }
-    .dash-nav__link--logout { color: var(--c-error); margin-top: auto; }
-    .dash-nav__link--logout:hover { background: var(--c-error-bg); color: var(--c-error); }
+    .dash-nav__link:hover {
+      background: var(--c-linen);
+      color: var(--c-text);
+    }
+
+    .dash-nav__link.active {
+      background: var(--c-cream);
+      color: var(--c-text);
+      font-weight: 600;
+    }
+
+    .dash-nav__link--logout {
+      color: var(--c-error);
+      margin-top: auto;
+    }
+
+    .dash-nav__link--logout:hover {
+      background: var(--c-error-bg);
+      color: var(--c-error);
+    }
 
     .dash-nav__icon {
       font-size: 1rem;
@@ -105,7 +124,10 @@
       max-width: 880px;
     }
 
-    .tab-pane { display: none; }
+    .tab-pane {
+      display: none;
+    }
+
     .tab-pane.active {
       display: block;
       animation: fadeInUp var(--dur-base) var(--ease-smooth);
@@ -136,9 +158,14 @@
       transition: box-shadow var(--dur-fast);
     }
 
-    .booking-card:hover { box-shadow: var(--sh-sm); }
+    .booking-card:hover {
+      box-shadow: var(--sh-sm);
+    }
 
-    .booking-card__info { flex: 1; min-width: 200px; }
+    .booking-card__info {
+      flex: 1;
+      min-width: 200px;
+    }
 
     .booking-card__name {
       font-weight: 600;
@@ -174,16 +201,19 @@
       flex-wrap: wrap;
     }
 
-    /* ── Profile form ── */
+    /* В строке 183 измените: */
     .dash-form {
       background: var(--c-white);
       padding: var(--sp-8);
       border-radius: var(--r-xl);
       border: 1px solid var(--c-border);
-      max-width: 560px;
+      max-width: 640px;
+      /* Было 560px */
     }
 
-    .dash-form + .dash-form { margin-top: var(--sp-8); }
+    .dash-form+.dash-form {
+      margin-top: var(--sp-8);
+    }
 
     .dash-form__title {
       font-size: var(--text-lg);
@@ -225,9 +255,11 @@
     .credit-card::before {
       content: '';
       position: absolute;
-      top: -50px; right: -50px;
-      width: 200px; height: 200px;
-      background: rgba(255,255,255,0.04);
+      top: -50px;
+      right: -50px;
+      width: 200px;
+      height: 200px;
+      background: rgba(255, 255, 255, 0.04);
       border-radius: 50%;
     }
 
@@ -242,7 +274,8 @@
     }
 
     .card-chip {
-      width: 36px; height: 26px;
+      width: 36px;
+      height: 26px;
       background: linear-gradient(135deg, #e8c97a, #c4a855);
       border-radius: 4px;
       opacity: 0.85;
@@ -254,27 +287,35 @@
     }
 
     .card-btn {
-      background: rgba(255,255,255,0.12);
+      background: rgba(255, 255, 255, 0.12);
       border: none;
       color: var(--c-warm-white);
-      width: 28px; height: 28px;
+      width: 28px;
+      height: 28px;
       border-radius: 50%;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 0.9rem;
-      transition: background var(--dur-fast);
+      transition: all 0.2s ease;
     }
 
-    .card-btn:hover { background: rgba(255,255,255,0.25); }
+    .card-btn:hover {
+      background: rgba(255, 255, 255, 0.25);
+      transform: scale(1.15);
+    }
+
+    .card-btn:active {
+      transform: scale(0.95);
+    }
 
     .card-number {
       font-size: 1.3rem;
       letter-spacing: 3px;
       font-family: monospace;
       margin: var(--sp-4) 0 var(--sp-3);
-      text-shadow: 0 1px 4px rgba(0,0,0,0.2);
+      text-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
     }
 
     .card-bottom {
@@ -299,8 +340,9 @@
 
     .badge-default {
       position: absolute;
-      top: 12px; left: 12px;
-      background: rgba(255,255,255,0.2);
+      top: 12px;
+      left: 12px;
+      background: rgba(255, 255, 255, 0.2);
       color: var(--c-warm-white);
       font-size: 10px;
       padding: 3px 10px;
@@ -329,7 +371,9 @@
         gap: var(--sp-1);
       }
 
-      .dash-user { display: none; }
+      .dash-user {
+        display: none;
+      }
 
       .dash-nav {
         flex-direction: row;
@@ -347,9 +391,18 @@
     }
 
     @media (max-width: 480px) {
-      .booking-card { flex-direction: column; align-items: flex-start; }
-      .booking-card__meta { text-align: left; }
-      .booking-card__actions { justify-content: flex-start; }
+      .booking-card {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .booking-card__meta {
+        text-align: left;
+      }
+
+      .booking-card__actions {
+        justify-content: flex-start;
+      }
     }
   </style>
 </head>
@@ -365,8 +418,8 @@
       <nav class="nav" id="nav" aria-label="Главное меню">
         <ul class="nav__list">
           <li><a href="catalog.html" class="nav__link">Каталог</a></li>
-          <li><a href="lakes.html"   class="nav__link">Озёра</a></li>
-          <li><a href="about.html"   class="nav__link">О компании</a></li>
+          <li><a href="lakes.html" class="nav__link">Озёра</a></li>
+          <li><a href="about.html" class="nav__link">О компании</a></li>
         </ul>
       </nav>
       <div class="header__actions">
@@ -397,6 +450,9 @@
         </a>
         <a href="#" class="dash-nav__link" data-tab="cards">
           <span class="dash-nav__icon" aria-hidden="true">▭</span>Карты оплаты
+        </a>
+        <a href="admin.html" class="dash-nav__link dash-nav__link--admin hidden" id="adminLink">
+          <span class="dash-nav__icon" aria-hidden="true">⚙</span>Админ-панель
         </a>
         <a href="#" class="dash-nav__link dash-nav__link--logout" id="logoutBtn">
           <span class="dash-nav__icon" aria-hidden="true">→</span>Выйти
@@ -469,7 +525,8 @@
         <h2 class="dash-heading">Карты оплаты</h2>
 
         <div id="cardsList" class="cards-grid"></div>
-        <div id="noCards" class="hidden" style="color:var(--c-text-muted);font-size:var(--text-sm);margin-bottom:var(--sp-6);">
+        <div id="noCards" class="hidden"
+          style="color:var(--c-text-muted);font-size:var(--text-sm);margin-bottom:var(--sp-6);">
           Нет сохранённых карт
         </div>
 
@@ -498,7 +555,8 @@
                 <input type="password" id="cCvc" placeholder="•••" maxlength="3" required style="text-align:center;" />
               </div>
             </div>
-            <button type="submit" class="btn btn--forest btn--full" style="margin-top:var(--sp-2);">Сохранить карту</button>
+            <button type="submit" class="btn btn--forest btn--full" style="margin-top:var(--sp-2);">Сохранить
+              карту</button>
             <p class="input-hint" style="text-align:center;margin-top:var(--sp-3);">
               Данные передаются в зашифрованном виде. Полный номер не хранится.
             </p>
@@ -531,10 +589,13 @@
         document.getElementById('userName').textContent = user.first_name || user.name || 'Гость';
         document.getElementById('userEmail').textContent = user.email || '';
         if (user) {
-          document.getElementById('pName').value    = user.first_name || '';
-          document.getElementById('pSurname').value = user.last_name  || '';
-          document.getElementById('pEmail').value   = user.email      || '';
-          document.getElementById('pPhone').value   = user.phone      || '';
+          document.getElementById('pName').value = user.first_name || '';
+          document.getElementById('pSurname').value = user.last_name || '';
+          document.getElementById('pEmail').value = user.email || '';
+          document.getElementById('pPhone').value = user.phone || '';
+        }
+        if (user.role === 'admin') {
+          document.getElementById('adminLink')?.classList.remove('hidden');
         }
         loadBookings();
         loadCards();
@@ -562,8 +623,8 @@
         try {
           await API.updateProfile({
             first_name: document.getElementById('pName').value,
-            last_name:  document.getElementById('pSurname').value,
-            phone:      document.getElementById('pPhone').value,
+            last_name: document.getElementById('pSurname').value,
+            phone: document.getElementById('pPhone').value,
           });
           btn.textContent = 'Сохранено ✓';
           setTimeout(() => { btn.textContent = 'Сохранить изменения'; }, 2000);
@@ -577,7 +638,7 @@
         const newPass = document.getElementById('newPassword').value;
         const confirm = document.getElementById('confirmPassword').value;
         if (newPass !== confirm) return alert('Новые пароли не совпадают');
-        if (newPass.length < 6)  return alert('Пароль — минимум 6 символов');
+        if (newPass.length < 6) return alert('Пароль — минимум 6 символов');
         const btn = e.target.querySelector('button[type=submit]');
         btn.disabled = true; btn.textContent = 'Изменение...';
         try {
@@ -613,9 +674,9 @@
           await API.addCard({
             card_number: document.getElementById('cNumber').value,
             card_holder: document.getElementById('cHolder').value.toUpperCase(),
-            exp_month:   parseInt(document.getElementById('cMonth').value),
-            exp_year:    parseInt(document.getElementById('cYear').value),
-            cvc:         document.getElementById('cCvc').value,
+            exp_month: parseInt(document.getElementById('cMonth').value),
+            exp_year: parseInt(document.getElementById('cYear').value),
+            cvc: document.getElementById('cCvc').value,
           });
           e.target.reset();
           loadCards();
@@ -627,14 +688,14 @@
     async function loadBookings() {
       try {
         const { bookings } = await API.getMyBookings();
-        const list  = document.getElementById('bookingsList');
+        const list = document.getElementById('bookingsList');
         const empty = document.getElementById('noBookings');
         list.innerHTML = '';
         if (!bookings?.length) { empty.classList.remove('hidden'); return; }
         empty.classList.add('hidden');
 
         const statusLabel = {
-          pending:   'Ожидает оплаты',
+          pending: 'Ожидает оплаты',
           confirmed: 'Подтверждено',
           cancelled: 'Отменено',
           completed: 'Завершено',
@@ -676,7 +737,7 @@
     async function loadCards() {
       try {
         const { cards } = await API.getCards();
-        const grid  = document.getElementById('cardsList');
+        const grid = document.getElementById('cardsList');
         const empty = document.getElementById('noCards');
         grid.innerHTML = '';
         if (!cards?.length) { empty.classList.remove('hidden'); return; }
@@ -684,7 +745,7 @@
 
         cards.forEach(c => {
           const masked = `•••• •••• •••• ${c.card_last_4}`;
-          const isDef  = c.is_default;
+          const isDef = c.is_default;
           const div = document.createElement('div');
           div.className = `credit-card${isDef ? ' is-default' : ''}`;
           div.innerHTML = `
@@ -699,12 +760,12 @@
             <div class="card-number">${masked}</div>
             <div class="card-bottom">
               <div class="card-holder"></div>
-              <div class="card-expiry">${String(c.exp_month).padStart(2,'0')}/${c.exp_year}</div>
+              <div class="card-expiry">${String(c.exp_month).padStart(2, '0')}/${c.exp_year}</div>
             </div>`;
           div.querySelector('.card-holder').textContent = c.card_holder;
           grid.appendChild(div);
         });
-      } catch {}
+      } catch { }
     }
 
     window.payBooking = async id => {
@@ -733,4 +794,5 @@
   </script>
 
 </body>
+
 </html>

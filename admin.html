@@ -255,7 +255,7 @@
       try {
         const { user } = await API.getCurrentUser();
         if (!user || user.role !== 'admin') window.location.replace('index.html');
-      } catch { window.location.replace('cabinet.html'); }
+      } catch { window.location.replace('index.html'); }
     })();
 
     // Вкладки

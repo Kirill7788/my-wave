@@ -54,6 +54,10 @@ class CottageRepository
             $sql      .= " AND t.slug = ?";
             $params[] = $filters['type'];
         }
+        if (!empty($filters['region'])) {
+            $sql      .= " AND l.region = ?";
+            $params[] = $filters['region'];
+        }
         if (!empty($filters['lake'])) {
             $sql      .= " AND l.slug = ?";
             $params[] = $filters['lake'];

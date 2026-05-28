@@ -41,6 +41,8 @@
   box-shadow: var(--sh-ambient);
   position: sticky;
   top: 96px;
+  max-height: calc(100vh - 120px); /* ← добавлено */
+  overflow-y: auto; 
 }
 
 .sidebar-title {
